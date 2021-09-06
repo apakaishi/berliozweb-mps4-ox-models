@@ -1,0 +1,178 @@
+plugins {
+  id "java"
+  id "org.hidetake.ssh" version "2.10.1"
+}
+ext {
+  globalVersion = file('version.txt').text
+  //Libraries Version
+  berliozVersion = '0.11.1'
+  bridgeVersion  = '0.11.23'
+  simpleVersion  = '2021.5-1'
+  oxVersion   = '2.2.65'
+  docxVersion = '0.8.18'
+  xmlVersion  = '0.4.56'
+  psnPDFVersion = '0.0.5'
+  pdfBoxVersion = '2.0.21'
+  apachePoiVersion = '3.15'
+  xlsxVersion      = '0.6.0'
+  xmlUnitVersion   = '2.8.2'
+  psnS3Version     = '0.1.0'
+  awsS3Version     = '2.15.67'
+}
+
+group 'com.allette.oxford.ox'
+version "$globalVersion"
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+
+  // Allette IVY
+  ivy   {
+    url 'http://ivy.pageseeder.com/shared/'
+    patternLayout {
+      ivy '[organisation]/[module]/ivy-[revision].xml'
+      artifact '[organisation]/[module]/[artifact]-[revision].[ext]'
+    }
+  }
+
+  //replacement for mavenCentral and jcenter
+  maven {
+    url = uri("https://maven-central.storage.googleapis.com/maven2")
+  }
+
+  // Takes our libraries immediately
+  maven { url 'https://s01.oss.sonatype.org/content/groups/public/' }
+
+  // Use 'jcenter' for resolving your dependencies that are not in maven central yet.
+  jcenter() {
+    content {
+      //includeModule("org.gretty", "gretty-runner-jetty94:3.0.3")
+      includeGroup "org.gretty"
+    }
+  }
+
+  //Local Maven
+  mavenLocal()
+}
+
+// In this section you declare the dependencies for your production and test code
+dependencies {
+  // Test dependencies
+  testImplementation (
+      'junit:junit:4.12',
+      'org.slf4j:slf4j-api:1.7.21',
+      'org.hamcrest:java-hamcrest:2.0.0.0',
+      'org.hamcrest:hamcrest-junit:2.0.0.0',
+      "org.xmlunit:xmlunit-core:$xmlUnitVersion",
+      "org.xmlunit:xmlunit-matchers:$xmlUnitVersion",
+      "org.xmlunit:xmlunit-assertj3:$xmlUnitVersion",
+      'org.mockito:mockito-all:1.10.19',
+      'org.powermock:powermock-mockito-release-full:1.6.4',
+
+      //berlioz and ox
+      "org.pageseeder.berlioz:pso-berlioz:${berliozVersion}",
+      "org.pageseeder.ox:pso-ox-berlioz:${oxVersion}",
+      "org.pageseeder.ox:pso-ox-core:${oxVersion}",
+      "org.pageseeder.ox:pso-ox-pageseeder:${oxVersion}",
+      "org.pageseeder.ox:pso-ox-test:${oxVersion}",
+      'org.pageseeder.xmlwriter:pso-xmlwriter:1.0.2',
+
+      //Bridge
+      "org.pageseeder.bridge:pso-bridge:$bridgeVersion",
+      "org.pageseeder.bridge:pso-bridge-berlioz:$bridgeVersion",
+
+      //Simple
+      "net.pageseeder.app:psberlioz-simple-vault:$simpleVersion",
+      "net.pageseeder.app:psberlioz-simple-core:$simpleVersion",
+      "net.pageseeder.app:psberlioz-simple-navigation:$simpleVersion",
+      //Security module needs navigation
+      "net.pageseeder.app:psberlioz-simple-security:$simpleVersion",
+
+      //PDF
+      "net.pageseeder.pdf:psn-pdf-core:${psnPDFVersion}",
+      "net.pageseeder.pdf:psn-pdf-ox:${psnPDFVersion}",
+      "org.apache.pdfbox:pdfbox:${pdfBoxVersion}",
+      "org.apache.pdfbox:preflight:${pdfBoxVersion}",
+      "org.apache.pdfbox:fontbox:${pdfBoxVersion}",
+      "org.apache.pdfbox:pdfbox-tools:${pdfBoxVersion}",//Images Generation
+      'swinglabs:PDFRenderer:0.9.1',
+      'org.bouncycastle:bcprov-jdk15on:1.54',
+
+      //PSN XLSX
+      "org.pageseeder.xlsx:pso-xlsx-ox:${xlsxVersion}",
+      "org.pageseeder.xlsx:pso-xlsx-core:${xlsxVersion}",
+
+      //PSN S3
+      "net.pageseeder.s3:psn-s3-core:${psnS3Version}",
+      "net.pageseeder.s3:psn-s3-ox:${psnS3Version}",
+      "software.amazon.awssdk:bom:${awsS3Version}",
+      "software.amazon.awssdk:s3:${awsS3Version}",
+  )
+}
+
+def server = getSystemProperty('server' , 'local')
+
+//If the System.getenv returns null or empty, remotes.staging or remotes.production complains
+def defaultFakeValue = "just-to-allow-gradle-to-compile-locally"
+
+
+remotes {
+  staging {
+    role "staging"
+    host = getSystemEnv("OUP_OX_STAGING_FREENAS_HOST", defaultFakeValue)
+    user = getSystemEnv("OUP_OX_STAGING_FREENAS_USER", defaultFakeValue)
+    identity = file(getSystemEnv("PRIVATE_KEY", "/"))
+    knownHosts = file(getSystemEnv("PYR_STORAGE_01_KNOWN_HOSTS", defaultFakeValue))
+  }
+  production {
+    role "production"
+    host = getSystemEnv("OUP_OX_PRODUCTION_FREENAS_HOST", defaultFakeValue)
+    user = getSystemEnv("OUP_OX_PRODUCTION_FREENAS_USER", defaultFakeValue)
+    identity = file(getSystemEnv("PRIVATE_KEY", "/"))
+    knownHosts = file(getSystemEnv("SY4_STORAGE_03_KNOWN_HOSTS", defaultFakeValue))
+  }
+}
+
+task deploy {
+  doLast {
+    println "Started deploying to ${server}."
+    def result = ssh.run {
+      session(remotes.role[server]) {
+        def destinationFolder = server == "production" ? getSystemEnv("OUP_OX_PRODUCTION_FREENAS_FOLDER", "") : getSystemEnv("OUP_OX_STAGING_FREENAS_FOLDER", "")
+
+        // Create the folder if does not exist.
+        // because we need to delete if exists
+        execute("mkdir -p ${destinationFolder}")
+        execute("mkdir -p ${destinationFolder}/config")
+        execute("mkdir -p ${destinationFolder}/model")
+        execute("rm -rf ${destinationFolder}/config")
+        execute("rm -rf ${destinationFolder}/model")
+
+        // Create the folder if does not exist.
+        // It is necessary, otherwise the "put" command will return an error "Failed SFTP MKDIR"
+        execute("mkdir -p ${destinationFolder}")
+
+
+        //Even if you get "Failed SFTP MKDIR", The file may be copied
+        put from: "${project.projectDir}/local/appdata/model", into: destinationFolder, fileTransfer: 'sftp'
+        put from: "${project.projectDir}/local/appdata/config", into: destinationFolder, fileTransfer: 'sftp'
+
+        //Copy version
+        put from: "${project.projectDir}/version.txt", into: destinationFolder, fileTransfer: 'sftp'
+        //If reached this, then it was successful.
+        //Return success
+        "success"
+      }
+    }
+    //Check if finished
+    assert result == "success"
+  }
+}
+
+def getSystemEnv(String key, String defaultValue = "") {
+  System.getenv(key) ?: defaultValue
+}
+
+def getSystemProperty(String key, String defaultValue = null) {
+  System.properties[key] ?: defaultValue
+}

@@ -1,0 +1,35 @@
+image: docker:19
+
+stages:
+  - test
+  - deploystaging
+  - deployproduction
+
+before_script:
+  - echo -n $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
+
+Test:
+  stage: test
+  only:
+    - tags
+  script:
+    - ./gradlew test
+
+
+Deploy staging:
+  stage: deploystaging
+  only:
+    - tags
+  script:
+    - echo "Started deploying to $OUP_OX_STAGING_FREENAS_HOST"
+    - ./gradlew deploy -Dserver=staging
+
+# Manual trigger for the deployment to production
+Deploy production:
+  stage: deployproduction
+  only:
+    - tags
+  when: manual
+  script:
+    - echo "Started deploying to $OUP_OX_PRODUCTION_FREENAS_HOST"
+    - ./gradlew deploy -Dserver=production
