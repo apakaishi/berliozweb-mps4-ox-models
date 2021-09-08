@@ -14,13 +14,13 @@ ext {
   psnPDFVersion = '0.0.5'
   pdfBoxVersion = '2.0.21'
   apachePoiVersion = '3.15'
-  xlsxVersion      = '0.6.0'
+  xlsxVersion      = '0.6.1'
   xmlUnitVersion   = '2.8.2'
   psnS3Version     = '0.1.0'
   awsS3Version     = '2.15.67'
 }
 
-group 'com.allette.oxford.ox'
+group 'au.gov.pbs.ox'
 version "$globalVersion"
 
 // In this section you declare where to find the dependencies of your project
@@ -117,19 +117,12 @@ def defaultFakeValue = "just-to-allow-gradle-to-compile-locally"
 
 
 remotes {
-  staging {
-    role "staging"
-    host = getSystemEnv("OUP_OX_STAGING_FREENAS_HOST", defaultFakeValue)
-    user = getSystemEnv("OUP_OX_STAGING_FREENAS_USER", defaultFakeValue)
-    identity = file(getSystemEnv("PRIVATE_KEY", "/"))
-    knownHosts = file(getSystemEnv("PYR_STORAGE_01_KNOWN_HOSTS", defaultFakeValue))
-  }
   production {
     role "production"
-    host = getSystemEnv("OUP_OX_PRODUCTION_FREENAS_HOST", defaultFakeValue)
-    user = getSystemEnv("OUP_OX_PRODUCTION_FREENAS_USER", defaultFakeValue)
-    identity = file(getSystemEnv("PRIVATE_KEY", "/"))
-    knownHosts = file(getSystemEnv("SY4_STORAGE_03_KNOWN_HOSTS", defaultFakeValue))
+    host = getSystemEnv("MPS4_PRODUCTION_FREENAS_HOST", defaultFakeValue)
+    user = getSystemEnv("MPS4_PRODUCTION_FREENAS_USER", defaultFakeValue)
+    identity = file(getSystemEnv("MPS4_PRODUCTION_FREENAS_PRIVATE_KEY", "/"))
+    knownHosts = file(getSystemEnv("SY4_STORAGE_02_KNOWN_HOSTS", defaultFakeValue))
   }
 }
 
@@ -138,7 +131,7 @@ task deploy {
     println "Started deploying to ${server}."
     def result = ssh.run {
       session(remotes.role[server]) {
-        def destinationFolder = server == "production" ? getSystemEnv("OUP_OX_PRODUCTION_FREENAS_FOLDER", "") : getSystemEnv("OUP_OX_STAGING_FREENAS_FOLDER", "")
+        def destinationFolder = getSystemEnv("MPS4_OX_PRODUCTION_FREENAS_FOLDER", "")
 
         // Create the folder if does not exist.
         // because we need to delete if exists
@@ -154,11 +147,11 @@ task deploy {
 
 
         //Even if you get "Failed SFTP MKDIR", The file may be copied
-        put from: "${project.projectDir}/local/appdata/model", into: destinationFolder, fileTransfer: 'sftp'
-        put from: "${project.projectDir}/local/appdata/config", into: destinationFolder, fileTransfer: 'sftp'
+        put from: 'local/appdata/model', into: destinationFolder, fileTransfer: 'sftp'
+        put from: 'local/appdata/config', into: destinationFolder, fileTransfer: 'sftp'
 
         //Copy version
-        put from: "${project.projectDir}/version.txt", into: destinationFolder, fileTransfer: 'sftp'
+        put from: 'version.txt', into: destinationFolder, fileTransfer: 'sftp'
         //If reached this, then it was successful.
         //Return success
         "success"

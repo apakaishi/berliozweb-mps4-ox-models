@@ -7,4 +7,4 @@ This project contains the ox models and the berlioz config for https://ox-stagin
 - In the berliozweb-ox create a copy of gradle/local.properties.sample and save as local.properties
 - Update the local.properties with the following information.
 - Change the berliozAppdataFolder to {this project instalation path}/berliozweb-mps4-ox-models/local/appdata
-- Change the berliozMode to mps4local
+- Change the berliozMode to mps4
