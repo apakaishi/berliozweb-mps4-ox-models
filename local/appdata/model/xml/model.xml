@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  This document defines the pipelines for the conversion ox model.
+-->
+<pipelines>
+  <pipeline id="mps4-submission-conversion" name="MPS4 Submission Bus: Generate Document for Bus Submission" accepts="application/xml"  default="false">
+    <step id="create-files-properties" name="Create Files Properties" viewable="false" class="org.pageseeder.ox.step.Transformation">
+      <parameter name="xsl"    value="bus/bus-submission_v2.xsl"/>
+      <parameter name="output" value="files/document.xml"/>
+    </step>
+    <step id="Zip-full-package" name="Zipping PSML document with images folder." class="org.pageseeder.ox.step.Compression">
+      <parameter name="input" value="files/bus" />
+      <parameter name="output" value="mps4-submission.zip"/>
+    </step>
+  </pipeline>
+
+</pipelines>
+
+
+
