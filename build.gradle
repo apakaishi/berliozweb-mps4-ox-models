@@ -117,11 +117,18 @@ def defaultFakeValue = "just-to-allow-gradle-to-compile-locally"
 
 
 remotes {
+  staging {
+    role "staging"
+    host = getSystemEnv("PBS_OX_STAGING_FREENAS_HOST", defaultFakeValue)
+    user = getSystemEnv("PBS_OX_STAGING_FREENAS_USER", defaultFakeValue)
+    identity = file(getSystemEnv("PRIVATE_KEY", "/"))
+    knownHosts = file(getSystemEnv("PYR_STORAGE_01_KNOWN_HOSTS", defaultFakeValue))
+  }
   production {
     role "production"
-    host = getSystemEnv("MPS4_PRODUCTION_FREENAS_HOST", defaultFakeValue)
-    user = getSystemEnv("MPS4_PRODUCTION_FREENAS_USER", defaultFakeValue)
-    identity = file(getSystemEnv("MPS4_PRODUCTION_FREENAS_PRIVATE_KEY", "/"))
+    host = getSystemEnv("PBS_PRODUCTION_FREENAS_HOST", defaultFakeValue)
+    user = getSystemEnv("PBS_PRODUCTION_FREENAS_USER", defaultFakeValue)
+    identity = file(getSystemEnv("PBS_PRODUCTION_FREENAS_PRIVATE_KEY", "/"))
     knownHosts = file(getSystemEnv("SY4_STORAGE_02_KNOWN_HOSTS", defaultFakeValue))
   }
 }
@@ -131,7 +138,7 @@ task deploy {
     println "Started deploying to ${server}."
     def result = ssh.run {
       session(remotes.role[server]) {
-        def destinationFolder = getSystemEnv("MPS4_OX_PRODUCTION_FREENAS_FOLDER", "")
+        def destinationFolder = server == "production" ? getSystemEnv("PBS_OX_PRODUCTION_FREENAS_FOLDER", "") : getSystemEnv("PBS_OX_STAGING_FREENAS_FOLDER", "")
 
         // Create the folder if does not exist.
         // because we need to delete if exists
