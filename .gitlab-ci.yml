@@ -1,15 +1,23 @@
 image: docker:19
 
 stages:
-  - deployproduction
+  - test
+  - deploystaging
 
 before_script:
   - echo -n $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
 
-Deploy production:
-  stage: deployproduction
+Test:
+  stage: test
   only:
     - tags
   script:
-    - echo "Started deploying to $MPS4_PRODUCTION_FREENAS_HOST"
-    - ./gradlew deploy -Dserver=production
+    - ./gradlew test
+
+Deploy staging:
+  stage: deploystaging
+  only:
+    - tags
+  script:
+    - echo "Started deploying to $PBS_OX_STAGING_FREENAS_HOST"
+    - ./gradlew deploy -Dserver=staging
