@@ -154,11 +154,11 @@ task deploy {
 
 
         //Even if you get "Failed SFTP MKDIR", The file may be copied
-        put from: 'local/appdata/model', into: destinationFolder, fileTransfer: 'sftp'
-        put from: 'local/appdata/config', into: destinationFolder, fileTransfer: 'sftp'
+        put from: "${project.projectDir}/local/appdata/model", into: destinationFolder, fileTransfer: 'sftp'
+        put from: "${project.projectDir}/local/appdata/config", into: destinationFolder, fileTransfer: 'sftp'
 
         //Copy version
-        put from: 'version.txt', into: destinationFolder, fileTransfer: 'sftp'
+        put from: "${project.projectDir}/version.txt", into: destinationFolder, fileTransfer: 'sftp'
         //If reached this, then it was successful.
         //Return success
         "success"
