@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<global>
+
+  <!--
+    Configuration specific to this Web application and not disclosed in XML
+  -->
+  <app  title="MPS4 OX">
+  </app>
+
+  <bridge url="https://dev-mps4.pbs.gov.au/ps"/>
+
+  <oauth>
+    <client-credentials client="" secret=""/>
+    <password-credentials client="" secret=""/>
+  </oauth>
+
+  <security-config-file option="none" path="security.xml"/>
+
+  <!--
+    max-inactive-time-ms: Max time a pipeline/step job can be inactive (86400000=1Day).
+    max-stored-completed-job: Max number of completed pipeline/step job that will be stored.
+ -->
+  <ox2 max-inactive-time-ms="86400000" max-stored-completed-job="1000">
+    <upload max-size="500"/><!-- The maximum upload file size in mb -->
+    <slow-mode size="51200"/> <!-- The threshold for put job into slow mode in kb (50mb)-->
+    <threads number="2"/> <!-- the number of threads for running OX -->
+    <!--
+      threads-number: Max number of threads for asynchronous steps.
+      check-intervals: Time in milleseconds to check the step job status
+     -->
+    <step threads-number="4"/>
+  </ox2>
+</global>
