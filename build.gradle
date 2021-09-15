@@ -128,8 +128,8 @@ remotes {
     role "production"
     host = getSystemEnv("PBS_PRODUCTION_FREENAS_HOST", defaultFakeValue)
     user = getSystemEnv("PBS_PRODUCTION_FREENAS_USER", defaultFakeValue)
-    identity = file(getSystemEnv("PBS_PRODUCTION_FREENAS_PRIVATE_KEY", "/"))
-    knownHosts = file(getSystemEnv("SY4_STORAGE_02_KNOWN_HOSTS", defaultFakeValue))
+    identity = file(getSystemEnv("PRIVATE_KEY", "/"))
+    knownHosts = file(getSystemEnv("SY4_STORAGE_03_KNOWN_HOSTS", defaultFakeValue))
   }
 }
 
