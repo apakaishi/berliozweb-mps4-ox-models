@@ -21,3 +21,5 @@ Deploy staging:
   script:
     - echo "Started deploying to $PBS_OX_STAGING_FREENAS_HOST"
     - ./gradlew deploy -Dserver=staging
+  after_script:
+    - curl https://ox-staging.pbs.gov.au/login.html?berlioz-reload=true
