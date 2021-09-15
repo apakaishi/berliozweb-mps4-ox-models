@@ -3,6 +3,7 @@ image: docker:19
 stages:
   - test
   - deploystaging
+  - deployproduction
 
 before_script:
   - echo -n $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
@@ -23,3 +24,13 @@ Deploy staging:
     - ./gradlew deploy -Dserver=staging
   after_script:
     - curl https://ox-staging.pbs.gov.au/login.html?berlioz-reload=true
+
+Deploy production:
+  stage: deployproduction
+  only:
+    - tags
+  script:
+    - echo "Started deploying to $PBS_OX_PRODUCTION_FREENAS_HOST"
+    - ./gradlew deploy -Dserver=production
+  after_script:
+    - curl https://ox.pbs.gov.au/login.html?berlioz-reload=true
