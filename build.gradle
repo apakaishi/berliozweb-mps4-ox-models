@@ -6,9 +6,9 @@ ext {
   globalVersion = file('version.txt').text
   //Libraries Version
   berliozVersion = '0.11.1'
-  bridgeVersion  = '0.11.23'
-  simpleVersion  = '2021.5-1'
-  oxVersion   = '2.2.65'
+  bridgeVersion  = '0.11.28'
+  simpleVersion = '2021.09-02'
+  oxVersion   = '2.2.68'
   docxVersion = '0.8.18'
   xmlVersion  = '0.4.56'
   psnPDFVersion = '0.0.5'
