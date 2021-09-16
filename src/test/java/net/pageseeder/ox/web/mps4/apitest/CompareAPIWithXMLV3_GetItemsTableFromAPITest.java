@@ -3,6 +3,7 @@ package net.pageseeder.ox.web.mps4.apitest;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.pageseeder.ox.step.StepSimulator;
 
@@ -31,6 +32,7 @@ public class CompareAPIWithXMLV3_GetItemsTableFromAPITest extends CompareAPIWith
   }
 
   @Test
+  @Ignore
   public void getItemsTableFromAPI() {
     try {
       StepSimulator simulator = new StepSimulator(super.getModel().name(), this.INPUT, this.REQUEST_PARAMETER);
