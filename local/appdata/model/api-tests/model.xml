@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  This document defines the pipelines for the conversion ox model.
+-->
+<pipelines icon="api" title="API tests">
+
+  <pipeline id="compare-api-with-xml-v3"
+            name="Compare New API with PBS XML V3"
+            description="Compare New API with PBS XML V3"
+            accepts="application/zip"
+            default="true">
+    <step id="unzip-pbs-xml-v3"
+          name="Unzipping PBS XML V3"
+          interaction="false"
+          class="org.pageseeder.ox.step.Decompression">
+      <parameter name="output" value="xml-v3" />
+    </step>
+
+    <step id="get-items-table-from-pbs-xml-v3"
+          name="Get items table from PBS XML v3"
+          interaction="false"
+          viewable="false"
+          async="true"
+          class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"  value="xml-v3"/>
+      <parameter name="display-result"  value="false"/>
+      <parameter name="xsl"    value="xslt/extract-item-table.xsl"/>
+      <parameter name="output" value="items/pbs-xml-v3-item.csv"/>
+    </step>
+
+    <step id="get-items-table-from-api"
+          name="Get items table from API"
+          interaction="false"
+          viewable="false"
+          async="true"
+          class="org.pageseeder.ox.step.GetURLContent">
+      <parameter name="url"  value="https://aucapiapppbspilot.azurewebsites.net/ITEM?format=csv&amp;include_header=true&amp;download=true"/>
+      <parameter name="output" value="items/new-pbs-api-item.csv"/>
+    </step>
+
+    <step id="zip-items-tables"
+          name="Zip items tables"
+          interaction="false"
+          viewable="false"
+          class="org.pageseeder.ox.step.Compression">
+      <parameter name="input" value="/items/" />
+      <parameter name="output" value="items-tables.zip" />
+    </step>
+  </pipeline>
+
+</pipelines>
+
+
+
