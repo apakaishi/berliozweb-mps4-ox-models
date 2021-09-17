@@ -10,8 +10,9 @@
   <bridge url="https://dev-mps4.pbs.gov.au/ps"/>
 
   <oauth>
-    <client-credentials client="ca6562e09df69276" secret="ddSa3PI4WRs8g_Ja6TJkoQ"/>
-    <password-credentials client="377145073c89ebc5" secret="AThZdQcu48gDAQYWK8_2FA"/>
+    <client-credentials client="ca6562e09df69276" secret="OB1:kF1zQ82I977g11dv5aygfVS3RZx2kbT4zBf2IvGrOxgwLtSfEz"/>
+    <password-credentials client="377145073c89ebc5" secret="OB1:cHD7cVxNSyq11dnMvFMKdGS5XMXhpRP5ZloaXKeSxrGjdTXSV
+"/>
   </oauth>
 
   <security-config-file option="none" path="security.xml"/>
