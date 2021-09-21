@@ -14,7 +14,7 @@
 
   <xsl:import href="util/function.xsl" />
   <xsl:param name="output-folder" />
-	
+
   <xsl:output method="xml" encoding="UTF-8" indent="yes" />
 
   <xsl:variable name="base" select="substring-before(replace(base-uri(),'file:', 'file://'),'data/workbook.xml')" />
@@ -168,8 +168,8 @@
 			</section>
 		    <section id="template-version" lockstructure="true" edit="false">
 		  	   <properties-fragment id="template-version">
-					 <property datatype="string" name="template-version" title="Template Version" value=".9.14" />
-					 <property datatype="string" name="template-date" title="Last updated" value="2021-05-06" />
+					 <property datatype="string" name="template-version" title="Template Version" value=".9.15" />
+					 <property datatype="string" name="template-date" title="Last updated" value="2021-09-21" />
 			   </properties-fragment>
 			</section>
 		 </document>
