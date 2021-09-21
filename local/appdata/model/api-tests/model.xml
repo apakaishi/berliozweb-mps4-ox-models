@@ -34,7 +34,7 @@
           viewable="false"
           async="true"
           class="org.pageseeder.ox.step.GetURLContent">
-      <parameter name="url"  value="https://aucapiapppbspilot.azurewebsites.net/ITEM?format=csv&amp;include_header=true&amp;download=true"/>
+      <parameter name="url"  value="https://aucapiapppbspilot.azurewebsites.net/ITEM?format=csv&amp;include_header=true&amp;download=true&amp;SCHEDULE_CODE=3013"/>
       <parameter name="output" value="items/new-pbs-api-item.csv"/>
     </step>
 
