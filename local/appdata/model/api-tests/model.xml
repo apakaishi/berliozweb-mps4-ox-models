@@ -27,6 +27,51 @@
       <parameter name="xsl"    value="xslt/extract-item-table.xsl"/>
       <parameter name="output" value="items/pbs-xml-v3-item.csv"/>
     </step>
+    <step id="convert-pbs-xml-v3-to-xml"
+          name="Convert PBS XML v3 to XML"
+          interaction="false"
+          viewable="false"
+          async="true"
+          class="net.pageseeder.xmltools.ox.step.CSVToXML">
+      <parameter name="input"               value="items/pbs-xml-v3-item.csv"/>
+      <parameter name="output"              value="items-xml/pbs-xml-v3-item.xml"/>
+      <parameter name="has-headers"         value="true"/>
+      <parameter name="row-element-name"    value="item"/>
+      <parameter name="delimiter"           value=","/>
+      <parameter name="column-as-attribute" value="true"/>
+    </step>
+
+    <step id="get-api-schedule-codes"
+          name="Get API Schedule Codes "
+          interaction="false"
+          viewable="false"
+          async="true"
+          class="org.pageseeder.ox.step.GetURLContent">
+      <parameter name="url"    value="https://aucapiapppbspilot.azurewebsites.net/SCHEDULE?format=csv&amp;include_header=true"/>
+      <parameter name="output" value="api-schedule-codes.csv"/>
+    </step>
+
+    <step id="convert-api-schedule-codes-to-xml"
+          name="Convert API Schedule Codes to XML"
+          interaction="false"
+          viewable="false"
+          async="true"
+          class="net.pageseeder.xmltools.ox.step.CSVToXML">
+      <parameter name="has-headers"         value="true"/>
+      <parameter name="row-element-name"    value="item"/>
+      <parameter name="delimiter"           value=","/>
+      <parameter name="column-as-attribute" value="true"/>
+      <parameter name="input"               value="api-schedule-codes.csv"/>
+      <parameter name="output"              value="api-schedule-codes.xml"/>
+    </step>
+
+    <step id="make-schedule-codes-selectable"
+          name="Make Schedule Codes selectable"
+          viewable="false"
+          class="org.pageseeder.ox.step.Transformation">
+      <parameter name="xsl"    value="xslt/api-schedule-codes-selectable.xsl"/>
+      <parameter name="output" value="api-schedule-codes-selectable.xml"/>
+    </step>
 
     <step id="get-items-table-from-api"
           name="Get items table from API"
@@ -36,6 +81,23 @@
           class="org.pageseeder.ox.step.GetURLContent">
       <parameter name="url"  value="https://aucapiapppbspilot.azurewebsites.net/ITEM?format=csv&amp;include_header=true&amp;download=true&amp;SCHEDULE_CODE=3013"/>
       <parameter name="output" value="items/new-pbs-api-item.csv"/>
+      <parameter name="has-headers"         value="true"/>
+      <parameter name="row-element-name"    value="item"/>
+      <parameter name="delimiter"           value=","/>
+      <parameter name="column-as-attribute" value="true"/>
+    </step>
+    <step id="convert-items-table-from-api-to-xml"
+          name="Convert items table from API to XML"
+          interaction="false"
+          viewable="false"
+          async="true"
+          class="net.pageseeder.xmltools.ox.step.CSVToXML">
+      <parameter name="input"               value="items/new-pbs-api-item.csv"/>
+      <parameter name="output"              value="items-xml/new-pbs-api-item.xml"/>
+      <parameter name="has-headers"         value="true"/>
+      <parameter name="row-element-name"    value="item"/>
+      <parameter name="delimiter"           value=","/>
+      <parameter name="column-as-attribute" value="true"/>
     </step>
 
     <step id="zip-items-tables"
@@ -45,6 +107,31 @@
           class="org.pageseeder.ox.step.Compression">
       <parameter name="input" value="/items/" />
       <parameter name="output" value="items-tables.zip" />
+    </step>
+  </pipeline>
+
+  <pipeline id="testing"
+            name="test"
+            description="test"
+            accepts="application/xml"
+            default="true">
+    <step id="read-xml"
+          name="Read XML"
+          viewable="false"
+          class="net.pageseeder.xmltools.ox.step.ReadXML">
+    </step>
+    <step id="get-items-table-from-api"
+          name="Get items table from API"
+          interaction="false"
+          viewable="false"
+          async="true"
+          class="org.pageseeder.ox.step.GetURLContent">
+      <parameter name="url"  value="https://aucapiapppbspilot.azurewebsites.net/ITEM?format=csv&amp;include_header=true&amp;download=true&amp;SCHEDULE_CODE=3013"/>
+      <parameter name="output" value="items/new-pbs-api-item.csv"/>
+      <parameter name="has-headers"         value="true"/>
+      <parameter name="row-element-name"    value="item"/>
+      <parameter name="delimiter"           value=","/>
+      <parameter name="column-as-attribute" value="true"/>
     </step>
   </pipeline>
 
