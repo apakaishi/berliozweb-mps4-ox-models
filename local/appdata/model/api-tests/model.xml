@@ -150,6 +150,24 @@
     </step>
   </pipeline>
 
+  <!-- Linus -->
+  <pipeline id="summary"
+            name="Create summary"
+            description="Summary"
+            accepts="application/zip"
+            default="true">
+    <step id="Summary"
+          name="Summary"
+          interaction="false"
+          viewable="false"
+          async="true"
+          class="org.pageseeder.ox.step.Transformation">
+<!--      <parameter name="input"  value="xml-v3"/>-->
+      <parameter name="display-result"  value="false"/>
+      <parameter name="xsl"    value="xslt/item-table-summary.xsl"/>
+      <parameter name="output" value="items/pbs-xml-v3-item.csv"/>
+    </step>
+  </pipeline>
 </pipelines>
 
 
