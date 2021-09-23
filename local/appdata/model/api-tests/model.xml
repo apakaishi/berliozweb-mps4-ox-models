@@ -114,7 +114,7 @@
             name="test"
             description="test"
             accepts="application/xml"
-            default="true">
+            default="false">
     <step id="read-xml"
           name="Read XML"
           viewable="false"
@@ -132,6 +132,19 @@
       <parameter name="row-element-name"    value="item"/>
       <parameter name="delimiter"           value=","/>
       <parameter name="column-as-attribute" value="true"/>
+    </step>
+  </pipeline>
+
+  <!-- Create supply-only input data for API V3 from a spreadsheet. -->
+  <pipeline id="schematron" name="Schematron Test"
+            description="Just test."
+            accepts="application/xml"
+            default="false">
+    <step id="validate-xml" name="Validate XML"
+          class="org.pageseeder.ox.schematron.step.SchematronValidation"
+          async="false">
+      <parameter name="input" value="xml-ex1.xml" />
+      <parameter name="schema" value="sch/sch-ex1.sch" />
     </step>
   </pipeline>
 
