@@ -38,7 +38,8 @@
       <parameter name="has-headers"         value="true"/>
       <parameter name="row-element-name"    value="item"/>
       <parameter name="delimiter"           value=","/>
-      <parameter name="column-as-attribute" value="true"/>
+      <parameter name="columns-as-attributes" value="true"/>
+      <parameter name="add-xml-to-response"   value="false"/>
     </step>
 
     <step id="get-api-schedule-codes"
@@ -60,7 +61,7 @@
       <parameter name="has-headers"         value="true"/>
       <parameter name="row-element-name"    value="item"/>
       <parameter name="delimiter"           value=","/>
-      <parameter name="column-as-attribute" value="true"/>
+      <parameter name="columns-as-attributes" value="true"/>
       <parameter name="input"               value="api-schedule-codes.csv"/>
       <parameter name="output"              value="api-schedule-codes.xml"/>
     </step>
@@ -69,7 +70,8 @@
           name="Make Schedule Codes selectable"
           viewable="false"
           class="org.pageseeder.ox.step.Transformation">
-      <parameter name="xsl"    value="xslt/api-schedule-codes-selectable.xsl"/>
+      <parameter name="xsl"    value="xslt/selectable-schedule-codes.xsl"/>
+      <parameter name="input"  value="api-schedule-codes.xml"/>
       <parameter name="output" value="api-schedule-codes-selectable.xml"/>
     </step>
 
@@ -84,7 +86,7 @@
       <parameter name="has-headers"         value="true"/>
       <parameter name="row-element-name"    value="item"/>
       <parameter name="delimiter"           value=","/>
-      <parameter name="column-as-attribute" value="true"/>
+      <parameter name="columns-as-attributes" value="true"/>
     </step>
     <step id="convert-items-table-from-api-to-xml"
           name="Convert items table from API to XML"
@@ -97,7 +99,7 @@
       <parameter name="has-headers"         value="true"/>
       <parameter name="row-element-name"    value="item"/>
       <parameter name="delimiter"           value=","/>
-      <parameter name="column-as-attribute" value="true"/>
+      <parameter name="columns-as-attributes" value="true"/>
     </step>
 
     <step id="zip-items-tables"
@@ -131,7 +133,7 @@
       <parameter name="has-headers"         value="true"/>
       <parameter name="row-element-name"    value="item"/>
       <parameter name="delimiter"           value=","/>
-      <parameter name="column-as-attribute" value="true"/>
+      <parameter name="columns-as-attributes" value="true"/>
     </step>
   </pipeline>
 
