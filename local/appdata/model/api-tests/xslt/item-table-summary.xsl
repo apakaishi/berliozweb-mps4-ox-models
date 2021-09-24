@@ -7,13 +7,27 @@
     exclude-result-prefixes="xs"
     version="2.0">
 
-<!--  <xsl:output method="xml" encoding="UTF-8" indent="yes" />-->
-  <xsl:output method="text" />
+  <xsl:output method="text" encoding="UTF-8"/>
 
-  <xsl:template match="/">
-    <xsl:text>Drug Types, Druds, Items, Brands</xsl:text>
-    <xsl:text>&#x0D;</xsl:text>
+  <xsl:template match="/csv">
+
+    <xsl:text>Generic Drugs,Items,Brands&#x0D;</xsl:text>
+
+    <xsl:value-of select="count(distinct-values(item/@PBS_CODE))" /> <xsl:text>,</xsl:text>
+    <xsl:value-of select="count(item)" /> <xsl:text>,</xsl:text>
+    <xsl:value-of select="count(distinct-values(item/@BRAND_NAME))" /> <xsl:text>&#x0D;&#x0D;&#x0D;</xsl:text>
+
+
+    <xsl:text>Drug Types,Drugs,Items,Brands</xsl:text>
+
+    <xsl:for-each-group select="item" group-by="@PROGRAM_CODE">
+      <xsl:text>&#x0D;</xsl:text>
+      <xsl:value-of select="current-grouping-key()" /> <xsl:text>,</xsl:text>
+      <xsl:value-of select="count(distinct-values(current-group()/@PBS_CODE))" /> <xsl:text>,</xsl:text>
+      <xsl:value-of select="count(current-group())" /> <xsl:text>,</xsl:text>
+      <xsl:value-of select="count(distinct-values(current-group()/@BRAND_NAME))" />
+    </xsl:for-each-group>
+
   </xsl:template>
-
 
 </xsl:stylesheet>
