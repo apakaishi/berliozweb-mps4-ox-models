@@ -154,7 +154,7 @@
   <pipeline id="summary"
             name="Create summary"
             description="Summary"
-            accepts="application/zip"
+            accepts="application/xml"
             default="true">
     <step id="Summary"
           name="Summary"
