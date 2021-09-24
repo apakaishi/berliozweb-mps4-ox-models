@@ -16,8 +16,8 @@
       <parameter name="output" value="xml-v3" />
     </step>
 
-    <step id="get-items-table-from-pbs-xml-v3"
-          name="Get items table from PBS XML v3"
+    <step id="generate-items-table-csv-from-pbs-xml-v3"
+          name="Generate items table from PBS XML v3 as CSV"
           interaction="false"
           viewable="false"
           async="true"
@@ -25,16 +25,16 @@
       <parameter name="input"  value="xml-v3"/>
       <parameter name="display-result"  value="false"/>
       <parameter name="xsl"    value="xslt/extract-item-table.xsl"/>
-      <parameter name="output" value="items/pbs-xml-v3-item.csv"/>
+      <parameter name="output" value="items/csv/pbs-xml-v3-item.csv"/>
     </step>
-    <step id="convert-pbs-xml-v3-to-xml"
-          name="Convert PBS XML v3 to XML"
+    <step id="convert-pbs-xml-v3-item-table-csv-to-xml"
+          name="Convert PBS XML v3 item table CSV to XML"
           interaction="false"
           viewable="false"
           async="true"
           class="net.pageseeder.xmltools.ox.step.CSVToXML">
-      <parameter name="input"               value="items/pbs-xml-v3-item.csv"/>
-      <parameter name="output"              value="items-xml/pbs-xml-v3-item.xml"/>
+      <parameter name="input"               value="items/csv/pbs-xml-v3-item.csv"/>
+      <parameter name="output"              value="items/xml/pbs-xml-v3-item.xml"/>
       <parameter name="has-headers"         value="true"/>
       <parameter name="row-element-name"    value="item"/>
       <parameter name="delimiter"           value=","/>
@@ -42,38 +42,49 @@
       <parameter name="add-xml-to-response"   value="false"/>
     </step>
 
-    <step id="get-api-schedule-codes"
-          name="Get API Schedule Codes "
+    <step id="create-summary-for-pbs-xml-v3-items"
+          name="Create summary for PBS XML V3 items"
           interaction="false"
           viewable="false"
           async="true"
-          class="org.pageseeder.ox.step.GetURLContent">
-      <parameter name="url"    value="https://aucapiapppbspilot.azurewebsites.net/SCHEDULE?format=csv&amp;include_header=true"/>
-      <parameter name="output" value="api-schedule-codes.csv"/>
-    </step>
-
-    <step id="convert-api-schedule-codes-to-xml"
-          name="Convert API Schedule Codes to XML"
-          interaction="false"
-          viewable="false"
-          async="true"
-          class="net.pageseeder.xmltools.ox.step.CSVToXML">
-      <parameter name="has-headers"         value="true"/>
-      <parameter name="row-element-name"    value="item"/>
-      <parameter name="delimiter"           value=","/>
-      <parameter name="columns-as-attributes" value="true"/>
-      <parameter name="input"               value="api-schedule-codes.csv"/>
-      <parameter name="output"              value="api-schedule-codes.xml"/>
-    </step>
-
-    <step id="make-schedule-codes-selectable"
-          name="Make Schedule Codes selectable"
-          viewable="false"
           class="org.pageseeder.ox.step.Transformation">
-      <parameter name="xsl"    value="xslt/selectable-schedule-codes.xsl"/>
-      <parameter name="input"  value="api-schedule-codes.xml"/>
-      <parameter name="output" value="api-schedule-codes-selectable.xml"/>
+      <parameter name="input"  value="items/xml/pbs-xml-v3-item.xml"/>
+      <parameter name="display-result"  value="false"/>
+      <parameter name="xsl"    value="xslt/item-table-summary.xsl"/>
+      <parameter name="output" value="items/summary/pbs-xml-v3-item-summary.csv"/>
     </step>
+<!--    <step id="get-api-schedule-codes"-->
+<!--          name="Get API Schedule Codes "-->
+<!--          interaction="false"-->
+<!--          viewable="false"-->
+<!--          async="true"-->
+<!--          class="org.pageseeder.ox.step.GetURLContent">-->
+<!--      <parameter name="url"    value="https://aucapiapppbspilot.azurewebsites.net/SCHEDULE?format=csv&amp;include_header=true"/>-->
+<!--      <parameter name="output" value="api-schedule-codes.csv"/>-->
+<!--    </step>-->
+
+<!--    <step id="convert-api-schedule-codes-to-xml"-->
+<!--          name="Convert API Schedule Codes to XML"-->
+<!--          interaction="false"-->
+<!--          viewable="false"-->
+<!--          async="true"-->
+<!--          class="net.pageseeder.xmltools.ox.step.CSVToXML">-->
+<!--      <parameter name="has-headers"         value="true"/>-->
+<!--      <parameter name="row-element-name"    value="item"/>-->
+<!--      <parameter name="delimiter"           value=","/>-->
+<!--      <parameter name="columns-as-attributes" value="true"/>-->
+<!--      <parameter name="input"               value="api-schedule-codes.csv"/>-->
+<!--      <parameter name="output"              value="api-schedule-codes.xml"/>-->
+<!--    </step>-->
+
+<!--    <step id="make-schedule-codes-selectable"-->
+<!--          name="Make Schedule Codes selectable"-->
+<!--          viewable="false"-->
+<!--          class="org.pageseeder.ox.step.Transformation">-->
+<!--      <parameter name="xsl"    value="xslt/selectable-schedule-codes.xsl"/>-->
+<!--      <parameter name="input"  value="api-schedule-codes.xml"/>-->
+<!--      <parameter name="output" value="api-schedule-codes-selectable.xml"/>-->
+<!--    </step>-->
 
     <step id="get-items-table-from-api"
           name="Get items table from API"
@@ -82,7 +93,7 @@
           async="true"
           class="org.pageseeder.ox.step.GetURLContent">
       <parameter name="url"  value="https://aucapiapppbspilot.azurewebsites.net/ITEM?format=csv&amp;include_header=true&amp;download=true&amp;SCHEDULE_CODE=3013"/>
-      <parameter name="output" value="items/new-pbs-api-item.csv"/>
+      <parameter name="output" value="items/csv/new-pbs-api-item.csv"/>
       <parameter name="has-headers"         value="true"/>
       <parameter name="row-element-name"    value="item"/>
       <parameter name="delimiter"           value=","/>
@@ -94,12 +105,24 @@
           viewable="false"
           async="true"
           class="net.pageseeder.xmltools.ox.step.CSVToXML">
-      <parameter name="input"               value="items/new-pbs-api-item.csv"/>
-      <parameter name="output"              value="items-xml/new-pbs-api-item.xml"/>
+      <parameter name="input"               value="items/csv/new-pbs-api-item.csv"/>
+      <parameter name="output"              value="items/xml/new-pbs-api-item.xml"/>
       <parameter name="has-headers"         value="true"/>
       <parameter name="row-element-name"    value="item"/>
       <parameter name="delimiter"           value=","/>
       <parameter name="columns-as-attributes" value="true"/>
+    </step>
+
+    <step id="create-summary-for-new-pbs-api-items"
+          name="Create summary for new PBS API items"
+          interaction="false"
+          viewable="false"
+          async="true"
+          class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"  value="items/xml/new-pbs-api-item.xml"/>
+      <parameter name="display-result"  value="false"/>
+      <parameter name="xsl"    value="xslt/item-table-summary.xsl"/>
+      <parameter name="output" value="items/summary/new-pbs-api-item-summary.csv"/>
     </step>
 
     <step id="zip-items-tables"
@@ -108,47 +131,47 @@
           viewable="false"
           class="org.pageseeder.ox.step.Compression">
       <parameter name="input" value="/items/" />
-      <parameter name="output" value="items-tables.zip" />
+      <parameter name="output" value="items.zip" />
     </step>
   </pipeline>
 
-  <pipeline id="testing"
-            name="test"
-            description="test"
-            accepts="application/xml"
-            default="false">
-    <step id="read-xml"
-          name="Read XML"
-          viewable="false"
-          class="net.pageseeder.xmltools.ox.step.ReadXML">
-    </step>
-    <step id="get-items-table-from-api"
-          name="Get items table from API"
-          interaction="false"
-          viewable="false"
-          async="true"
-          class="org.pageseeder.ox.step.GetURLContent">
-      <parameter name="url"  value="https://aucapiapppbspilot.azurewebsites.net/ITEM?format=csv&amp;include_header=true&amp;download=true&amp;SCHEDULE_CODE=3013"/>
-      <parameter name="output" value="items/new-pbs-api-item.csv"/>
-      <parameter name="has-headers"         value="true"/>
-      <parameter name="row-element-name"    value="item"/>
-      <parameter name="delimiter"           value=","/>
-      <parameter name="columns-as-attributes" value="true"/>
-    </step>
-  </pipeline>
+<!--  <pipeline id="testing"-->
+<!--            name="test"-->
+<!--            description="test"-->
+<!--            accepts="application/xml"-->
+<!--            default="false">-->
+<!--    <step id="read-xml"-->
+<!--          name="Read XML"-->
+<!--          viewable="false"-->
+<!--          class="net.pageseeder.xmltools.ox.step.ReadXML">-->
+<!--    </step>-->
+<!--    <step id="get-items-table-from-api"-->
+<!--          name="Get items table from API"-->
+<!--          interaction="false"-->
+<!--          viewable="false"-->
+<!--          async="true"-->
+<!--          class="org.pageseeder.ox.step.GetURLContent">-->
+<!--      <parameter name="url"  value="https://aucapiapppbspilot.azurewebsites.net/ITEM?format=csv&amp;include_header=true&amp;download=true&amp;SCHEDULE_CODE=3013"/>-->
+<!--      <parameter name="output" value="items/new-pbs-api-item.csv"/>-->
+<!--      <parameter name="has-headers"         value="true"/>-->
+<!--      <parameter name="row-element-name"    value="item"/>-->
+<!--      <parameter name="delimiter"           value=","/>-->
+<!--      <parameter name="columns-as-attributes" value="true"/>-->
+<!--    </step>-->
+<!--  </pipeline>-->
 
   <!-- Create supply-only input data for API V3 from a spreadsheet. -->
-  <pipeline id="schematron" name="Schematron Test"
-            description="Just test."
-            accepts="application/xml"
-            default="false">
-    <step id="validate-xml" name="Validate XML"
-          class="org.pageseeder.ox.schematron.step.SchematronValidation"
-          async="false">
-      <parameter name="input" value="xml-ex1.xml" />
-      <parameter name="schema" value="sch/sch-ex1.sch" />
-    </step>
-  </pipeline>
+<!--  <pipeline id="schematron" name="Schematron Test"-->
+<!--            description="Just test."-->
+<!--            accepts="application/xml"-->
+<!--            default="false">-->
+<!--    <step id="validate-xml" name="Validate XML"-->
+<!--          class="org.pageseeder.ox.schematron.step.SchematronValidation"-->
+<!--          async="false">-->
+<!--      <parameter name="input" value="xml-ex1.xml" />-->
+<!--      <parameter name="schema" value="sch/sch-ex1.sch" />-->
+<!--    </step>-->
+<!--  </pipeline>-->
 
   <!-- Linus -->
   <pipeline id="create-summary"
