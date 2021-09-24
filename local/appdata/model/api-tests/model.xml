@@ -151,13 +151,13 @@
   </pipeline>
 
   <!-- Linus -->
-  <pipeline id="summary"
+  <pipeline id="create-summary"
             name="Create summary"
-            description="Summary"
+            description="Create summary"
             accepts="application/xml"
-            default="true">
-    <step id="Summary"
-          name="Summary"
+            default="false">
+    <step id="create-summary"
+          name="create-summary"
           interaction="false"
           viewable="false"
           async="true"

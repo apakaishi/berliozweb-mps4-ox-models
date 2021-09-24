@@ -11,13 +11,14 @@
 
   <xsl:template match="/csv">
 
+    <xsl:text>General&#x0D;</xsl:text>
     <xsl:text>Generic Drugs,Items,Brands&#x0D;</xsl:text>
 
     <xsl:value-of select="count(distinct-values(item/@PBS_CODE))" /> <xsl:text>,</xsl:text>
     <xsl:value-of select="count(item)" /> <xsl:text>,</xsl:text>
     <xsl:value-of select="count(distinct-values(item/@BRAND_NAME))" /> <xsl:text>&#x0D;&#x0D;&#x0D;</xsl:text>
 
-
+    <xsl:text>Programs&#x0D;</xsl:text>
     <xsl:text>Drug Types,Drugs,Items,Brands</xsl:text>
 
     <xsl:for-each-group select="item" group-by="@PROGRAM_CODE">
