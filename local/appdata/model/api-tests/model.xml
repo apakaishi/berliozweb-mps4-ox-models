@@ -3,32 +3,6 @@
   This document defines the pipelines for the conversion ox model.
 -->
 <pipelines icon="api" title="API tests">
-
-  <pipeline id="generate-csv-item-table-from-xml-v3"
-            name="Generate CSV Item Table from XML V3"
-            description="Generate CSV Item Table from XML V3"
-            accepts="application/zip"
-            default="true">
-    <step id="unzip-xml-v3"
-          name="Unzipping XML V3"
-          interaction="false"
-          class="org.pageseeder.ox.step.Decompression">
-      <parameter name="output" value="xml-v3" />
-    </step>
-
-    <step id="generate-csv-items-table-from-xml-v3"
-          name="Generate CSV items table from XML v3"
-          interaction="false"
-          viewable="false"
-          async="true"
-          class="org.pageseeder.ox.step.Transformation">
-      <parameter name="input"  value="xml-v3"/>
-      <parameter name="display-result"  value="false"/>
-      <parameter name="xsl"    value="xslt/extract-item-table-from-xml-v3.xsl"/>
-      <parameter name="output" value="items/csv/xml-v3-item.csv"/>
-    </step>
-  </pipeline>
-
   <pipeline id="compare-new-api-with-xml-v3"
             name="Compare New API with XML V3"
             description="Compare New API with XML V3"
@@ -144,6 +118,8 @@
       <parameter name="output" value="items/summary/items-tables-summary.xml"/>
       <parameter name="display-result"  value="false"/>
       <parameter name="xsl"    value="xslt/item-table-to-xml-summary.xsl"/>
+      <parameter name="_xslt-sheet-name-prefix-01"    value="xml-v3"/>
+      <parameter name="_xslt-sheet-name-prefix-02"    value="new-api"/>
       <parameter name="_xslt-new-api-file-name"    value="new-api-item.xml"/>
     </step>
     <step id="summary-from-xml-to-xlsx" name="Creating XLSX from summary report in XML" class="net.pageseeder.xmltools.ox.step.XMLProcess">
@@ -163,55 +139,7 @@
     </step>
   </pipeline>
 
-<!--<pipeline id="test"-->
-<!--          name="TEst"-->
-<!--          accepts="application/csv">-->
-
-<!--    <step id="convert-api-schedule-codes-to-xml"-->
-<!--          name="Convert API Schedule Codes to XML"-->
-<!--          interaction="false"-->
-<!--          viewable="false"-->
-<!--          async="true"-->
-<!--          class="net.pageseeder.xmltools.ox.step.CSVToXML">-->
-<!--      <parameter name="has-headers"         value="true"/>-->
-<!--      <parameter name="row-element-name"    value="item"/>-->
-<!--      <parameter name="delimiter"           value=","/>-->
-<!--      <parameter name="columns-as-attributes" value="true"/>-->
-<!--      <parameter name="output"              value="api-schedule-codes.xml"/>-->
-<!--    </step>-->
-
-<!--    <step id="make-schedule-codes-selectable"-->
-<!--          name="Make Schedule Codes selectable"-->
-<!--          viewable="false"-->
-<!--          class="org.pageseeder.ox.step.Transformation">-->
-<!--      <parameter name="xsl"    value="xslt/selectable-schedule-codes.xsl"/>-->
-<!--      <parameter name="input"  value="api-schedule-codes.xml"/>-->
-<!--      <parameter name="output" value="api-schedule-codes-selectable.xml"/>-->
-<!--    </step>-->
-<!--    <step id="read-xml"-->
-<!--          name="Read XML"-->
-<!--          viewable="false"-->
-<!--          class="net.pageseeder.xmltools.ox.step.ReadXML">-->
-<!--      <parameter name="input"  value="api-schedule-codes-selectable.xml"/>-->
-<!--    </step>-->
-<!--    <step id="get-items-table-from-api"-->
-<!--          name="Get items table from API"-->
-<!--          interaction="true"-->
-<!--          viewable="false"-->
-<!--          async="true"-->
-<!--          class="org.pageseeder.ox.step.GetURLContent">-->
-<!--      <component name="SelectItem"/>-->
-<!--      <parameter name="url"  value="https://aucapiapppbspilot.azurewebsites.net/ITEM?format=csv&amp;include_header=true&amp;download=true&amp;SCHEDULE_CODE={SCHEDULE_CODE}"/>-->
-<!--      <parameter name="output" value="items/new-pbs-api-item.csv"/>-->
-<!--      <parameter name="has-headers"         value="true"/>-->
-<!--      <parameter name="row-element-name"    value="item"/>-->
-<!--      <parameter name="delimiter"           value=","/>-->
-<!--      <parameter name="columns-as-attributes" value="true"/>-->
-<!--    </step>-->
-<!--  </pipeline>-->
-
-
-    <!-- Create supply-only input data for API V3 from a spreadsheet. -->
+<!-- Create supply-only input data for API V3 from a spreadsheet. -->
 <!--  <pipeline id="schematron" name="Schematron Test"-->
 <!--            description="Just test."-->
 <!--            accepts="application/xml"-->
@@ -224,6 +152,86 @@
 <!--    </step>-->
 <!--  </pipeline>-->
 
+
+  <pipeline id="create-item-table-summary-from-csv"
+            name="Create item table summary from CSV"
+            description="Create item table summary from CSV"
+            accepts="text/csv"
+            default="true">
+    <step id="convert-csv-item-table-to-xml"
+          name="Convert item table from CSV to XML"
+          interaction="false"
+          viewable="false"
+          async="true"
+          class="net.pageseeder.xmltools.ox.step.CSVToXML">
+      <parameter name="output"              value="items/xml/item-table.xml"/>
+      <parameter name="has-headers"         value="true"/>
+      <parameter name="row-element-name"    value="item"/>
+      <parameter name="delimiter"           value=","/>
+      <parameter name="columns-as-attributes" value="true"/>
+      <parameter name="add-xml-to-response"   value="false"/>
+    </step>
+    <step id="create-summary-from-xml-items-tables"
+          name="Create summary from XML items tables"
+          interaction="false"
+          viewable="false"
+          async="true"
+          class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"  value="items/xml/item-table.xml"/>
+      <parameter name="output" value="items/summary/items-tables-summary.xml"/>
+      <parameter name="display-result"  value="false"/>
+      <parameter name="xsl"    value="xslt/item-table-to-xml-summary.xsl"/>
+      <parameter name="_xslt-sheet-name-prefix-01"    value="individual"/>
+    </step>
+    <step id="summary-from-xml-to-xlsx" name="Creating XLSX from summary report in XML" class="net.pageseeder.xmltools.ox.step.XMLProcess">
+      <parameter name="input" value="items/summary/items-tables-summary.xml" />
+      <parameter name="output" value="items/summary/items-tables-summary.xlsx" />
+      <parameter name="options" value="-xex" />
+      <parameter name="is-xml-data" value="true" />
+      <parameter name="parameter-list" value="high-level-separated:true;create-info-sheet:false" />
+    </step>
+    <step id="zip-items-tables"
+          name="Zip items tables"
+          interaction="false"
+          viewable="false"
+          class="org.pageseeder.ox.step.Compression">
+      <parameter name="input" value="/items/" />
+      <parameter name="output" value="items.zip" />
+    </step>
+  </pipeline>
+
+  <pipeline id="generate-csv-item-table-from-xml-v3"
+            name="Generate CSV Item Table from XML V3"
+            description="Generate CSV Item Table from XML V3"
+            accepts="application/zip"
+            default="true">
+    <step id="unzip-xml-v3"
+          name="Unzipping XML V3"
+          interaction="false"
+          class="org.pageseeder.ox.step.Decompression">
+      <parameter name="output" value="xml-v3" />
+    </step>
+
+    <step id="generate-csv-items-table-from-xml-v3"
+          name="Generate CSV items table from XML v3"
+          interaction="false"
+          viewable="false"
+          async="true"
+          class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"  value="xml-v3"/>
+      <parameter name="display-result"  value="false"/>
+      <parameter name="xsl"    value="xslt/extract-item-table-from-xml-v3.xsl"/>
+      <parameter name="output" value="items/csv/xml-v3-item.csv"/>
+    </step>
+    <step id="zip-items-table"
+          name="Zip items table"
+          interaction="false"
+          viewable="false"
+          class="org.pageseeder.ox.step.Compression">
+      <parameter name="input" value="items/csv/xml-v3-item.csv" />
+      <parameter name="output" value="items.zip" />
+    </step>
+  </pipeline>
 </pipelines>
 
 

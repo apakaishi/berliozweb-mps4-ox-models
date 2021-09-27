@@ -11,17 +11,22 @@
   <xsl:output method="xml" encoding="UTF-8" indent="yes" />
 
   <xsl:param name="new-api-file-name"/>
+  <xsl:param name="sheet-name-prefix-01"/>
+  <xsl:param name="sheet-name-prefix-02"/>
 
   <xsl:template match="/csv">
     <report>
       <xsl:apply-templates select="." mode="summary">
-        <xsl:with-param name="prefix" select="'xml-v3'"/>
+        <xsl:with-param name="prefix" select="$sheet-name-prefix-01"/>
       </xsl:apply-templates>
-      <xsl:variable name="new-api-file-uri" select="resolve-uri($new-api-file-name, base-uri())"/>
-      <xsl:variable name="new-api-file" select="document($new-api-file-uri)"/>
-      <xsl:apply-templates select="$new-api-file/csv" mode="summary">
-        <xsl:with-param name="prefix" select="'new-api'"/>
-      </xsl:apply-templates>
+
+      <xsl:if test="$new-api-file-name">
+        <xsl:variable name="new-api-file-uri" select="resolve-uri($new-api-file-name, base-uri())"/>
+        <xsl:variable name="new-api-file" select="document($new-api-file-uri)"/>
+        <xsl:apply-templates select="$new-api-file/csv" mode="summary">
+          <xsl:with-param name="prefix" select="$sheet-name-prefix-02"/>
+        </xsl:apply-templates>
+      </xsl:if>
     </report>
   </xsl:template>
 
