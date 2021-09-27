@@ -10,26 +10,16 @@
   <xsl:output method="xml" encoding="UTF-8" indent="yes" />
 
   <xsl:template match="/">
-    <selectable-table>
+    <selectable-table item-key="SCHEDULE_CODE">
       <headers>
-        <header>
-          <value>SCHEDULE_CODE</value>
-          <text>Schedule Code</text>
-        </header>
-        <header>
-          <value>EFFECTIVE_DATE</value>
-          <text>Effective Date</text>
-        </header>
+        <header text="Schedule Code" value="SCHEDULE_CODE"/>
+        <header text="Effective Date" value="EFFECTIVE_DATE"/>
       </headers>
       <values>
-        <value>
-         <SCHEDULE_CODE>3013</SCHEDULE_CODE>
-         <EFFECTIVE_DATE>2021-07-01</EFFECTIVE_DATE>
-        </value>
-        <value>
-          <SCHEDULE_CODE>2992</SCHEDULE_CODE>
-          <EFFECTIVE_DATE>2021-06-01</EFFECTIVE_DATE>
-        </value>
+        <xsl:for-each select="csv/item">
+          <xsl:sort select="@EFFECTIVE_DATE" order="descending"/>
+          <value SCHEDULE_CODE="{@SCHEDULE_CODE}" EFFECTIVE_DATE="{@EFFECTIVE_DATE}"/>
+        </xsl:for-each>
       </values>
     </selectable-table>
   </xsl:template>
