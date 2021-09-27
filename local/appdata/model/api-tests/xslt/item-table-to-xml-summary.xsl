@@ -17,14 +17,8 @@
       <xsl:apply-templates select="." mode="summary">
         <xsl:with-param name="prefix" select="'xml-v3'"/>
       </xsl:apply-templates>
-<!--      <xsl:variable name="new-api-file-uri" select="resolve-uri($new-api-file-name)"/>-->
       <xsl:variable name="new-api-file-uri" select="resolve-uri($new-api-file-name, base-uri())"/>
-
-      <xsl:message>Base URI: <xsl:value-of select="base-uri()"/> </xsl:message>
-      <xsl:message>API Path: <xsl:value-of select="$new-api-file-uri"/> </xsl:message>
       <xsl:variable name="new-api-file" select="document($new-api-file-uri)"/>
-      <xsl:message>Has CSV: <xsl:value-of select="count($new-api-file/csv)"/> </xsl:message>
-      <xsl:message>Children: <xsl:value-of select="count($new-api-file/*)"/> </xsl:message>
       <xsl:apply-templates select="$new-api-file/csv" mode="summary">
         <xsl:with-param name="prefix" select="'new-api'"/>
       </xsl:apply-templates>
