@@ -10,7 +10,7 @@ ext {
   simpleVersion = '2021.09-02'
   oxVersion   = '2.2.70'
   docxVersion = '0.8.18'
-  xmlVersion  = '0.4.58'
+  xmlVersion  = '0.4.59'
   psnPDFVersion = '0.0.5'
   pdfBoxVersion = '2.0.21'
   apachePoiVersion = '3.15'
