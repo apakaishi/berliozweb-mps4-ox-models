@@ -32,19 +32,19 @@
   <sch:let name="step-2-closed-date-column"     value="'step 2 closed date'" />
   <sch:let name="step-2-see-url-column"       value="'step 2 see url'" />
 
-  <sch:pattern id="test">
-    <!--
-    -->
-    <sch:rule context="/">
-      <sch:assert test="root" flag="ALERT">
-        <sch:value-of select="'root does not exist'"/>
-      </sch:assert>
-      <sch:report test="root" flag="ALERT">
-        <sch:value-of select="'root exists'"/>
-      </sch:report>
-    </sch:rule>
+<!--  <sch:pattern id="test">-->
+<!--    &lt;!&ndash;-->
+<!--    &ndash;&gt;-->
+<!--    <sch:rule context="/">-->
+<!--      <sch:assert test="root" flag="ALERT">-->
+<!--        <sch:value-of select="'root does not exist'"/>-->
+<!--      </sch:assert>-->
+<!--      <sch:report test="root" flag="ALERT">-->
+<!--        <sch:value-of select="'root exists'"/>-->
+<!--      </sch:report>-->
+<!--    </sch:rule>-->
 
-  </sch:pattern>
+<!--  </sch:pattern>-->
 
   <sch:pattern id="has-columns">
     <!--
@@ -125,15 +125,15 @@
   <xsl:function name="af:column-exist" as="xs:boolean">
     <xsl:param name="row-element" as="element()"/>
     <xsl:param name="column-name" as="xs:string"/>
-    <xsl:message>Column Exist: <xsl:value-of select="$column-name"/></xsl:message>
-    <xsl:message>Result: <xsl:value-of select="count($row-element/*[af:same-characters(name(), $column-name)])=1"/></xsl:message>
+<!--    <xsl:message>Column Exist: <xsl:value-of select="$column-name"/></xsl:message>-->
+<!--    <xsl:message>Result: <xsl:value-of select="count($row-element/*[af:same-characters(name(), $column-name)])=1"/></xsl:message>-->
     <xsl:sequence select="count($row-element/*[af:same-characters(name(), $column-name)])=1"/>
   </xsl:function>
 
   <xsl:function name="af:same-characters" as="xs:boolean">
     <xsl:param name="value-01" as="xs:string"/>
     <xsl:param name="value-02" as="xs:string"/>
-    <xsl:message> Same characters <xsl:value-of select="$value-01"/> | <xsl:value-of select="$value-02"/></xsl:message>
+<!--    <xsl:message> Same characters <xsl:value-of select="$value-01"/> | <xsl:value-of select="$value-02"/></xsl:message>-->
     <xsl:sequence select="replace(lower-case($value-01), '[^a-z0-9]', '') = replace(lower-case($value-02), '[^a-z0-9]', '')"/>
   </xsl:function>
 </sch:schema>
