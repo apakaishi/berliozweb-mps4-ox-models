@@ -24,30 +24,28 @@
   <xsl:template match="col">
     <xsl:variable name="col-ref" select="@ref"/>
     <xsl:variable name="new-col-name" select="translate($header-cols[@ref=$col-ref]/text(), ' ', '_')"/>
-    <xsl:if test=".!= ''">
-      <xsl:choose>
-        <xsl:when test="contains($new-col-name,'-date') and contains(.,'-')">
-          <xsl:variable name="day" select="tokenize(.,'-')[last()]" />
-          <xsl:variable name="month" select="tokenize(.,'-')[2]" />
-          <xsl:variable name="year" select="tokenize(.,'-')[1]" />
-          <xsl:element name="{$new-col-name}">
-            <xsl:value-of select="concat($day,'/',$month,'/',$year)" />
-          </xsl:element>
-        </xsl:when>
-        <xsl:when test="contains($new-col-name,'Meeting_last_considered_at') and contains(.,'-')">
-          <xsl:variable name="month" select="substring(format-date(.,'[MNn]'),1,3)" />
-          <xsl:variable name="year" select="substring(tokenize(.,'-')[1],3)" />
-          <xsl:element name="{$new-col-name}">
-            <xsl:value-of select="concat($month,'-',$year)" />
-          </xsl:element>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:element name="{$new-col-name}">
-            <xsl:apply-templates />
-          </xsl:element>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="contains($new-col-name,'-date') and contains(.,'-')">
+        <xsl:variable name="day" select="tokenize(.,'-')[last()]" />
+        <xsl:variable name="month" select="tokenize(.,'-')[2]" />
+        <xsl:variable name="year" select="tokenize(.,'-')[1]" />
+        <xsl:element name="{$new-col-name}">
+          <xsl:value-of select="concat($day,'/',$month,'/',$year)" />
+        </xsl:element>
+      </xsl:when>
+      <xsl:when test="contains($new-col-name,'Meeting_last_considered_at') and contains(.,'-')">
+        <xsl:variable name="month" select="substring(format-date(.,'[MNn]'),1,3)" />
+        <xsl:variable name="year" select="substring(tokenize(.,'-')[1],3)" />
+        <xsl:element name="{$new-col-name}">
+          <xsl:value-of select="concat($month,'-',$year)" />
+        </xsl:element>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:element name="{$new-col-name}">
+          <xsl:apply-templates />
+        </xsl:element>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="@*|node()">

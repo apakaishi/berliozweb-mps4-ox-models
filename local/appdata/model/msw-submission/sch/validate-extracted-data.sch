@@ -24,8 +24,7 @@
   <sch:let name="submission-type-column"         value="'submission type'" />
   <sch:let name="comment-column"     value="'comment'" />
   <sch:let name="resubmission-column"     value="'resubmission'" />
-  <sch:let name="meeting-last-considered-at-column"        value="'Meeting last considered at'" />
-  <sch:let name="related-medicine-column"   value="'related medicine'" />
+  <sch:let name="related-medicine-column"   value="'related medicines'" />
   <sch:let name="status-column" value="'status'" />
   <sch:let name="step-1-status-column"   value="'step 1 status'" />
   <sch:let name="step-2-status-column"          value="'step 2 status'" />
@@ -33,13 +32,26 @@
   <sch:let name="step-2-closed-date-column"     value="'step 2 closed date'" />
   <sch:let name="step-2-see-url-column"       value="'step 2 see url'" />
 
+  <sch:pattern id="test">
+    <!--
+    -->
+    <sch:rule context="/">
+      <sch:assert test="root" flag="ALERT">
+        <sch:value-of select="'root does not exist'"/>
+      </sch:assert>
+      <sch:report test="root" flag="ALERT">
+        <sch:value-of select="'root exists'"/>
+      </sch:report>
+    </sch:rule>
+
+  </sch:pattern>
+
   <sch:pattern id="has-columns">
     <!--
     -->
-    <sch:rule context="workbook/worksheet/*[not(position()= (1, last()))]">
+    <sch:rule context="root/*[not(position()= (1, last()))]">
       <sch:let name="row-number"   value="position()" />
       <sch:let name="case-id" value="*[af:same-characters(name(), $case-id-column)]"/>
-
       <sch:assert test="$case-id" flag="ALERT">
         <sch:value-of select="af:message-column-not-found($row-number, $case-id-column, $case-id)"/>
       </sch:assert>
@@ -73,20 +85,8 @@
       <sch:assert test="af:column-exist(., $resubmission-column)" flag="ALERT">
         <sch:value-of select="af:message-column-not-found($row-number, $resubmission-column, $case-id)"/>
       </sch:assert>
-
-      <sch:let name="meeting-last-considered" value="*[af:same-characters(name(), $meeting-last-considered-at-column)]"/>
-      <sch:assert test="$meeting-last-considered" flag="ALERT">
-        <sch:value-of select="af:message-column-not-found($row-number, $meeting-last-considered-at-column, $case-id)"/>
-      </sch:assert>
-      <sch:assert test="matches($meeting-last-considered/text(), '^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$')" flag="WARNING">
-        Date may have month before day <sch:value-of select="$meeting-last-considered"/> at row <sch:value-of select="position()"/>
-      </sch:assert>
-
       <sch:assert test="af:column-exist(., $related-medicine-column)" flag="ALERT">
         <sch:value-of select="af:message-column-not-found($row-number, $related-medicine-column, $case-id)"/>
-      </sch:assert>
-      <sch:assert test="af:column-exist(., $status-column)" flag="ALERT">
-        <sch:value-of select="af:message-column-not-found($row-number, $status-column, $case-id)"/>
       </sch:assert>
       <sch:assert test="af:column-exist(., $step-1-status-column)" flag="ALERT">
         <sch:value-of select="af:message-column-not-found($row-number, $step-1-status-column, $case-id)"/>
@@ -99,16 +99,16 @@
       <sch:assert test="$step-2-open-date" flag="ALERT">
         <sch:value-of select="af:message-column-not-found($row-number, $step-2-open-date-column, $case-id)"/>
       </sch:assert>
-      <sch:assert test="matches($step-2-open-date/text(), '^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$')" flag="WARNING">
-        Date may have month before day <sch:value-of select="$step-2-open-date"/> at row <sch:value-of select="position()"/>
+      <sch:assert test="matches($step-2-open-date/text(), '^[0-9]{1,2}/[0-9]{1,2}/[0-9]{4}$')" flag="WARNING">
+        Date format should be DD/MM/YYYY <sch:value-of select="$step-2-open-date"/> at row <sch:value-of select="position()"/>
       </sch:assert>
 
       <sch:let name="step-2-closed-date" value="*[af:same-characters(name(), $step-2-closed-date-column)]"/>
       <sch:assert test="$step-2-closed-date" flag="ALERT">
         <sch:value-of select="af:message-column-not-found($row-number, $step-2-closed-date-column, $case-id)"/>
       </sch:assert>
-      <sch:assert test="matches($step-2-closed-date/text(), '^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$')" flag="WARNING">
-        Date may have month before day <sch:value-of select="$step-2-closed-date"/> at row <sch:value-of select="position()"/>
+      <sch:assert test="matches($step-2-closed-date/text(), '^[0-9]{1,2}/[0-9]{1,2}/[0-9]{4}$')" flag="WARNING">
+        Date format should be DD/MM/YYYY <sch:value-of select="$step-2-closed-date"/> at row <sch:value-of select="position()"/>
       </sch:assert>
 
     </sch:rule>
@@ -125,13 +125,15 @@
   <xsl:function name="af:column-exist" as="xs:boolean">
     <xsl:param name="row-element" as="element()"/>
     <xsl:param name="column-name" as="xs:string"/>
+    <xsl:message>Column Exist: <xsl:value-of select="$column-name"/></xsl:message>
+    <xsl:message>Result: <xsl:value-of select="count($row-element/*[af:same-characters(name(), $column-name)])=1"/></xsl:message>
     <xsl:sequence select="count($row-element/*[af:same-characters(name(), $column-name)])=1"/>
   </xsl:function>
 
   <xsl:function name="af:same-characters" as="xs:boolean">
     <xsl:param name="value-01" as="xs:string"/>
     <xsl:param name="value-02" as="xs:string"/>
-    <!--    <xsl:message> Same characters <xsl:value-of select="$value-01"/> | <xsl:value-of select="$value-02"/></xsl:message>-->
-    <xsl:sequence select="replace(lower-case($value-01), '[^a-z]', '') = replace(lower-case($value-02), '[^a-z]', '')"/>
+    <xsl:message> Same characters <xsl:value-of select="$value-01"/> | <xsl:value-of select="$value-02"/></xsl:message>
+    <xsl:sequence select="replace(lower-case($value-01), '[^a-z0-9]', '') = replace(lower-case($value-02), '[^a-z0-9]', '')"/>
   </xsl:function>
 </sch:schema>
