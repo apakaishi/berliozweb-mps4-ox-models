@@ -73,8 +73,6 @@
 
 				   <property name="comment" title="Comment" value="{comment}" datatype="string" />
 				   <!--Property review in Template-->
-				   <!--<property name="related-medicines" title="Related Medicines" count="n" datatype="xref"/>-->
-				   <!--<property name="related-medicines" title="Related Medicines" value="{Related-medicines}" datatype="xref" multiple="true"/>-->
 				   <property name="related-medicines" title="Related Medicines" datatype="xref" multiple="true">
 					 <xsl:if test="related-medicines != ''">
 					   <xsl:for-each select="tokenize(related-medicines, ',')">
@@ -87,8 +85,7 @@
 						</xsl:for-each>
 					  </xsl:if>
 				   </property>
-				   <!--<property name="public-summary-document" title="Public summary document" value="{PublicSummaryDocument}" datatype="xref"/>-->
-				   <property name="public-summary-document" title="Public summary document" datatype="xref"/>
+				   <property name="public-summary-document" title="Public summary document" datatype="link"/>
 		       </properties-fragment>
 			   <properties-fragment id="steps">
 				   <xsl:variable name="step1-label" select="'Submission received for'" />
@@ -101,9 +98,9 @@
 				   <property name="step-2-status" title="Step 2 - status" value="{if(step-2-status) then step-2-status else 'pending'}" datatype="string" />
 				   <property name="step-2-open-date" title="Step 2 - Open Date" value="{fn:format-yyyy-mm-dd(step-2-open-date/text())}" datatype="date" />
 				   <property name="step-2-closed-date" title="Step 2 - Closed Date" value="{fn:format-yyyy-mm-dd(step-2-closed-date/text())}" datatype="date"/>
-				   <property name="step-2-see-url" title="Step 2 - See URL" datatype="xref">
+				   <property name="step-2-see-url" title="Step 2 - See URL" datatype="link">
 				     <xsl:if test="step-2-see-url/text()">
-						<xref uriid="{step-2-see-url/text()}" frag="default"/>
+						<link uriid="{step-2-see-url/text()}"/>
 					 </xsl:if>
 				   </property>
 				   <property name="step-3-label" title="Step 3 - label" value="PBAC meeting" datatype="string" />
@@ -112,7 +109,7 @@
 				   <property name="step-4-status" title="Step 4 - status" value="{if(step-4-status) then step-4-status else 'pending'}" datatype="string" />
 				   <property name="step-4-notice-pricing-received-date" title="Step 4 - Notice of intent for pricing received:" value="{fn:verify-data-for-format-date(step-4-notice-pricing-received-date/text())}" datatype="date" />
 				   <property name="step-4-notice-pricing-exception-applied"      title="Step 4 - Notice of intent - Exception applied"  value="false"      datatype="string"/>
-				   <property name="step-4-see-url" title="Step 4 - See URL" datatype="xref"/>
+				   <property name="step-4-see-url" title="Step 4 - See URL" datatype="link"/>
 				   <property name="step-5-label" title="Step 5 - label" value="Lodgement of required documentation" datatype="string" />
 				   <property name="step-5-status" title="Step 5 - status" value="{if(step-5-status) then step-5-status else 'pending'}" datatype="string" />
 				   <property name="step-5-pricing-offer-package-received" title="Step 5 - Applicant’s pricing offer package received" value="{$step-5-pricing-offer-package-received}" datatype="date" />
@@ -126,7 +123,7 @@
 				   <property name="step-7-commence-date" title="Step 7 - Commence Date" value="{fn:verify-data-for-format-date(step-7-commence-date/text())}" datatype="date"/>
 				   <property name="step-8-label" title="Step 8 - label" value="Medicine listed on the PBS" datatype="string" />
 				   <property name="step-8-status" title="Step 8 - status" value="{if(step-8-status) then step-8-status else 'pending'}" datatype="string"/>
-				   <property name="step-8-see-url" title="Step 8 - See URL" datatype="xref"/>
+				   <property name="step-8-see-url" title="Step 8 - See URL" datatype="link"/>
 			   </properties-fragment>
 			   <properties-fragment id="not-proceeding">
 				    <property name="not-proceeding" title="Not Proceeding" value="false" datatype="string" />
@@ -168,8 +165,8 @@
 			</section>
 		    <section id="template-version" lockstructure="true" edit="false">
 		  	   <properties-fragment id="template-version">
-					 <property datatype="string" name="template-version" title="Template Version" value=".9.15" />
-					 <property datatype="string" name="template-date" title="Last updated" value="2021-09-21" />
+					 <property datatype="string" name="template-version" title="Template Version" value=".9.16" />
+					 <property datatype="string" name="template-date" title="Last updated" value="2021-10-25" />
 			   </properties-fragment>
 			</section>
 		 </document>
