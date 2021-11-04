@@ -22,7 +22,7 @@
       <parameter name="xsl"                       value="bus/bus-submission_v2.xsl"/>
       <parameter name="output"                    value="files/document.xml"/>
     </step>
-    <step id="Zip-full-package" name="Zipping PSML document with images folder." class="org.pageseeder.ox.step.Compression">
+    <step id="zip-full-package" name="Zipping PSML document with images folder." class="org.pageseeder.ox.step.Compression">
       <parameter name="input" value="bus-documents" />
       <parameter name="output" value="mps4-submission.zip"/>
     </step>

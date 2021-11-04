@@ -66,6 +66,7 @@ dependencies {
       "org.pageseeder.ox:pso-ox-berlioz:${oxVersion}",
       "org.pageseeder.ox:pso-ox-core:${oxVersion}",
       "org.pageseeder.ox:pso-ox-pageseeder:${oxVersion}",
+      "org.pageseeder.ox:pso-ox-schematron:${oxVersion}",
       "org.pageseeder.ox:pso-ox-test:${oxVersion}",
       'org.pageseeder.xmlwriter:pso-xmlwriter:1.0.2',
 
