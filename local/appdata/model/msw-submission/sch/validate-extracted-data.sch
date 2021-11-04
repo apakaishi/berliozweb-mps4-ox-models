@@ -49,7 +49,7 @@
   <sch:pattern id="has-columns">
     <!--
     -->
-    <sch:rule context="root/*[not(position()= (1, last()))]">
+    <sch:rule context="root/*[not(position()= (0, last()))]">
       <sch:let name="row-number"   value="position()" />
       <sch:let name="case-id" value="*[af:same-characters(name(), $case-id-column)]"/>
       <sch:assert test="$case-id" flag="ALERT">
