@@ -29,7 +29,7 @@
                 <xsl:variable name="moa-ref" select="descendant::pbs:administration/pbs:moa-value" />
                 <xsl:variable name="root" select="ancestor::pbs:root" />
                 <xsl:variable name="moa" select="$root/descendant::skos:Concept[@rdf:about = $moa-ref]/skos:definition" />
-                <xsl:variable name="prescribers">
+                <xsl:variable name="member-of">
                     <xsl:for-each select="pbs:member-of-list/pbs:member-of">
                         <xsl:variable name="ref" select="substring-after(@xlink:href,'#')" />
                         <xsl:variable name="group-name" select="$root/descendant::pbs:group[@xml:id = $ref]/pbs:name" />
@@ -37,7 +37,7 @@
                     </xsl:for-each>
                 </xsl:variable>
                 <xsl:variable name="prescribers-text">
-                    <xsl:for-each select="tokenize($prescribers,',')">
+                    <xsl:for-each select="tokenize($member-of,',')">
                         <xsl:variable name="type-prescribers" select="if(.='http://schema.pbs.gov.au/Group#medical') then 'M'
                                             else if(.='http://schema.pbs.gov.au/Group#dental') then 'D'
                                             else if(.='http://schema.pbs.gov.au/Group#nurse') then 'N'
@@ -46,6 +46,17 @@
                         <xsl:choose>
                             <xsl:when test="$type-prescribers != ''">
                                 <xsl:value-of select="concat($type-prescribers,',')" />
+                            </xsl:when>
+                            <xsl:otherwise></xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:for-each>
+                </xsl:variable>
+                <xsl:variable name="brand-substitution">
+                    <xsl:for-each select="tokenize($member-of,',')">
+                        <xsl:variable name="brand-s" select="if(starts-with(normalize-space(.),'GRP-')) then substring-after(normalize-space(.),'GRP-') else ''" />
+                        <xsl:choose>
+                            <xsl:when test="$brand-s != ''">
+                                <xsl:value-of select="concat($brand-s,',')" />
                             </xsl:when>
                             <xsl:otherwise></xsl:otherwise>
                         </xsl:choose>
@@ -89,6 +100,7 @@
                             <NUMBER_OF_REPEATS><xsl:value-of select="$num-repeat" /></NUMBER_OF_REPEATS>
                             <BENEFIT_TYPE_CODE><xsl:value-of select="$benefit-type" /></BENEFIT_TYPE_CODE>
                             <PACK_SIZE><xsl:value-of select="$pack-size" /></PACK_SIZE>
+                            <BRAND_SUBSTITUTION><xsl:value-of select="$brand-substitution" /></BRAND_SUBSTITUTION>
                         </item>
                     </xsl:for-each>
                 </xsl:for-each>
@@ -128,6 +140,7 @@
                                 <NUMBER_OF_REPEATS><xsl:value-of select="NUMBER_OF_REPEATS" /></NUMBER_OF_REPEATS>
                                 <BENEFIT_TYPE_CODE><xsl:value-of select="BENEFIT_TYPE_CODE" /></BENEFIT_TYPE_CODE>
                                 <PACK_SIZE><xsl:value-of select="PACK_SIZE" /></PACK_SIZE>
+                                <BRAND_SUBSTITUTION><xsl:value-of select="BRAND_SUBSTITUTION" /></BRAND_SUBSTITUTION>
                              </item>
                        </xsl:for-each-group>
                     </xsl:for-each-group>
