@@ -143,13 +143,20 @@
                     <xsl:variable name="grouping_4_item" select="$s100/grouping/drug[@value=$drug]/form[@value=$form]/item[@code=$item]/@distinct-program-code" />
 
                     <!-- S100 rules -->
-                    <xsl:variable name="S100" select="if(mps:is-HSD-drug($grouping_4_drug)= true()) then 'D(100)' (:Rule D1:)
-                                            else if(mps:is-EFC-drug($grouping_4_drug)= true()) then 'D(100)' (:Rule D2:)
-                                            else if(mps:is-Growth-Hormone-drug($grouping_4_drug)= true()) then 'D(100)' (:Rule D3:)
-                                            else if(mps:is-IVF-drug($grouping_4_drug)= true()) then 'D(100)' (:Rule D4:)
-                                            else if(mps:is-Botulinium-Toxin-drug($grouping_4_drug)= true()) then 'D(100)' (:Rule D5:)
-                                            else if(mps:is-Opiate-Dependence-drug($grouping_4_drug)= true()) then 'D(100)' (:Rule D6:)
-                                            else if(mps:is-ParaQuad-drug($grouping_4_drug)= true()) then 'D(100)' (:Rule D7:)
+                    <xsl:variable name="S100" select="if(mps:is-HSD-code($grouping_4_drug)= true()) then 'D(100)' (:Rule D1:)
+                                            else if(mps:is-EFC-code($grouping_4_drug)= true()) then 'D(100)' (:Rule D2:)
+                                            else if(mps:is-Growth-Hormone-code($grouping_4_drug)= true()) then 'D(100)' (:Rule D3:)
+                                            else if(mps:is-IVF-code($grouping_4_drug)= true()) then 'D(100)' (:Rule D4:)
+                                            else if(mps:is-Botulinium-Toxin-code($grouping_4_drug)= true()) then 'D(100)' (:Rule D5:)
+                                            else if(mps:is-Opiate-Dependence-code($grouping_4_drug)= true()) then 'D(100)' (:Rule D6:)
+                                            else if(mps:is-ParaQuad-code($grouping_4_drug)= true()) then 'D(100)' (:Rule D7:)
+                                            else if(mps:is-HSD-code($grouping_4_drug)= false() and mps:is-HSD-code($grouping_4_form)= true()) then 'PB(100)' (:Rule PB1:)
+                                            else if(mps:is-EFC-code($grouping_4_drug)= false() and mps:is-EFC-code($grouping_4_form)= true()) then 'PB(100)' (:Rule PB2:)
+                                            else if(mps:is-Growth-Hormone-code($grouping_4_drug)= false() and mps:is-Growth-Hormone-code($grouping_4_form)= true()) then 'PB(100)' (:Rule PB3:)
+                                            else if(mps:is-IVF-code($grouping_4_drug)= false() and mps:is-IVF-code($grouping_4_form)= true()) then 'PB(100)' (:Rule PB4:)
+                                            else if(mps:is-Botulinium-Toxin-code($grouping_4_drug)= false() and mps:is-Botulinium-Toxin-code($grouping_4_form)= true()) then 'PB(100)' (:Rule PB5:)
+                                            else if(mps:is-Opiate-Dependence-code($grouping_4_drug)= false() and mps:is-Opiate-Dependence-code($grouping_4_form)= true()) then 'PB(100)' (:Rule PB6:)
+                                            else if(mps:is-ParaQuad-code($grouping_4_drug)= false() and mps:is-ParaQuad-code($grouping_4_form)= true()) then 'PB(100)' (:Rule PB7:)
                                             else ''" />
 
                     <xsl:element name="S100"><xsl:value-of select="$S100" /></xsl:element>
