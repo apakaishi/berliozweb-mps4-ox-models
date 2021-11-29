@@ -166,11 +166,22 @@
                                             else if(mps:is-Opiate-Dependence-code($grouping_4_drug)= false() and mps:is-Opiate-Dependence-code($grouping_4_form)= false() and mps:is-dual-list-s100-with($grouping_4_form, 'GE')= true() and mps:is-Opiate-Dependence-code($grouping_4_item)= true()) then 'C(100)' (:Rule C6:)
                                             else if(mps:is-ParaQuad-code($grouping_4_drug)= false() and mps:is-ParaQuad-code($grouping_4_form)= false() and mps:is-dual-list-s100-with($grouping_4_form, 'GE')= true() and mps:is-ParaQuad-code($grouping_4_item)= true()) then 'C(100)' (:Rule C7:)
                                             else if(mps:is-db-only($grouping_4_drug)= true()) then concat('D(',$prescriber,')') (:Rule PresBagD1:)
+                                            else if(mps:is-db-only($grouping_4_drug)= false() and mps:is-db-only($grouping_4_form)= true()) then concat('PB(',$prescriber,')') (:Rule PresBagPB1:)
+                                            else if(mps:is-db-only($grouping_4_drug)= false() and mps:is-db-only($grouping_4_form)= true() and mps:is-dual-list-s100-with($grouping_4_form, 'GE')= true() and mps:is-db-only($grouping_4_item)= true()) then concat('C(',$prescriber,')') (:Rule PresBagC1:)
                                             else ''" />
 
-                    <RESTRICTIONS><xsl:value-of select="if(mps:is-db-only($grouping_4_drug)= true()) then concat('See Note 4 [',RESTRICTIONS/text(),']') else RESTRICTIONS/text()"/></RESTRICTIONS>
-                    <MAX_PRESCRIBABLE_UNIT_OF_USE><xsl:value-of select="if(mps:is-db-only($grouping_4_drug)= true()) then concat('See Note 4 [',MAX_PRESCRIBABLE_UNIT_OF_USE/text(),']') else MAX_PRESCRIBABLE_UNIT_OF_USE/text()"/></MAX_PRESCRIBABLE_UNIT_OF_USE>
-                    <NUMBER_OF_REPEATS><xsl:value-of select="if(mps:is-db-only($grouping_4_drug)= true()) then concat('See Note 4 [',NUMBER_OF_REPEATS/text(),']') else NUMBER_OF_REPEATS/text()"/></NUMBER_OF_REPEATS>
+                    <RESTRICTIONS><xsl:value-of select="if(mps:is-db-only($grouping_4_drug)= true() or
+                                (mps:is-db-only($grouping_4_drug)= false() and mps:is-db-only($grouping_4_form))= true() or
+                                (mps:is-db-only($grouping_4_drug)= false() and mps:is-db-only($grouping_4_form)= true() and mps:is-dual-list-s100-with($grouping_4_form, 'GE')= true() and mps:is-db-only($grouping_4_item)= true()))
+                                    then concat('See Note 4 [',RESTRICTIONS/text(),']') else RESTRICTIONS/text()"/></RESTRICTIONS>
+                    <MAX_PRESCRIBABLE_UNIT_OF_USE><xsl:value-of select="if(mps:is-db-only($grouping_4_drug)= true() or
+                                (mps:is-db-only($grouping_4_drug)= false() and mps:is-db-only($grouping_4_form))= true() or
+                                (mps:is-db-only($grouping_4_drug)= false() and mps:is-db-only($grouping_4_form)= true() and mps:is-dual-list-s100-with($grouping_4_form, 'GE')= true() and mps:is-db-only($grouping_4_item)= true()))
+                                    then concat('See Note 4 [',MAX_PRESCRIBABLE_UNIT_OF_USE/text(),']') else MAX_PRESCRIBABLE_UNIT_OF_USE/text()"/></MAX_PRESCRIBABLE_UNIT_OF_USE>
+                    <NUMBER_OF_REPEATS><xsl:value-of select="if(mps:is-db-only($grouping_4_drug)= true() or
+                                (mps:is-db-only($grouping_4_drug)= false() and mps:is-db-only($grouping_4_form))= true() or
+                                (mps:is-db-only($grouping_4_drug)= false() and mps:is-db-only($grouping_4_form)= true() and mps:is-dual-list-s100-with($grouping_4_form, 'GE')= true() and mps:is-db-only($grouping_4_item)= true()))
+                                    then concat('See Note 4 [',NUMBER_OF_REPEATS/text(),']') else NUMBER_OF_REPEATS/text()"/></NUMBER_OF_REPEATS>
                     <xsl:element name="S100"><xsl:value-of select="$S100" /></xsl:element>
                 </item>
             </xsl:for-each>
