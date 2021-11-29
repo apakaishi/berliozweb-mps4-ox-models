@@ -321,5 +321,32 @@
         </xsl:choose>
     </xsl:function>
 
+    <xsl:function name="mps:has-s100" as="xs:boolean">
+        <xsl:param name="dts" />
+
+        <xsl:variable name="drugtypes" select="upper-case(string-join( distinct-values($dts), ' '))"/>
+
+        <xsl:choose>
+            <xsl:when test="contains($drugtypes , 'HB' ) or
+                    contains($drugtypes , 'HS' ) or
+                    contains($drugtypes , 'CA' ) or
+                    contains($drugtypes , 'GH' ) or
+                    contains($drugtypes , 'IF' ) or
+                    contains($drugtypes , 'MD' ) or
+                    contains($drugtypes , 'MF' ) or
+                    contains($drugtypes , 'CT' ) or
+                    contains($drugtypes , 'IP' ) or
+                    contains($drugtypes , 'IN' ) or
+                    contains($drugtypes , 'TY' ) or
+                    contains($drugtypes , 'TZ' )
+                    ">
+                <xsl:value-of select="true()" />
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="false()" />
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+
 
 </xsl:stylesheet>
