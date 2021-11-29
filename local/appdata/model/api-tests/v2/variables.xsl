@@ -265,4 +265,61 @@
         </xsl:choose>
     </xsl:function>
 
+    <!-- check whether is dual listing -->
+    <xsl:function name="mps:is-dual-list-s100-with" as="xs:boolean">
+        <xsl:param name="dts" />
+        <xsl:param name="dt" />
+
+        <xsl:variable name="drugtypes" select="upper-case(string-join( distinct-values($dts), ' '))"/>
+
+        <xsl:choose>
+            <xsl:when test="mps:is-s100-only($dts)">
+                <xsl:value-of select="true()"/>
+            </xsl:when>
+            <xsl:when test="contains($drugtypes, upper-case($dt)) and mps:has-s100($dts)">
+                <xsl:value-of select="true()"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="false()"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+
+    <!-- check whether is session 100 -->
+    <xsl:function name="mps:is-s100-only" as="xs:boolean">
+        <xsl:param name="dts" />
+
+        <xsl:variable name="drugtypes" select="upper-case(string-join( distinct-values($dts), ' '))"/>
+
+        <xsl:choose>
+            <xsl:when test="(
+                      contains($drugtypes , 'HB' ) or
+	                  contains($drugtypes , 'HS' ) or
+                      contains($drugtypes , 'CA' ) or
+	                  contains($drugtypes , 'GH' ) or
+	                  contains($drugtypes , 'IF' ) or
+	                  contains($drugtypes , 'MD' ) or
+	                  contains($drugtypes , 'MF' ) or
+                      contains($drugtypes , 'CT' ) or
+	                  contains($drugtypes , 'IP' ) or
+	                  contains($drugtypes , 'IN' ) or
+	                  contains($drugtypes , 'TY' ) or
+	                  contains($drugtypes , 'TZ' ) or
+                      contains($drugtypes , 'PQ' )
+                    )
+                    and not(
+                      contains($drugtypes , 'DB' ) or
+	                  contains($drugtypes , 'GE' ) or
+	                  contains($drugtypes , 'PL' ) or
+	                  contains($drugtypes , 'R1' )
+                    )">
+                <xsl:value-of select="true()" />
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="false()" />
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+
+
 </xsl:stylesheet>
