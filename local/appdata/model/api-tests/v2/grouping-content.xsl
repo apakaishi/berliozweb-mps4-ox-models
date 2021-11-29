@@ -157,6 +157,13 @@
                                             else if(mps:is-Botulinium-Toxin-code($grouping_4_drug)= false() and mps:is-Botulinium-Toxin-code($grouping_4_form)= true()) then 'PB(100)' (:Rule PB5:)
                                             else if(mps:is-Opiate-Dependence-code($grouping_4_drug)= false() and mps:is-Opiate-Dependence-code($grouping_4_form)= true()) then 'PB(100)' (:Rule PB6:)
                                             else if(mps:is-ParaQuad-code($grouping_4_drug)= false() and mps:is-ParaQuad-code($grouping_4_form)= true()) then 'PB(100)' (:Rule PB7:)
+                                            else if(mps:is-HSD-code($grouping_4_drug)= false() and mps:is-HSD-code($grouping_4_form)= false() and mps:is-dual-list-s100-with($grouping_4_form, 'GE')= true() and mps:is-HSD-code($grouping_4_item)= true()) then 'C(100)' (:Rule C1:)
+                                            else if(mps:is-EFC-code($grouping_4_drug)= false() and mps:is-EFC-code($grouping_4_form)= false() and mps:is-dual-list-s100-with($grouping_4_form, 'GE')= true() and mps:is-EFC-code($grouping_4_item)= true()) then 'C(100)' (:Rule C2:)
+                                            else if(mps:is-Growth-Hormone-code($grouping_4_drug)= false() and mps:is-Growth-Hormone-code($grouping_4_form)= false() and mps:is-dual-list-s100-with($grouping_4_form, 'GE')= true() and mps:is-Growth-Hormone-code($grouping_4_item)= true()) then 'C(100)' (:Rule C3:)
+                                            else if(mps:is-IVF-code($grouping_4_drug)= false() and mps:is-IVF-code($grouping_4_form)= false() and mps:is-dual-list-s100-with($grouping_4_form, 'GE')= true() and mps:is-IVF-code($grouping_4_item)= true()) then 'C(100)' (:Rule C4:)
+                                            else if(mps:is-Botulinium-Toxin-code($grouping_4_drug)= false() and mps:is-Botulinium-Toxin-code($grouping_4_form)= false() and mps:is-dual-list-s100-with($grouping_4_form, 'GE')= true() and mps:is-Botulinium-Toxin-code($grouping_4_item)= true()) then 'C(100)' (:Rule C5:)
+                                            else if(mps:is-Opiate-Dependence-code($grouping_4_drug)= false() and mps:is-Opiate-Dependence-code($grouping_4_form)= false() and mps:is-dual-list-s100-with($grouping_4_form, 'GE')= true() and mps:is-Opiate-Dependence-code($grouping_4_item)= true()) then 'C(100)' (:Rule C6:)
+                                            else if(mps:is-ParaQuad-code($grouping_4_drug)= false() and mps:is-ParaQuad-code($grouping_4_form)= false() and mps:is-dual-list-s100-with($grouping_4_form, 'GE')= true() and mps:is-ParaQuad-code($grouping_4_item)= true()) then 'C(100)' (:Rule C7:)
                                             else ''" />
 
                     <xsl:element name="S100"><xsl:value-of select="$S100" /></xsl:element>
@@ -164,6 +171,9 @@
             </xsl:for-each>
         </data>
     </xsl:variable>
+
+    <!--    <xsl:attribute name="is-dual-listing-s100-with-ge" select="mps:is-dual-list-s100-with($drugtypecodes/drugtypecodes, 'GE')" />
+-->
 
     <xsl:template match="/">
         <main>
