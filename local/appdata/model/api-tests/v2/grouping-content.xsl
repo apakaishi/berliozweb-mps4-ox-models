@@ -135,12 +135,13 @@
                 <xsl:variable name="item" select="PBS_CODE/text()" />
 
                 <item>
-                    <xsl:copy-of select="*" />
+                    <xsl:copy-of select="*[not(name()='RESTRICTIONS' or name()='MAX_PRESCRIBABLE_UNIT_OF_USE' or name()='NUMBER_OF_REPEATS')]" />
 
                     <!-- S100 grouping rules -->
                     <xsl:variable name="grouping_4_drug" select="$s100/grouping/drug[@value=$drug]/@distinct-program-code" />
                     <xsl:variable name="grouping_4_form" select="$s100/grouping/drug[@value=$drug]/form[@value=$form]/@distinct-program-code" />
                     <xsl:variable name="grouping_4_item" select="$s100/grouping/drug[@value=$drug]/form[@value=$form]/item[@code=$item]/@distinct-program-code" />
+                    <xsl:variable name="prescriber" select="concat(PRESCRIBER/text(),'P')" />
 
                     <!-- S100 rules -->
                     <xsl:variable name="S100" select="if(mps:is-HSD-code($grouping_4_drug)= true()) then 'D(100)' (:Rule D1:)
@@ -164,8 +165,12 @@
                                             else if(mps:is-Botulinium-Toxin-code($grouping_4_drug)= false() and mps:is-Botulinium-Toxin-code($grouping_4_form)= false() and mps:is-dual-list-s100-with($grouping_4_form, 'GE')= true() and mps:is-Botulinium-Toxin-code($grouping_4_item)= true()) then 'C(100)' (:Rule C5:)
                                             else if(mps:is-Opiate-Dependence-code($grouping_4_drug)= false() and mps:is-Opiate-Dependence-code($grouping_4_form)= false() and mps:is-dual-list-s100-with($grouping_4_form, 'GE')= true() and mps:is-Opiate-Dependence-code($grouping_4_item)= true()) then 'C(100)' (:Rule C6:)
                                             else if(mps:is-ParaQuad-code($grouping_4_drug)= false() and mps:is-ParaQuad-code($grouping_4_form)= false() and mps:is-dual-list-s100-with($grouping_4_form, 'GE')= true() and mps:is-ParaQuad-code($grouping_4_item)= true()) then 'C(100)' (:Rule C7:)
+                                            else if(mps:is-db-only($grouping_4_drug)= true()) then concat('D(',$prescriber,')') (:Rule PresBagD1:)
                                             else ''" />
 
+                    <RESTRICTIONS><xsl:value-of select="if(mps:is-db-only($grouping_4_drug)= true()) then concat('See Note 4 [',RESTRICTIONS/text(),']') else RESTRICTIONS/text()"/></RESTRICTIONS>
+                    <MAX_PRESCRIBABLE_UNIT_OF_USE><xsl:value-of select="if(mps:is-db-only($grouping_4_drug)= true()) then concat('See Note 4 [',MAX_PRESCRIBABLE_UNIT_OF_USE/text(),']') else MAX_PRESCRIBABLE_UNIT_OF_USE/text()"/></MAX_PRESCRIBABLE_UNIT_OF_USE>
+                    <NUMBER_OF_REPEATS><xsl:value-of select="if(mps:is-db-only($grouping_4_drug)= true()) then concat('See Note 4 [',NUMBER_OF_REPEATS/text(),']') else NUMBER_OF_REPEATS/text()"/></NUMBER_OF_REPEATS>
                     <xsl:element name="S100"><xsl:value-of select="$S100" /></xsl:element>
                 </item>
             </xsl:for-each>
