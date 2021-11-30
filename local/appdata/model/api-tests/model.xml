@@ -238,15 +238,15 @@
             description="Conversion v2 to API model"
             accepts="xml"
             default="true">
-<!--
+
     <step id="process-v2-xml"
           name="Extracting content from v2 XML"
           viewable="false"
           async="true"
           class="au.com.allette.pbs.ox.generator.Transformation">
       <parameter name="display-result"  value="false"/>
-      <parameter name="xsl"    value="v2/process-data.xsl"/>
-      <parameter name="output" value="final/items.xml"/>
+      <parameter name="xsl"             value="v2/process-data.xsl"/>
+      <parameter name="output"          value="final/items.xml"/>
     </step>
 
     <step id="flatten-content-document"
@@ -254,20 +254,21 @@
           viewable="false"
           async="true"
           class="org.pageseeder.ox.step.Transformation">
-      <parameter name="input"  value="final/items.xml"/>
+      <parameter name="input"           value="final/items.xml"/>
       <parameter name="display-result"  value="false"/>
-      <parameter name="xsl"    value="v2/flatten-content.xsl"/>
-      <parameter name="output" value="final/flatten.xml"/>
+      <parameter name="xsl"             value="v2/flatten-content.xsl"/>
+      <parameter name="output"          value="final/flatten.xml"/>
     </step>
--->
+
     <step id="grouping-content-document"
           name="Grouping Analysis document"
           viewable="false"
           async="true"
           class="au.com.allette.pbs.ox.generator.Transformation">
+      <parameter name="input"           value="final/flatten.xml"/>
       <parameter name="display-result"  value="false"/>
-      <parameter name="xsl"    value="v2/grouping-content.xsl"/>
-      <parameter name="output" value="final/grouping.xml"/>
+      <parameter name="xsl"             value="v2/grouping-content.xsl"/>
+      <parameter name="output"          value="final/grouping.xml"/>
     </step>
   </pipeline>
 
