@@ -52,17 +52,6 @@
                         </xsl:choose>
                     </xsl:for-each>
                 </xsl:variable>
-                <xsl:variable name="brand-substitution">
-                    <xsl:for-each select="tokenize($member-of,',')">
-                        <xsl:variable name="brand-s" select="if(starts-with(normalize-space(.),'GRP-')) then substring-after(normalize-space(.),'GRP-') else ''" />
-                        <xsl:choose>
-                            <xsl:when test="$brand-s != ''">
-                                <xsl:value-of select="concat($brand-s,',')" />
-                            </xsl:when>
-                            <xsl:otherwise></xsl:otherwise>
-                        </xsl:choose>
-                    </xsl:for-each>
-                </xsl:variable>
 
                 <xsl:variable name="restrictions">
                     <xsl:for-each select="descendant::rwt:restriction-reference">
@@ -80,6 +69,13 @@
                         <xsl:variable name="tpp-ref" select="substring-after(@xlink:href,'#')" />
                         <xsl:variable name="tpp-content" select="$root/descendant::pbs:mpp[@xml:id = $mpp-ref]/pbs:tpp[@xml:id = $tpp-ref]"/>
                         <xsl:variable name="tpp-organisation-ref" select="substring-after($tpp-content/pbs:organisation-reference/@xlink:href,'#')" />
+                        <xsl:variable name="group">
+                           <xsl:for-each select="$tpp-content/pbs:member-of-list/pbs:member-of">
+                               <xsl:variable name="ref" select="substring-after(@xlink:href,'#')" />
+                               <xsl:value-of select="if(position()!=last()) then concat(substring-after($root/descendant::pbs:group[@xml:id = $ref]/pbs:name,'GRP-'),',')
+                                            else substring-after($root/descendant::pbs:group[@xml:id = $ref]/pbs:name,'GRP-')" />
+                           </xsl:for-each>
+                        </xsl:variable>
                         <xsl:variable name="pack-size" select="$tpp-content/pbs:pack-size" />
                         <xsl:variable name="brand-name" select="$tpp-content/dbk:subtitle" />
                         <xsl:variable name="org-ref" select="$root/descendant::pbs:organisation[@xml:id = $tpp-organisation-ref]" />
@@ -101,7 +97,7 @@
                             <NUMBER_OF_REPEATS><xsl:value-of select="$num-repeat" /></NUMBER_OF_REPEATS>
                             <BENEFIT_TYPE_CODE><xsl:value-of select="$benefit-type" /></BENEFIT_TYPE_CODE>
                             <PACK_SIZE><xsl:value-of select="$pack-size" /></PACK_SIZE>
-                            <BRAND_SUBSTITUTION><xsl:value-of select="$brand-substitution" /></BRAND_SUBSTITUTION>
+                            <BRAND_SUBSTITUTION><xsl:value-of select="$group" /></BRAND_SUBSTITUTION>
                         </item>
                     </xsl:for-each>
                 </xsl:for-each>
@@ -152,7 +148,6 @@
     
     <xsl:template match="/">
         <my-document>
-           <!-- <xsl:copy-of select="$items" />-->
             <xsl:copy-of select="$ordered" />
         </my-document>
     </xsl:template>
