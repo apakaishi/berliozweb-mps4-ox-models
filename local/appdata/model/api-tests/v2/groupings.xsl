@@ -30,36 +30,37 @@
                                     <xsl:attribute name="code" select="$item-code" />
                                     <xsl:variable name="distinct-brand-sub-group">
                                         <xsl:for-each-group select="current-group()" group-by="BRAND_SUBSTITUTION">
+                                            <xsl:sort select="BRAND_SUBSTITUTION" />
                                             <xsl:variable name="pos" select="position()" />
                                             <xsl:value-of select="if($pos != last()) then concat(BRAND_SUBSTITUTION/text(), ',') else BRAND_SUBSTITUTION/text()" />
                                         </xsl:for-each-group>
                                     </xsl:variable>
-                                    <xsl:variable name="count-bsd" select="if(contains($distinct-brand-sub-group,',')) then count(tokenize($distinct-brand-sub-group,','))-1 else 0" />
+                                   <!-- <xsl:variable name="distinct-brand-sub-group-comp" select="if(normalize-space($distinct-brand-sub-group)!='') then concat($distinct-brand-sub-group,',') else $distinct-brand-sub-group" />-->
+                                    <xsl:variable name="count-bsd" select="if(contains($distinct-brand-sub-group,',')) then count(tokenize($distinct-brand-sub-group,',')) else 0" />
                                     <xsl:attribute name="distinct-brand-sub-group" select="$distinct-brand-sub-group" />
                                     <xsl:attribute name="count-brand-sub-group" select="$count-bsd" />
+                                    <xsl:variable name="pos-brand-sub">
+                                        <brand-subs>
+                                            <xsl:for-each select="tokenize($distinct-brand-sub-group,',')">
+                                                <brand-sub>
+                                                    <xsl:variable name="pos" select="position()" />
+                                                    <xsl:variable name="equiv" select="if($pos = 1) then 'a'
+                                                                    else if($pos = 2) then 'b'
+                                                                    else if($pos = 3) then 'c' else ''" />
+                                                    <xsl:attribute name="pos" select="$pos"/>
+                                                    <xsl:attribute name="equiv" select="$equiv"/>
+                                                    <xsl:attribute name="value" select="."/>
+                                                </brand-sub>
+                                            </xsl:for-each>
+                                        </brand-subs>
+                                    </xsl:variable>
                                     <xsl:for-each-group select="current-group()" group-by="BRAND_NAME">
                                         <xsl:variable name="brand" select="BRAND_NAME/text()" />
+                                        <xsl:variable name="brand-substitution" select="BRAND_SUBSTITUTION/text()" />
                                         <brand>
                                             <xsl:attribute name="value" select="$brand" />
-                                            <xsl:variable name="group">
-                                                <xsl:choose>
-                                                    <xsl:when test="number($count-bsd) > 1">
-                                                        <xsl:choose>
-                                                            <xsl:when test="contains($brand,'ED')">
-                                                                <xsl:value-of select="'b'" />
-                                                            </xsl:when>
-                                                            <xsl:otherwise>
-                                                                <xsl:value-of select="'a'" />
-                                                            </xsl:otherwise>
-                                                        </xsl:choose>
-                                                    </xsl:when>
-                                                    <xsl:when test="number($count-bsd) = 1">
-                                                        <xsl:value-of select="'a'" />
-                                                    </xsl:when>
-                                                    <xsl:otherwise>
-                                                    </xsl:otherwise>
-                                                </xsl:choose>
-                                            </xsl:variable>
+                                            <xsl:attribute name="brand-substitution" select="$brand-substitution" />
+                                            <xsl:variable name="group" select="$pos-brand-sub/brand-subs/brand-sub[@value = $brand-substitution]/@equiv" />
                                             <xsl:attribute name="group" select="$group" />
                                         </brand>
                                     </xsl:for-each-group>
