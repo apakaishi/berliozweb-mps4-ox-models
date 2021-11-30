@@ -35,10 +35,7 @@
                                             <xsl:value-of select="if($pos != last()) then concat(BRAND_SUBSTITUTION/text(), ',') else BRAND_SUBSTITUTION/text()" />
                                         </xsl:for-each-group>
                                     </xsl:variable>
-                                   <!-- <xsl:variable name="distinct-brand-sub-group-comp" select="if(normalize-space($distinct-brand-sub-group)!='') then concat($distinct-brand-sub-group,',') else $distinct-brand-sub-group" />-->
-                                    <xsl:variable name="count-bsd" select="if(contains($distinct-brand-sub-group,',')) then count(tokenize($distinct-brand-sub-group,',')) else 0" />
                                     <xsl:attribute name="distinct-brand-sub-group" select="$distinct-brand-sub-group" />
-                                    <xsl:attribute name="count-brand-sub-group" select="$count-bsd" />
                                     <xsl:variable name="pos-brand-sub">
                                         <brand-subs>
                                             <xsl:for-each select="tokenize($distinct-brand-sub-group,',')">
