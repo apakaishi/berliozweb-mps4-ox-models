@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
+  This stylesheet transform PBS XML v2 to a simulate API data
 
   @author Adriano Akaishi
-  @date 25/10/2021
+  @date 17/10/2021
   @copyright Allette Systems Pty Ltd
 -->
 
