@@ -73,7 +73,7 @@
                                 (mps:is-db-only($grouping_4_drug)= false() and mps:is-db-only($grouping_4_form))= true() or
                                 (mps:is-db-only($grouping_4_drug)= false() and mps:is-db-only($grouping_4_form)= true() and mps:is-dual-list-s100-with($grouping_4_form, 'GE')= true() and mps:is-db-only($grouping_4_item)= true()))
                                     then concat('See Note 4 [',NUMBER_OF_REPEATS/text(),']') else NUMBER_OF_REPEATS/text()"/></NUMBER_OF_REPEATS>
-                    <xsl:element name="SCHEDULE-EQUIVALENT"><xsl:value-of select="$brand-sub-group/grouping/drug[@value=$drug]/form[@value=$form]/item[@code=$item]/brand[@value=$brand-name]/@group" /></xsl:element>
+                    <xsl:element name="SCHEDULE-EQUIVALENT"><xsl:value-of select="$brand-sub-group/grouping/drug[@value=$drug]/form[@value=$form]/item[@code=$item]/brand[@value=$brand-name]/@group" /></xsl:element> <!-- Rule SE1 and SE2 - Works for one and (more than one) form(s)-->
                     <xsl:element name="S100"><xsl:value-of select="$S100" /></xsl:element>
                 </item>
             </xsl:for-each>
