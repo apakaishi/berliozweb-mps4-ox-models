@@ -105,50 +105,9 @@
         </item>
     </xsl:variable>
 
-    <xsl:variable name="ordered">
-        <item>
-            <xsl:for-each-group select="$items/item/item" group-by="LI_DRUG_NAME">
-                <xsl:sort select="LI_DRUG_NAME" />
-                <xsl:variable name="drug" select="LI_DRUG_NAME" />
-                <xsl:variable name="count" select="count(ancestor::item/item[LI_DRUG_NAME/text() = $drug])" />
-                <xsl:for-each-group select="current-group()" group-by="LI_FORM">
-                    <xsl:sort select="LI_FORM" />
-                    <xsl:variable name="form" select="LI_FORM" />
-                    <xsl:for-each-group select="current-group()" group-by="MANUFACTURER_CODE">
-                        <xsl:sort select="MANUFACTURER_CODE" />
-                        <xsl:variable name="man-code" select="MANUFACTURER_CODE" />
-                        <xsl:variable name="man-name" select="MANUFACTURER_NAME" />
-                        <xsl:for-each-group select="current-group()" group-by="PBS_CODE">
-                            <xsl:sort select="PBS_CODE" />
-                            <xsl:variable name="item" select="PBS_CODE" />
-                            <item>
-                                <xsl:attribute name="count" select="$count" />
-                                <LI_DRUG_NAME><xsl:value-of select="$drug" /></LI_DRUG_NAME>
-                                <LI_FORM><xsl:value-of select="$form" /></LI_FORM>
-                                <MANNER_OF_ADMINISTRATION><xsl:value-of select="MANNER_OF_ADMINISTRATION" /></MANNER_OF_ADMINISTRATION>
-                                <BRAND_NAME><xsl:value-of select="BRAND_NAME" /></BRAND_NAME>
-                                <MANUFACTURER_CODE><xsl:value-of select="$man-code" /></MANUFACTURER_CODE>
-                                <MANUFACTURER_NAME><xsl:value-of select="$man-name" /></MANUFACTURER_NAME>
-                                <RESTRICTIONS><xsl:value-of select="RESTRICTIONS" /></RESTRICTIONS>
-                                <PBS_CODE><xsl:value-of select="$item" /></PBS_CODE>
-                                <PROGRAM_CODE><xsl:value-of select="PROGRAM_CODE" /></PROGRAM_CODE>
-                                <PRESCRIBERS><xsl:value-of select="PRESCRIBERS" /></PRESCRIBERS>
-                                <MAX_PRESCRIBABLE_UNIT_OF_USE><xsl:value-of select="MAX_PRESCRIBABLE_UNIT_OF_USE" /></MAX_PRESCRIBABLE_UNIT_OF_USE>
-                                <NUMBER_OF_REPEATS><xsl:value-of select="NUMBER_OF_REPEATS" /></NUMBER_OF_REPEATS>
-                                <BENEFIT_TYPE_CODE><xsl:value-of select="BENEFIT_TYPE_CODE" /></BENEFIT_TYPE_CODE>
-                                <PACK_SIZE><xsl:value-of select="PACK_SIZE" /></PACK_SIZE>
-                                <BRAND_SUBSTITUTION><xsl:value-of select="BRAND_SUBSTITUTION" /></BRAND_SUBSTITUTION>
-                             </item>
-                       </xsl:for-each-group>
-                    </xsl:for-each-group>
-                </xsl:for-each-group>
-            </xsl:for-each-group>
-        </item>
-    </xsl:variable>
-    
     <xsl:template match="/">
         <my-document>
-            <xsl:copy-of select="$ordered" />
+            <xsl:copy-of select="$items" />
         </my-document>
     </xsl:template>
 
