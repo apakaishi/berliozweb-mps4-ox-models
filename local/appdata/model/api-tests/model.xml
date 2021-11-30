@@ -272,6 +272,159 @@
     </step>
   </pipeline>
 
+  <pipeline id="api-json"
+            name="API Json tests"
+            description="API Json tests"
+            accepts="text/json"
+            default="true">
+
+    <fields>
+      <field
+              type="switch"
+              id="items-search"
+              name="items-search"
+              label="Full Items Search"
+              active="false"
+              hint="Output a Full Items list. Default: return only Supply only items."
+      />
+    </fields>
+
+    <!-- Receive a PBS XML data in one zip file -->
+    <step id="Unzip" name="Unzipping." class="org.pageseeder.ox.step.Decompression">
+      <parameter name="output" value="data" />
+    </step>
+
+    <step id="json-to-xml-items"
+          name="Converter JSON to XML document - Items"
+          viewable="false"
+          async="true"
+          class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"  value="data/items-3111.json"/>
+      <parameter name="display-result"  value="false"/>
+      <parameter name="xsl"    value="xslt/json/json-to-xml.xsl"/>
+      <parameter name="_xslt-type"  value="item" />
+      <parameter name="output" value="files/items.xml"/>
+    </step>
+
+    <step id="json-to-xml-organisations"
+          name="Converter JSON to XML document - Organisations"
+          viewable="false"
+          async="true"
+          class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"  value="data/organisations-3111.json"/>
+      <parameter name="display-result"  value="false"/>
+      <parameter name="xsl"    value="xslt/json/json-to-xml.xsl"/>
+      <parameter name="_xslt-type"  value="organisation" />
+      <parameter name="output" value="files/organisations.xml"/>
+    </step>
+
+    <step id="json-to-xml-items-amt"
+          name="Converter JSON to XML document - Items / AMT"
+          viewable="false"
+          async="true"
+          class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"  value="data/items-amt-relationships-3111.json"/>
+      <parameter name="display-result"  value="false"/>
+      <parameter name="xsl"    value="xslt/json/json-to-xml.xsl"/>
+      <parameter name="_xslt-type"  value="items-amt" />
+      <parameter name="output" value="files/items-amts.xml"/>
+    </step>
+
+    <step id="json-to-xml-amt"
+          name="Converter JSON to XML document - AMT"
+          viewable="false"
+          async="true"
+          class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"  value="data/amts-3111.json"/>
+      <parameter name="display-result"  value="false"/>
+      <parameter name="xsl"    value="xslt/json/json-to-xml.xsl"/>
+      <parameter name="_xslt-type"  value="amt" />
+      <parameter name="output" value="files/amt.xml"/>
+    </step>
+
+    <step id="json-to-xml-items-atc"
+          name="Converter JSON to XML document - Items / ATC"
+          viewable="false"
+          async="true"
+          class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"  value="data/items-atc-relationships-3111.json"/>
+      <parameter name="display-result"  value="false"/>
+      <parameter name="xsl"    value="xslt/json/json-to-xml.xsl"/>
+      <parameter name="_xslt-type"  value="items-atc" />
+      <parameter name="output" value="files/items-atcs.xml"/>
+    </step>
+
+    <step id="json-to-xml-prescriber"
+          name="Converter JSON to XML document - Prescriber"
+          viewable="false"
+          async="true"
+          class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"  value="data/prescribers-3111.json"/>
+      <parameter name="display-result"  value="false"/>
+      <parameter name="xsl"    value="xslt/json/json-to-xml.xsl"/>
+      <parameter name="_xslt-type"  value="prescriber" />
+      <parameter name="output" value="files/prescribers.xml"/>
+    </step>
+
+
+    <step id="json-to-xml-restriction"
+          name="Converter JSON to XML document - Restriction"
+          viewable="false"
+          async="true"
+          class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"  value="data/restrictions-3111.json"/>
+      <parameter name="display-result"  value="false"/>
+      <parameter name="xsl"    value="xslt/json/json-to-xml.xsl"/>
+      <parameter name="_xslt-type"  value="restriction" />
+      <parameter name="output" value="files/restrictions.xml"/>
+    </step>
+
+    <step id="json-to-xml-items-restriction"
+          name="Converter JSON to XML document - Items / Restriction"
+          viewable="false"
+          async="true"
+          class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"  value="data/items-restrictions-relationships-3111.json"/>
+      <parameter name="display-result"  value="false"/>
+      <parameter name="xsl"    value="xslt/json/json-to-xml.xsl"/>
+      <parameter name="_xslt-type"  value="items-restriction" />
+      <parameter name="output" value="files/items-restrictions.xml"/>
+    </step>
+
+    <step id="items-document"
+          name="Extracting Items document"
+          viewable="false"
+          async="true"
+          class="au.com.allette.pbs.ox.generator.Transformation">
+      <parameter name="input"  value="files/items.xml"/>
+      <parameter name="display-result"  value="false"/>
+      <parameter name="xsl"    value="xslt/items-extraction.xsl"/>
+      <parameter name="output" value="final/items.xml"/>
+    </step>
+
+    <step id="flatten-content-document"
+          name="Flatten Content document"
+          viewable="false"
+          async="true"
+          class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"           value="final/items.xml"/>
+      <parameter name="display-result"  value="false"/>
+      <parameter name="xsl"             value="v2/flatten-content.xsl"/>
+      <parameter name="output"          value="final/flatten.xml"/>
+    </step>
+
+    <step id="grouping-content-document"
+          name="Grouping Analysis document"
+          viewable="false"
+          async="true"
+          class="au.com.allette.pbs.ox.generator.Transformation">
+      <parameter name="input"           value="final/flatten.xml"/>
+      <parameter name="display-result"  value="false"/>
+      <parameter name="xsl"             value="v2/grouping-content.xsl"/>
+      <parameter name="output"          value="final/grouping.xml"/>
+    </step>
+
+  </pipeline>
 
 </pipelines>
 
