@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
+  This stylesheet transform API flatten Prescriber
 
   @author Adriano Akaishi
-  @date 25/10/2021
+  @date 18/11/2021
   @copyright Allette Systems Pty Ltd
 -->
 
