@@ -87,7 +87,7 @@
                         <xsl:element name="NUMBER_OF_REPEATS"><xsl:value-of select="$number-of-repeats" /></xsl:element>
                         <xsl:element name="BENEFIT_TYPE_CODE"><xsl:value-of select="$restriction-benefit-type" /></xsl:element>
                         <xsl:element name="PACK_SIZE"><xsl:value-of select="substring-after($amt-mpp,',')" /></xsl:element> <!-- Pharmaceutical Item - quantity-->
-                        <xsl:element name="BRAND_SUBSTITUTION"><xsl:value-of select="if(normalize-space(BRAND_SUBSTITION_GROUP_ID/text())!='') then concat(BRAND_SUBSTITION_GROUP_ID/text(),',') else ''" /></xsl:element>
+                        <xsl:element name="BRAND_SUBSTITUTION"><xsl:value-of select="BRAND_SUBSTITION_GROUP_ID/text()" /></xsl:element>
                     </item>
                 </xsl:for-each>
             </item>
