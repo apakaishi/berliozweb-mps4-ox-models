@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  This stylesheet transform variable used to insert some information defined for client
+  This stylesheet transform content variable to compare with API groupings
 
   @author Adriano Akaishi
-  @date 25/03/2020
+  @date 29/11/2021
   @copyright Allette Systems Pty Ltd
 -->
 <xsl:stylesheet version="2.0"
