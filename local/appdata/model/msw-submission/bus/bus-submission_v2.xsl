@@ -100,8 +100,9 @@
 				   <property name="step-2-closed-date" title="Step 2 - Closed Date" value="{fn:format-yyyy-mm-dd(step-2-closed-date/text())}" datatype="date"/>
 				   <property name="step-2-see-url" title="Step 2 - See URL" datatype="link">
 				     <xsl:if test="step-2-see-url/text()">
-						<link uriid="{step-2-see-url/text()}"/>
-					 </xsl:if>
+							 <!-- TODO the text and href should come form the uriid. but currently it is not working in this way.-->
+						   <link uriid="{step-2-see-url/text()}" href="http://www.pbs.gov.au/info/industry/listing/elements/pbac-meetings/pbac-consumer-comments">PBAC Consumer Comment</link>
+					   </xsl:if>
 				   </property>
 				   <property name="step-3-label" title="Step 3 - label" value="PBAC meeting" datatype="string" />
 				   <property name="step-3-status" title="Step 3 - status" value="{if(step-3-status) then step-3-status else 'pending'}" datatype="string" />
