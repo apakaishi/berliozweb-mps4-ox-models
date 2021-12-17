@@ -115,7 +115,7 @@
                    value="2021-09-22"
                    datatype="date"/>
          <property name="step-2-see-url" title="Step 2 - See URL" datatype="link">
-            <link uriid="4024"/>
+            <link href="http://www.pbs.gov.au/info/industry/listing/elements/pbac-meetings/pbac-consumer-comments" uriid="4024">PBAC Consumer Comment</link>
          </property>
          <property name="step-3-label"
                    title="Step 3 - label"
