@@ -31,10 +31,14 @@
 
   	  <xsl:variable name="case-id" select="normalize-space(lower-case(case-id/text()))" />
       <xsl:variable name="filename" select="concat($case-id,'-',fn:format-yyyy-mm-dd(meeting-date/text()),'.psml')" />
-	  <xsl:variable name="path-report" select="concat($folder,$filename)" />
-	  <xsl:variable name="drug-name" select="drug-name"/>
-  	  <!-- The PSML title cannot be bigger than 250 -->
-	  <xsl:variable name="title" select="substring($drug-name, 1, 250)"/>
+	    <xsl:variable name="path-report" select="concat($folder,$filename)" />
+	    <xsl:variable name="drug-name" select="fn:clean-white-spaces(drug-name)"/>
+		  <xsl:variable name="brand-names" select="fn:clean-white-spaces(brand-names)"/>
+		  <xsl:variable name="sponsors" select="fn:clean-white-spaces(sponsors)"/>
+			<xsl:variable name="purpose" select="fn:clean-white-spaces(purpose)"/>
+
+			<!-- The PSML title cannot be bigger than 250 -->
+	    <xsl:variable name="title" select="substring($drug-name, 1, 250)"/>
 
 	  <xsl:result-document method="xml" href="{$path-report}">
 	    <!--
@@ -57,16 +61,16 @@
 				   <property name="pbac-outcome-status" title="PBAC Outcome Status" value="{pbac-outcome-status}" datatype="string" />
 				   <property name="meeting-date" title="Meeting date" value="{fn:format-yyyy-mm-dd(meeting-date/text())}" datatype="date" />
 				   <property name="listed-date" title="Listed date" value="{$list-date}" datatype="date" />
-				   <property name="drug-name" title="Drug name" value="{drug-name}" datatype="string" />
+				   <property name="drug-name" title="Drug name" value="{$drug-name}" datatype="string" />
 				   <property name="brand-names" title="Brand Names" count="n" datatype="string">
-					 <xsl:for-each select="tokenize(brand-names, ',')">
+					 <xsl:for-each select="tokenize($brand-names, ',')">
 					   <value><xsl:value-of select="." /></value>
 					 </xsl:for-each>
 				   </property>
-				   <property name="sponsors" title="Sponsor" value="{sponsors}" datatype="string"/>
+				   <property name="sponsors" title="Sponsor" value="{$sponsors}" datatype="string"/>
 				   <property name="manubookcode" title="Manubookcode" value=""  datatype="string"/>
 				   <property name="purpose" title="Purpose" count="n" datatype="string">
-					  <value><xsl:value-of select="purpose" /></value>
+					  <value><xsl:value-of select="$purpose" /></value>
 				   </property>
 				   <property name="type-listing" title="Type listing" value="{type-listing}" datatype="string" />
 				   <property name="submission-type" title="Submission type" value="{submission-type}" datatype="string" />
@@ -153,13 +157,15 @@
 				  	 <property name="msw-process-not-applicable-message" title="MSW Process Not Applicable Message" value="The processes outlined in the MSW are not applicable to this medicine. Please contact pbs@health.gov.au or 1800 020 613 for further information." datatype="string" />
 			   </properties-fragment>
 			   <properties-fragment id="item-index">
-				     <property name="drug-name-text" title="Drug name text" value="{drug-name}" datatype="string" />
+				     <property name="drug-name-text" title="Drug name text" value="{$drug-name}" datatype="string" />
 					 <property name="brand-names-text" title="Brand Names text" count="n" datatype="string">
-					   <value><xsl:value-of select="brand-names" /></value>
+						 <xsl:for-each select="tokenize($brand-names, ',')">
+							 <value><xsl:value-of select="." /></value>
+						 </xsl:for-each>
 					 </property>
-					 <property name="sponsor-text" title="Sponsor text" value="{sponsors}" datatype="string"/>
+					 <property name="sponsor-text" title="Sponsor text" value="{$sponsors}" datatype="string"/>
 					 <property name="purpose-text" title="Purpose text" count="n" datatype="string">
-					   <value><xsl:value-of select="purpose" /></value>
+					   <value><xsl:value-of select="$purpose" /></value>
 					 </property>
 					 <property name="pbac-outcome-status-text" title="PBAC Outcome Status text" value="{pbac-outcome-status}" datatype="string" />
 			   </properties-fragment>

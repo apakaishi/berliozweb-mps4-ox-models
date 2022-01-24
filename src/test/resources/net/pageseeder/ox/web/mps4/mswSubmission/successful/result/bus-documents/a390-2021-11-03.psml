@@ -4,8 +4,8 @@
       <uri mediatype="application/vnd.pageseeder.psml+xml"
            documenttype="drug"
            docid="a390"
-           title="ACALABRUTINIB ">
-         <displaytitle>ACALABRUTINIB </displaytitle>
+           title="ACALABRUTINIB">
+         <displaytitle>ACALABRUTINIB</displaytitle>
          <labels>current</labels>
       </uri>
    </documentinfo>
@@ -24,7 +24,7 @@
          <property name="listed-date" title="Listed date" value="" datatype="date"/>
          <property name="drug-name"
                    title="Drug name"
-                   value="ACALABRUTINIB "
+                   value="ACALABRUTINIB"
                    datatype="string"/>
          <property name="brand-names"
                    title="Brand Names"
@@ -64,10 +64,10 @@
                   display="document"
                   type="none"
                   docid="a159"
-                  urititle="ACALABRUTINIB "
+                  urititle="ACALABRUTINIB"
                   urilabels="current"
                   mediatype="application/vnd.pageseeder.psml+xml"
-                  documenttype="drug">ACALABRUTINIB </xref>
+                  documenttype="drug">ACALABRUTINIB</xref>
             <xref frag="default"
                   reversefrag="application"
                   reversetitle=""
@@ -76,10 +76,10 @@
                   display="document"
                   type="none"
                   docid="a112"
-                  urititle="ACALABRUTINIB "
+                  urititle="ACALABRUTINIB"
                   urilabels="current"
                   mediatype="application/vnd.pageseeder.psml+xml"
-                  documenttype="drug">ACALABRUTINIB </xref>
+                  documenttype="drug">ACALABRUTINIB</xref>
          </property>
          <property name="public-summary-document"
                    title="Public summary document"
@@ -255,7 +255,7 @@
       <properties-fragment id="item-index">
          <property name="drug-name-text"
                    title="Drug name text"
-                   value="ACALABRUTINIB "
+                   value="ACALABRUTINIB"
                    datatype="string"/>
          <property name="brand-names-text"
                    title="Brand Names text"

@@ -70,4 +70,20 @@
         <xsl:when test="lower-case($month) = ('dec', 'decembre')"><xsl:value-of select="'12'"/></xsl:when>
     </xsl:choose>
   </xsl:function>
+
+  <!--
+  remove non break space and leading and trailing spaces.
+  -->
+  <xsl:function name="fn:clean-white-spaces" as="xs:string?">
+    <xsl:param name="text" as="xs:string?"/>
+    <xsl:message>Clean-text <xsl:value-of select="$text"/></xsl:message>
+    <xsl:choose>
+      <xsl:when test="string-length($text) > 0">
+        <!-- \p{Z}+ matches one or more characters that are in the "separator" category in Unicode -->
+        <xsl:variable name="text-with-normal-space" select="replace($text, '\p{Z}+', ' ')"/>
+        <xsl:sequence select="normalize-space($text-with-normal-space)"/>
+      </xsl:when>
+      <xsl:otherwise><xsl:sequence select="''"/></xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
 </xsl:stylesheet>

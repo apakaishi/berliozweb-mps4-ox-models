@@ -4,8 +4,8 @@
       <uri mediatype="application/vnd.pageseeder.psml+xml"
            documenttype="drug"
            docid="a395"
-           title="APALUTAMIDE ">
-         <displaytitle>APALUTAMIDE </displaytitle>
+           title="APALUTAMIDE">
+         <displaytitle>APALUTAMIDE</displaytitle>
          <labels>current</labels>
       </uri>
    </documentinfo>
@@ -24,7 +24,7 @@
          <property name="listed-date" title="Listed date" value="" datatype="date"/>
          <property name="drug-name"
                    title="Drug name"
-                   value="APALUTAMIDE "
+                   value="APALUTAMIDE"
                    datatype="string"/>
          <property name="brand-names"
                    title="Brand Names"
@@ -41,7 +41,7 @@
                    value=""
                    datatype="string"/>
          <property name="purpose" title="Purpose" count="n" datatype="string">
-            <value>Prostate cancer </value>
+            <value>Prostate cancer</value>
          </property>
          <property name="type-listing"
                    title="Type listing"
@@ -64,10 +64,10 @@
                   display="document"
                   type="none"
                   docid="a003"
-                  urititle="APALUTAMIDE "
+                  urititle="APALUTAMIDE"
                   urilabels="current"
                   mediatype="application/vnd.pageseeder.psml+xml"
-                  documenttype="drug">APALUTAMIDE </xref>
+                  documenttype="drug">APALUTAMIDE</xref>
             <xref frag="default"
                   reversefrag="application"
                   reversetitle=""
@@ -76,10 +76,10 @@
                   display="document"
                   type="none"
                   docid="a226"
-                  urititle="APALUTAMIDE "
+                  urititle="APALUTAMIDE"
                   urilabels="current"
                   mediatype="application/vnd.pageseeder.psml+xml"
-                  documenttype="drug">APALUTAMIDE </xref>
+                  documenttype="drug">APALUTAMIDE</xref>
          </property>
          <property name="public-summary-document"
                    title="Public summary document"
@@ -255,7 +255,7 @@
       <properties-fragment id="item-index">
          <property name="drug-name-text"
                    title="Drug name text"
-                   value="APALUTAMIDE "
+                   value="APALUTAMIDE"
                    datatype="string"/>
          <property name="brand-names-text"
                    title="Brand Names text"
@@ -271,7 +271,7 @@
                    title="Purpose text"
                    count="n"
                    datatype="string">
-            <value>Prostate cancer </value>
+            <value>Prostate cancer</value>
          </property>
          <property name="pbac-outcome-status-text"
                    title="PBAC Outcome Status text"

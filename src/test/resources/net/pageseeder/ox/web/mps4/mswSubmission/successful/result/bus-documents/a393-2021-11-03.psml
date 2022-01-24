@@ -4,8 +4,8 @@
       <uri mediatype="application/vnd.pageseeder.psml+xml"
            documenttype="drug"
            docid="a393"
-           title="AMIFAMPRIDINE ">
-         <displaytitle>AMIFAMPRIDINE </displaytitle>
+           title="AMIFAMPRIDINE">
+         <displaytitle>AMIFAMPRIDINE</displaytitle>
          <labels>current</labels>
       </uri>
    </documentinfo>
@@ -24,7 +24,7 @@
          <property name="listed-date" title="Listed date" value="" datatype="date"/>
          <property name="drug-name"
                    title="Drug name"
-                   value="AMIFAMPRIDINE "
+                   value="AMIFAMPRIDINE"
                    datatype="string"/>
          <property name="brand-names"
                    title="Brand Names"
@@ -230,7 +230,7 @@
       <properties-fragment id="item-index">
          <property name="drug-name-text"
                    title="Drug name text"
-                   value="AMIFAMPRIDINE "
+                   value="AMIFAMPRIDINE"
                    datatype="string"/>
          <property name="brand-names-text"
                    title="Brand Names text"
