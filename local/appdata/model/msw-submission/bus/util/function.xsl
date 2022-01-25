@@ -76,7 +76,6 @@
   -->
   <xsl:function name="fn:clean-white-spaces" as="xs:string?">
     <xsl:param name="text" as="xs:string?"/>
-    <xsl:message>Clean-text <xsl:value-of select="$text"/></xsl:message>
     <xsl:choose>
       <xsl:when test="string-length($text) > 0">
         <!-- \p{Z}+ matches one or more characters that are in the "separator" category in Unicode -->
