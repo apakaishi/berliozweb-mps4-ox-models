@@ -31,6 +31,7 @@
   <sch:let name="step-2-open-date-column"          value="'step 2 open date'" />
   <sch:let name="step-2-closed-date-column"     value="'step 2 closed date'" />
   <sch:let name="step-2-see-url-column"       value="'step 2 see url'" />
+  <sch:let name="step-2-see-url-title-column"       value="'step 2 see url title'" />
 
 <!--  <sch:pattern id="test">-->
 <!--    &lt;!&ndash;-->
@@ -109,6 +110,15 @@
       </sch:assert>
       <sch:assert test="matches($step-2-closed-date/text(), '^[0-9]{1,2}/[0-9]{1,2}/[0-9]{4}$')" flag="WARNING">
         Date format should be DD/MM/YYYY <sch:value-of select="$step-2-closed-date"/> at row <sch:value-of select="position()"/>
+      </sch:assert>
+
+      <!-- It is not working yet -->
+      <sch:let name="step-2-see-url" value="*[af:same-characters(name(), $step-2-see-url-column)]"/>
+      <sch:let name="step-2-see-url-title" value="*[af:same-characters(name(), $step-2-see-url-title-column)]"/>
+
+      <sch:assert test="(not($step-2-see-url/text()) and not($step-2-see-url-title/text()))
+      or ($step-2-see-url and $step-2-see-url-title)" flag="ALERT">
+        <sch:value-of select="concat('Invalid step 2 see url href/title',$step-2-see-url/text())"/>
       </sch:assert>
 
     </sch:rule>
