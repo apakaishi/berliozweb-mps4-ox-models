@@ -115,7 +115,7 @@ remotes {
     host = getSystemEnv("PBS_OX_STAGING_FREENAS_HOST", defaultFakeValue)
     user = getSystemEnv("PBS_OX_STAGING_FREENAS_USER", defaultFakeValue)
     identity = file(getSystemEnv("PRIVATE_KEY", "/"))
-    knownHosts = file(getSystemEnv("PYR_STORAGE_01_KNOWN_HOSTS", defaultFakeValue))
+    knownHosts = file(getSystemEnv("PYR_STORAGE_03_KNOWN_HOSTS", defaultFakeValue))
   }
   production {
     role "production"
