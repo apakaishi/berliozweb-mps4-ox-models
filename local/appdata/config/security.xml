@@ -1,5 +1,28 @@
 <global>
   <security-configs>
+    <security-config name="ox-security"
+                     class="net.pageseeder.app.simple.security.config.model.DefaultSecurityConfig"
+                     default-target="/home.html"
+                     login-page="/login.html"
+                     authentication="/ox/api/oauth/login.json"
+                     original-url-allowed="html">
+      <restrictions>
+        <restriction builder="net.pageseeder.app.simple.security.restriction.WhiteListedUrlsRestrictionCheckerBuilder">
+          <pattern type="regex" pattern="^/.+\.(?:css|js)$"/>
+          <pattern type="regex" pattern="^/css/.+$"/>
+          <pattern type="regex" pattern="^/js/.+$"/>
+          <pattern type="regex" pattern="^/ox/api/oauth/user.(?:xml|json|src)$"/>
+          <pattern type="regex" pattern="^/ox/api/models.(?:xml|json|src)$"/>
+          <pattern type="regex" pattern="^/error\.(?:xml|html|src)$"/>
+          <pattern type="string" pattern="/logout.html"/>
+        </restriction>
+        <restriction builder="net.pageseeder.app.simple.security.restriction.NothingExemptedRestrictionCheckerBuilder"/>
+      </restrictions>
+      <authentication checker="net.pageseeder.app.simple.security.authentication.DefaultAuthenticationChecker"
+                      authenticator="net.pageseeder.app.simple.security.authentication.PSAuthenticator"
+                      ps-oauth-config-name="default"/>
+      <authorization authorizer-builder="net.pageseeder.app.simple.security.authorization.LoggedInAuthorizerBuilder"/>
+    </security-config>
 
   </security-configs>
 </global>
