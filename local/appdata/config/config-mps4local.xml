@@ -7,12 +7,21 @@
   <app  title="MPS4 OX">
   </app>
 
-  <bridge url="https://dev-mps4.pbs.gov.au/ps"/>
+  <bridge url="https://dev-mps4.pbs.gov.au/ps">
+    <mps4-dev url="https://dev-mps4.pbs.gov.au/ps"/>
+    <dev-clone url="https://dev-clone.pbs.gov.au/ps"/>
+  </bridge>
 
   <oauth>
     <client-credentials client="ca6562e09df69276" secret="OB1:kF1zQ82I977g11dv5aygfVS3RZx2kbT4zBf2IvGrOxgwLtSfEz"/>
-    <password-credentials client="377145073c89ebc5" secret="OB1:cHD7cVxNSyq11dnMvFMKdGS5XMXhpRP5ZloaXKeSxrGjdTXSV
-"/>
+    <password-credentials client="377145073c89ebc5" secret="OB1:cHD7cVxNSyq11dnMvFMKdGS5XMXhpRP5ZloaXKeSxrGjdTXSV"/>
+    <mps4-dev>
+      <client-credentials client="ca6562e09df69276" secret="OB1:kF1zQ82I977g11dv5aygfVS3RZx2kbT4zBf2IvGrOxgwLtSfEz"/>
+      <password-credentials client="377145073c89ebc5" secret="OB1:cHD7cVxNSyq11dnMvFMKdGS5XMXhpRP5ZloaXKeSxrGjdTXSV"/>
+    </mps4-dev>
+    <dev-clone>
+      <client-credentials client="31A761DB3A88F200" secret="OB1:WwEaYboy3x6X1dnOBqq4hsXIVCQ2vRJWWKMMTSAWVeFdHITwy"/>
+    </dev-clone>
   </oauth>
 
   <security-config-file option="none" path="security.xml"/>
