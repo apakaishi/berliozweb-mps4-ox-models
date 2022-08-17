@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  This document defines the pipelines for the conversion ox model.
+-->
+<pipelines  title="Embargo">
+
+    <pipeline id="embargo-shell-simple-file"
+              name="Upload One Document (DOCX/PDF)"
+              description="Upload One Document (DOCX/PDF)"
+              accepts="application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
+              default="true">
+
+        <fields>
+            <field
+                    type="text"
+                    id="title"
+                    name="title"
+                    label="Title"
+                    value=""
+                    rules="required"
+                    hint="Title."
+            />
+            <field
+                    type="select"
+                    id="publish_date"
+                    name="publish_date"
+                    label="Publish Date"
+                    active="2022-09-01"
+                    hint="Publish date."
+                    values='[
+                    {
+                      "text": "2022-09-01", "value": "2022-09-01"
+                    },
+                    {
+                      "text": "2022-10-01", "value": "2022-10-01"
+                    },
+                    {
+                      "text": "2022-11-01", "value": "2022-11-01"
+                    }
+                  ]'
+            />
+            <field
+                    type="text"
+                    id="url_path_link"
+                    name="url_path_link"
+                    label="URL-Path(Link)"
+                    value=""
+                    rules="false"
+                    hint="URL Path - Link."
+            />
+            <field
+                    type="text"
+                    id="folder"
+                    name="folder"
+                    label="Folder"
+                    value=""
+                    rules="false"
+                    hint="Folder."
+            />
+            <field
+                    type="text"
+                    id="url_path"
+                    name="url_path"
+                    label="URL-Path"
+                    value=""
+                    rules="false"
+                    hint="URL Path."
+            />
+
+        </fields>
+        <step id="copy-document-xml" name="Copying document.xml" class="org.pageseeder.ox.step.Copy">
+            <parameter name="input" value="resources" />
+            <parameter name="output" value="files/resources"/>
+        </step>
+        <step id="create-shell-psml-document" name="Create Shell PSML Document" viewable="false" class="org.pageseeder.ox.step.Transformation">
+            <parameter name="input"                     value="files/resources/document.xml" />
+            <parameter name="xsl"                       value="xslt/simple-file.xsl"/>
+            <parameter name="output"                    value="files/document.psml"/>
+        </step>
+        <step id="zip-full-package" name="Zipping PSML document with images folder." class="org.pageseeder.ox.step.Compression">
+            <parameter name="input" value="final" />
+            <parameter name="output" value="embargo.zip"/>
+        </step>
+
+    </pipeline>
+
+    <pipeline id="embargo-shell-multiple-files"
+              name="Upload Multiple Files (ZIP)"
+              description="Upload Multiple Files (ZIP)"
+              accepts="application/zip"
+              default="true">
+
+        <fields>
+            <field
+                    type="text"
+                    id="title"
+                    name="title"
+                    label="Title"
+                    value="2022-09-01"
+                    rules="required"
+                    placeholder=""
+                    hint="Title."
+            />
+            <field
+                    type="select"
+                    id="publish_date"
+                    name="publish_date"
+                    label="Publish Date"
+                    active="2022-09-01"
+                    hint="Publish date."
+                    values='[
+                    {
+                      "text": "2022-09-01", "value": "2022-09-01"
+                    },
+                    {
+                      "text": "2022-10-01", "value": "2022-10-01"
+                    },
+                    {
+                      "text": "2022-11-01", "value": "2022-11-01"
+                    }
+                  ]'
+            />
+            <field
+                    type="text"
+                    id="url_path_link"
+                    name="url_path_link"
+                    label="URL-Path(Link)"
+                    value=""
+                    rules="false"
+                    hint="URL Path - Link."
+            />
+            <field
+                    type="text"
+                    id="folder"
+                    name="folder"
+                    label="Folder"
+                    value=""
+                    rules="false"
+                    hint="Folder."
+            />
+            <field
+                    type="text"
+                    id="url_path"
+                    name="url_path"
+                    label="URL-Path"
+                    value=""
+                    rules="false"
+                    hint="URL Path."
+            />
+
+        </fields>
+        <!-- Receive a PBS XML data in one zip file -->
+        <step id="Unzip" name="Unzipping." class="org.pageseeder.ox.step.Decompression">
+            <parameter name="output" value="components" />
+        </step>
+        <step id="copy-document-xml" name="Copying document.xml" class="org.pageseeder.ox.step.Copy">
+            <parameter name="input" value="resources" />
+            <parameter name="output" value="files/resources"/>
+        </step>
+        <!--
+        <step id="copy-original-documents" name="Copying original documents" class="org.pageseeder.ox.step.Copy">
+            <parameter name="input" value="components" />
+            <parameter name="output" value="final/{publish_date}/components"/>
+        </step>-->
+        <step id="list-documents-path" name="Return a XML document with a list of documents" viewable="false" class="org.pageseeder.ox.step.ListFiles"
+              async="true">
+            <parameter name="input"            value="components"/>
+            <parameter name="glob-pattern"     value="*.*"/>
+            <parameter name="output"           value="output/list-files.xml"/>
+        </step>
+        <step id="create-shell-psml-document" name="Create Shell PSML Document" viewable="false" class="org.pageseeder.ox.step.Transformation">
+            <parameter name="input"                     value="files/resources/document.xml" />
+            <parameter name="_xslt-documents"           value="output/list-files.xml" />
+            <parameter name="xsl"                       value="xslt/multiple-files.xsl"/>
+            <parameter name="output"                    value="files/document.psml"/>
+        </step>
+        <step id="zip-full-package" name="Zipping PSML document with images folder." class="org.pageseeder.ox.step.Compression">
+            <parameter name="input" value="final" />
+            <parameter name="output" value="embargo.zip"/>
+        </step>
+
+    </pipeline>
+
+
+</pipelines>
+
+
+
