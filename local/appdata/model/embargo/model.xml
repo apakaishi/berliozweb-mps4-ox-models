@@ -11,60 +11,20 @@
               default="true">
 
         <fields>
-            <field
-                    type="text"
-                    id="title"
-                    name="title"
-                    label="Title"
-                    value=""
-                    rules="required"
-                    hint="Title."
-            />
-            <field
-                    type="select"
+            <field type="month"
                     id="publish_date"
                     name="publish_date"
                     label="Publish Date"
-                    active="2022-09-01"
-                    hint="Publish date."
-                    values='[
-                    {
-                      "text": "2022-09-01", "value": "2022-09-01"
-                    },
-                    {
-                      "text": "2022-10-01", "value": "2022-10-01"
-                    },
-                    {
-                      "text": "2022-11-01", "value": "2022-11-01"
-                    }
-                  ]'
-            />
-            <field
-                    type="text"
-                    id="url_path_link"
-                    name="url_path_link"
-                    label="URL-Path(Link)"
                     value=""
-                    rules="false"
-                    hint="URL Path - Link."
+                    increment="1"
+                    readonly="true"
             />
-            <field
-                    type="text"
-                    id="folder"
-                    name="folder"
-                    label="Folder"
+            <field  type="text"
+                    id="title"
+                    name="title"
+                    label="Document Title"
                     value=""
-                    rules="false"
-                    hint="Folder."
-            />
-            <field
-                    type="text"
-                    id="url_path"
-                    name="url_path"
-                    label="URL-Path"
-                    value=""
-                    rules="false"
-                    hint="URL Path."
+                    rules="required"
             />
 
         </fields>
@@ -91,61 +51,20 @@
               default="true">
 
         <fields>
-            <field
-                    type="text"
-                    id="title"
-                    name="title"
-                    label="Title"
-                    value="2022-09-01"
-                    rules="required"
-                    placeholder=""
-                    hint="Title."
-            />
-            <field
-                    type="select"
+            <field type="month"
                     id="publish_date"
                     name="publish_date"
                     label="Publish Date"
-                    active="2022-09-01"
-                    hint="Publish date."
-                    values='[
-                    {
-                      "text": "2022-09-01", "value": "2022-09-01"
-                    },
-                    {
-                      "text": "2022-10-01", "value": "2022-10-01"
-                    },
-                    {
-                      "text": "2022-11-01", "value": "2022-11-01"
-                    }
-                  ]'
-            />
-            <field
-                    type="text"
-                    id="url_path_link"
-                    name="url_path_link"
-                    label="URL-Path(Link)"
                     value=""
-                    rules="false"
-                    hint="URL Path - Link."
+                    increment="1"
+                    readonly="true"
             />
-            <field
-                    type="text"
-                    id="folder"
-                    name="folder"
-                    label="Folder"
+            <field  type="text"
+                    id="title"
+                    name="title"
+                    label="Document Title"
                     value=""
-                    rules="false"
-                    hint="Folder."
-            />
-            <field
-                    type="text"
-                    id="url_path"
-                    name="url_path"
-                    label="URL-Path"
-                    value=""
-                    rules="false"
-                    hint="URL Path."
+                    rules="required"
             />
 
         </fields>
