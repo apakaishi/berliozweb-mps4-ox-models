@@ -12,9 +12,6 @@
 
     <xsl:param name="title" />
     <xsl:param name="publish_date" />
-    <xsl:param name="url_path_link" />
-    <xsl:param name="folder" />
-    <xsl:param name="url_path" />
     <xsl:param name="original_file" />
     <xsl:param name="documents" />
 
@@ -41,7 +38,7 @@
             <xsl:variable name="date-folder" select="$publish_date" />
             <xsl:variable name="host-search" select="'https://data.pbs.gov.au/search/embargo.html?question='" />
             <xsl:variable name="host-path" select="'https://dev.pbs.gov.au/content/embargo/'" />
-            <xsl:variable name="folder" select="if($folder != '') then $folder else concat('/ps/developer/website/website/content/embargo/',$publish_date)" />
+            <xsl:variable name="folder" select="concat('/ps/developer/website/website/content/embargo/',$publish_date)" />
             <xsl:variable name="month" select="tokenize($folder,'/')[last()]" />
             <xsl:variable name="name" select="substring-before(@name,'.')" />
             <xsl:variable name="media-type" select="if(contains(@name,'.docx')) then 'application/docx'
