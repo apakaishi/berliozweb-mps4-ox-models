@@ -8,7 +8,7 @@ ext {
   berliozVersion = '0.11.1'
   bridgeVersion  = '0.11.28'
   simpleVersion = '2021.09-02'
-  oxVersion   = '2.2.70'
+  oxVersion   = '2.2.78'
   docxVersion = '0.8.18'
   xmlVersion  = '0.4.60'
   psnPDFVersion = '0.0.5'
