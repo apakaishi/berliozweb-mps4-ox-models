@@ -12,47 +12,33 @@
 
     <xsl:param name="title" />
     <xsl:param name="publish_date" />
-    <xsl:param name="original_file" />
-    <xsl:param name="documents" />
 
-    <xsl:variable name="base" select="replace(replace(base-uri(),'file:', 'file://'), 'files/resources/document.xml', '')" />
-    <xsl:variable name="doc-folders" select="document(concat($base,$documents))" />
-    <xsl:variable name="data">
-        <docs>
-            <file name="{$original_file}" />
-
-            <xsl:for-each select="$doc-folders/files/file">
-                <xsl:variable name="filename" select="tokenize(@path,'\\')[last()]" />
-                <file name="{$filename}" />
-            </xsl:for-each>
-        </docs>
-    </xsl:variable>
+    <xsl:variable name="base" select="replace(replace(base-uri(),'file:', 'file://'), 'files/list-files.xml', '')" />
 
     <xsl:output method="xml" encoding="UTF-8" indent="yes" />
 
-    <xsl:template match="/">
+    <xsl:template match="files">
 
-        <xsl:for-each select="$data/docs/file">
+        <xsl:for-each select="file">
 
-            <xsl:variable name="pos" select="if(position() = 0) then '1' else position()" />
-            <xsl:variable name="date-folder" select="$publish_date" />
+            <xsl:variable name="date-folder" select="concat(tokenize($publish_date,'-')[1],'/',tokenize($publish_date,'-')[2])" />
             <xsl:variable name="host-search" select="'https://data.pbs.gov.au/search/embargo.html?question='" />
             <xsl:variable name="host-path" select="'https://dev.pbs.gov.au/content/embargo/'" />
             <xsl:variable name="folder" select="concat('/ps/developer/website/website/content/embargo/',$publish_date)" />
-            <xsl:variable name="month" select="tokenize($folder,'/')[last()]" />
-            <xsl:variable name="name" select="substring-before(@name,'.')" />
-            <xsl:variable name="media-type" select="if(contains(@name,'.docx')) then 'application/docx'
-                                                 else if(contains(@name,'.pdf')) then 'application/pdf'
-                                                 else if(contains(@name,'.zip')) then 'application/zip' else 'not-allowed' " />
+            <xsl:variable name="month" select="tokenize($publish_date,'-')[2]" />
+            <xsl:variable name="name" select="tokenize(@path,'\\')[last()]" />
+            <xsl:variable name="filename" select="substring-before(tokenize(@path,'\\')[last()],'.')" />
+            <xsl:variable name="media-type" select="if(ends-with($name,'.docx')) then 'application/docx'
+                                                 else if(ends-with($name,'.pdf')) then 'application/pdf'
+                                                 else if(ends-with($name,'.zip')) then 'application/zip' else 'not-allowed' " />
 
             <xsl:if test="$media-type != 'not-allowed'">
-                <xsl:variable name="path" select="concat('../final/',$date-folder,'/',@name,'.psml')" />
-                <xsl:value-of select="$path" />
+                <xsl:variable name="path" select="concat($base,'final/output/',$date-folder,'/',$name,'.psml')" />
                 <xsl:result-document href="{$path}">
                     <document version="current" level="portable" type="embargo">
                         <documentinfo>
-                            <uri title="{$title}" documenttype="embargo">
-                                <displaytitle><xsl:value-of select="$title" /></displaytitle>
+                            <uri title="{concat($publish_date,' ',$title)}" documenttype="embargo">
+                                <displaytitle><xsl:value-of select="concat($publish_date,' ',$title)" /></displaytitle>
                                 <labels><xsl:value-of select="'embargo'" /></labels>
                             </uri>
                         </documentinfo>
@@ -61,9 +47,9 @@
                             <properties>
                                 <property name="last_modified" title="Last modified" datatype="string" value=""/>
                                 <property name="folder" title="Folder" datatype="string" value="{$folder}"/>
-                                <property name="filename" title="Filename" datatype="string" value="{@name}"/>
+                                <property name="filename" title="Filename" datatype="string" value="{$name}"/>
                                 <property name="media_type" title="Media Type" datatype="string" value="{$media-type}"/>
-                                <property name="url_path" title="URL-Path" datatype="string" value="{concat($host-path,$month,'/',@name)}"/>
+                                <property name="url_path" title="URL-Path" datatype="string" value="{concat($host-path,$month,'/',$name)}"/>
                                 <property name="url_uriid" title="URL-URIID" datatype="string" value="{''}"/>
                                 <property name="url_uriid_link"
                                           datatype="link"
@@ -75,7 +61,7 @@
                         <section id="title">
                             <fragment id="1">
                                 <heading level="1">
-                                    <xsl:value-of select="concat($date-folder,' ',$title)" />
+                                    <xsl:value-of select="concat($publish_date,' ',$title)" />
                                 </heading>
                             </fragment>
                         </section>
@@ -84,12 +70,12 @@
                                 <property name="publish_date"
                                           datatype="link"
                                           title="Publish Date">
-                                    <link href="{concat($host-search,$date-folder)}" frag="default"><xsl:value-of select="$date-folder" /></link>
+                                    <link href="{concat($host-search,$publish_date)}" frag="default"><xsl:value-of select="$publish_date" /></link>
                                 </property>
                                 <property name="url_path_link"
                                           datatype="link"
                                           title="URL-Path(Link)">
-                                    <link href="{concat($host-path,$month,'/',$original_file)}" frag="default"><xsl:value-of select="$original_file" /></link>
+                                    <link href="{concat($host-path,$month,'/',$name)}" frag="default"><xsl:value-of select="$name" /></link>
                                 </property>
                             </properties-fragment>
                         </section>
