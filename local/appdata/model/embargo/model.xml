@@ -26,22 +26,78 @@
                     value=""
                     rules="required"
             />
-
         </fields>
+
+        <step id="copy-input-file" name="Copy Input File" viewable="false" class="net.pageseeder.ox.web.step.CopyInputToFolder">
+            <parameter name="output"                value="final/binary/{publish_date_year}/{publish_date_month}"/>
+        </step>
         <step id="copy-document-xml" name="Copying document.xml" class="org.pageseeder.ox.step.Copy">
-            <parameter name="input" value="resources" />
-            <parameter name="output" value="files/resources"/>
+            <parameter name="input"                 value="resources" />
+            <parameter name="output"                value="files/resources"/>
         </step>
         <step id="create-shell-psml-document" name="Create Shell PSML Document" viewable="false" class="org.pageseeder.ox.step.Transformation">
-            <parameter name="input"                     value="files/resources/document.xml" />
-            <parameter name="xsl"                       value="xslt/simple-file.xsl"/>
-            <parameter name="output"                    value="files/document.psml"/>
+            <parameter name="input"                 value="files/resources/document.xml" />
+            <parameter name="xsl"                   value="xslt/simple-file.xsl"/>
+            <parameter name="output"                value="files/document.psml"/>
         </step>
-        <step id="zip-full-package" name="Zipping PSML document with images folder." class="org.pageseeder.ox.step.Compression">
-            <parameter name="input" value="final" />
-            <parameter name="output" value="embargo.zip"/>
+        <step id="zip-psml-output" name="Zipping PSML Document." class="org.pageseeder.ox.step.Compression">
+            <parameter name="input"                 value="final/output" />
+            <parameter name="output"                value="embargo.zip"/>
         </step>
-
+        <step id="upload-to-pageseeder-loadingzone" name="Upload ZIP to Pageseeder - PSML Document" class="org.pageseeder.ox.pageseeder.step.UploadToLoadingZone"
+              async="false" >
+            <parameter name="input"                 value="embargo.zip" />
+            <parameter name="filename"              value="embargo.zip" />
+            <parameter name="autoload"              value="false" />
+            <parameter name="psconfig"              value="dev-clone" />
+            <parameter name="overwrite"             value="true" />
+            <parameter name="group"                 value="data_source-website" />
+        </step>
+        <step id="unzip-loadingzone-content" name="Unzip File in Pageseeder - PSML Document" class="org.pageseeder.ox.pageseeder.step.UnzipLoadingZoneContent">
+            <parameter name="group"                 value="data_source-website" />
+            <parameter name="path"                  value="embargo.zip" />
+            <parameter name="psconfig"              value="dev-clone" />
+            <parameter name="deleteoriginal"        value="true" />
+        </step>
+        <step id="loads-content-to-the-group" name="Load Unzipped Content to Pageseeder Group  - PSML documents" class="org.pageseeder.ox.pageseeder.step.StartLoading">
+            <parameter name="group"                 value="data_source-website" />
+            <parameter name="createxrefs"           value="true" />
+            <parameter name="index"                 value="true" />
+            <parameter name="overwrite"             value="true" />
+            <parameter name="psconfig"              value="dev-clone" />
+            <parameter name="overwrite-properties"  value="true" />
+            <parameter name="validate"              value="true" />
+            <parameter name="folder"                value="website/embargo"/>
+        </step>
+        <step id="zip-binary-documents" name="Zipping Binary Document." class="org.pageseeder.ox.step.Compression">
+            <parameter name="input"                 value="final/binary" />
+            <parameter name="output"                value="binary.zip"/>
+        </step>
+        <step id="upload-to-pageseeder-loadingzone-binary" name="Upload ZIP to Pageseeder - Binary Document" class="org.pageseeder.ox.pageseeder.step.UploadToLoadingZone"
+              async="false" >
+            <parameter name="input"                 value="binary.zip" />
+            <parameter name="filename"              value="binary.zip" />
+            <parameter name="autoload"              value="false" />
+            <parameter name="psconfig"              value="dev-clone" />
+            <parameter name="overwrite"             value="true" />
+            <parameter name="group"                 value="data_source-files" />
+        </step>
+        <step id="unzip-loadingzone-content-binary" name="Unzip File in Pageseeder - Binary Document" class="org.pageseeder.ox.pageseeder.step.UnzipLoadingZoneContent">
+            <parameter name="group"                 value="data_source-files" />
+            <parameter name="path"                  value="binary.zip" />
+            <parameter name="psconfig"              value="dev-clone" />
+            <parameter name="deleteoriginal"        value="true" />
+        </step>
+        <step id="loads-content-to-the-group-binary" name="Load Unzipped Content to Pageseeder Group - Binary Document" class="org.pageseeder.ox.pageseeder.step.StartLoading">
+            <parameter name="group"                 value="data_source-files" />
+            <parameter name="createxrefs"           value="true" />
+            <parameter name="index"                 value="true" />
+            <parameter name="overwrite"             value="true" />
+            <parameter name="psconfig"              value="dev-clone" />
+            <parameter name="overwrite-properties"  value="true" />
+            <parameter name="validate"              value="true" />
+            <parameter name="folder"                value="documents/embargo"/>
+        </step>
     </pipeline>
 
     <pipeline id="embargo-shell-multiple-files"
@@ -68,34 +124,79 @@
             />
 
         </fields>
-        <!-- Receive a PBS XML data in one zip file -->
-        <step id="Unzip" name="Unzipping." class="org.pageseeder.ox.step.Decompression">
-            <parameter name="output" value="components" />
+        <step id="Unzip" name="Unzipping Document." class="org.pageseeder.ox.step.Decompression">
+            <parameter name="output"                value="final/binary/{publish_date_year}/{publish_date_month}" />
         </step>
-        <step id="copy-document-xml" name="Copying document.xml" class="org.pageseeder.ox.step.Copy">
-            <parameter name="input" value="resources" />
-            <parameter name="output" value="files/resources"/>
+        <step id="copy-input-file" name="Copy Input File" viewable="false" class="net.pageseeder.ox.web.step.CopyInputToFolder">
+            <parameter name="output"                value="final/binary/{publish_date_year}/{publish_date_month}"/>
         </step>
-        <!--
-        <step id="copy-original-documents" name="Copying original documents" class="org.pageseeder.ox.step.Copy">
-            <parameter name="input" value="components" />
-            <parameter name="output" value="final/{publish_date}/components"/>
-        </step>-->
-        <step id="list-documents-path" name="Return a XML document with a list of documents" viewable="false" class="org.pageseeder.ox.step.ListFiles"
-              async="true">
-            <parameter name="input"            value="components"/>
-            <parameter name="glob-pattern"     value="*.*"/>
-            <parameter name="output"           value="output/list-files.xml"/>
+        <step id="list-documents-path" name="Return a XML document with a list of documents" viewable="false" class="org.pageseeder.ox.step.ListFiles" async="true">
+            <parameter name="input"                 value="final/binary/{publish_date_year}/{publish_date_month}"/>
+            <parameter name="glob-pattern"          value="*.*"/>
+            <parameter name="output"                value="files/list-files.xml"/>
         </step>
         <step id="create-shell-psml-document" name="Create Shell PSML Document" viewable="false" class="org.pageseeder.ox.step.Transformation">
-            <parameter name="input"                     value="files/resources/document.xml" />
-            <parameter name="_xslt-documents"           value="output/list-files.xml" />
-            <parameter name="xsl"                       value="xslt/multiple-files.xsl"/>
-            <parameter name="output"                    value="files/document.psml"/>
+            <parameter name="input"                 value="files/list-files.xml" />
+            <parameter name="xsl"                   value="xslt/multiple-files.xsl"/>
+            <parameter name="output"                value="files/document.psml"/>
         </step>
-        <step id="zip-full-package" name="Zipping PSML document with images folder." class="org.pageseeder.ox.step.Compression">
-            <parameter name="input" value="final" />
-            <parameter name="output" value="embargo.zip"/>
+        <step id="zip-full-package" name="Zipping PSML Documents." class="org.pageseeder.ox.step.Compression">
+            <parameter name="input"                 value="final/output" />
+            <parameter name="output"                value="embargo.zip"/>
+        </step>
+        <step id="upload-to-pageseeder-loadingzone" name="Upload ZIP to Pageseeder - PSML Documents" class="org.pageseeder.ox.pageseeder.step.UploadToLoadingZone"
+              async="false" >
+            <parameter name="input"                 value="embargo.zip" />
+            <parameter name="filename"              value="embargo.zip" />
+            <parameter name="autoload"              value="false" />
+            <parameter name="psconfig"              value="dev-clone" />
+            <parameter name="overwrite"             value="true" />
+            <parameter name="group"                 value="data_source-website" />
+        </step>
+        <step id="unzip-loadingzone-content" name="Unzip File in Pageseeder - PSML Documents" class="org.pageseeder.ox.pageseeder.step.UnzipLoadingZoneContent">
+            <parameter name="group"                 value="data_source-website" />
+            <parameter name="path"                  value="embargo.zip" />
+            <parameter name="psconfig"              value="dev-clone" />
+            <parameter name="deleteoriginal"        value="true" />
+        </step>
+        <step id="loads-content-to-the-group" name="Load Unzipped Content to Pageseeder Group  - PSML documents" class="org.pageseeder.ox.pageseeder.step.StartLoading">
+            <parameter name="group"                 value="data_source-website" />
+            <parameter name="createxrefs"           value="true" />
+            <parameter name="index"                 value="true" />
+            <parameter name="overwrite"             value="true" />
+            <parameter name="psconfig"              value="dev-clone" />
+            <parameter name="overwrite-properties"  value="true" />
+            <parameter name="validate"              value="true" />
+            <parameter name="folder"                value="website/embargo"/>
+        </step>
+        <step id="zip-binary-documents" name="Zipping Binary Documents." class="org.pageseeder.ox.step.Compression">
+            <parameter name="input"                 value="final/binary" />
+            <parameter name="output"                value="binary.zip"/>
+        </step>
+        <step id="upload-to-pageseeder-loadingzone-binary" name="Upload ZIP to Pageseeder - Binary Documents" class="org.pageseeder.ox.pageseeder.step.UploadToLoadingZone"
+              async="false" >
+            <parameter name="input"                 value="binary.zip" />
+            <parameter name="filename"              value="binary.zip" />
+            <parameter name="autoload"              value="false" />
+            <parameter name="psconfig"              value="dev-clone" />
+            <parameter name="overwrite"             value="true" />
+            <parameter name="group"                 value="data_source-files" />
+        </step>
+        <step id="unzip-loadingzone-content-binary" name="Unzip File in Pageseeder - Binary Documents" class="org.pageseeder.ox.pageseeder.step.UnzipLoadingZoneContent">
+            <parameter name="group"                 value="data_source-files" />
+            <parameter name="path"                  value="binary.zip" />
+            <parameter name="psconfig"              value="dev-clone" />
+            <parameter name="deleteoriginal"        value="true" />
+        </step>
+        <step id="loads-content-to-the-group-binary" name="Load Unzipped Content to Pageseeder Group - Binary Documents" class="org.pageseeder.ox.pageseeder.step.StartLoading">
+            <parameter name="group"                 value="data_source-files" />
+            <parameter name="createxrefs"           value="true" />
+            <parameter name="index"                 value="true" />
+            <parameter name="overwrite"             value="true" />
+            <parameter name="psconfig"              value="dev-clone" />
+            <parameter name="overwrite-properties"  value="true" />
+            <parameter name="validate"              value="true" />
+            <parameter name="folder"                value="documents/embargo"/>
         </step>
 
     </pipeline>
