@@ -19,7 +19,7 @@
     <xsl:template match="/">
 
         <xsl:variable name="pos" select="if(position() = 0) then '1' else position()" />
-        <xsl:variable name="date-folder" select="$publish_date" />
+        <xsl:variable name="date-folder" select="concat(tokenize($publish_date,'-')[1],'/',tokenize($publish_date,'-')[2])" />
         <xsl:variable name="host-search" select="'https://data.pbs.gov.au/search/embargo.html?question='" />
         <xsl:variable name="host-path" select="'https://dev.pbs.gov.au/content/embargo/'" />
         <xsl:variable name="folder" select="concat('/ps/developer/website/website/content/embargo/',$publish_date)" />
@@ -29,12 +29,12 @@
                                                  else if(contains($filename,'.pdf')) then 'application/pdf' else 'not-allowed' " />
 
         <xsl:if test="$media-type != 'not-allowed'">
-            <xsl:variable name="path" select="concat('../final/',$date-folder,'/',$filename,'-',$pos,'.psml')" />
+            <xsl:variable name="path" select="concat('../final/output/',$date-folder,'/',$filename,'-',$pos,'.psml')" />
             <xsl:result-document href="{$path}">
                 <document version="current" level="portable" type="embargo">
                     <documentinfo>
-                        <uri title="{$title}" documenttype="embargo">
-                            <displaytitle><xsl:value-of select="$title" /></displaytitle>
+                        <uri title="{concat($publish_date,' ',$title)}" documenttype="embargo">
+                            <displaytitle><xsl:value-of select="concat($publish_date,' ',$title)" /></displaytitle>
                             <labels><xsl:value-of select="'embargo'" /></labels>
                         </uri>
                     </documentinfo>
@@ -57,7 +57,7 @@
                     <section id="title">
                         <fragment id="1">
                             <heading level="1">
-                                <xsl:value-of select="concat($date-folder,' ',$title)" />
+                                <xsl:value-of select="concat($publish_date,' ',$title)" />
                             </heading>
                         </fragment>
                     </section>
@@ -66,7 +66,7 @@
                             <property name="publish_date"
                                       datatype="link"
                                       title="Publish Date">
-                                <link href="{concat($host-search,$date-folder)}" frag="default"><xsl:value-of select="$date-folder" /></link>
+                                <link href="{concat($host-search,$publish_date)}" frag="default"><xsl:value-of select="$publish_date" /></link>
                             </property>
                             <property name="url_path_link"
                                       datatype="link"
