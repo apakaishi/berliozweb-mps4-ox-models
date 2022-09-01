@@ -32,15 +32,8 @@
             <xsl:variable name="media-type" select="if(ends-with($name,'.docx')) then 'application/docx'
                                                  else if(ends-with($name,'.pdf')) then 'application/pdf'
                                                  else if(ends-with($name,'.zip')) then 'application/zip' else 'not-allowed' " />
-            <test1><xsl:value-of select="$short-path" /></test1>
-            <test2><xsl:value-of select="@short-path" /></test2>
-            <name><xsl:value-of select="$name" /></name>
-            <filename><xsl:value-of select="$filename" /></filename>
-            <base><xsl:value-of select="$base" /></base>
-            <path><xsl:value-of select="@path" /></path>
             <xsl:if test="$media-type != 'not-allowed'">
                 <xsl:variable name="path" select="concat('../final/output/',$date-folder,'/',$filename,'.psml')" />
-                <pathorigem><xsl:value-of select="$path" /></pathorigem>
                 <xsl:result-document href="{$path}">
                     <document version="current" level="portable" type="embargo">
                         <documentinfo>
