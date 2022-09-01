@@ -26,14 +26,21 @@
             <xsl:variable name="host-path" select="'https://dev.pbs.gov.au/content/embargo/'" />
             <xsl:variable name="folder" select="concat('/ps/developer/website/website/content/embargo/',$publish_date)" />
             <xsl:variable name="month" select="tokenize($publish_date,'-')[2]" />
-            <xsl:variable name="name" select="tokenize(@path,'\\')[last()]" />
-            <xsl:variable name="filename" select="substring-before(tokenize(@path,'\\')[last()],'.')" />
+            <xsl:variable name="short-path" select="translate(@short-path,'/','\')" />
+            <xsl:variable name="name" select="tokenize($short-path,'\\')[last()]" />
+            <xsl:variable name="filename" select="substring-before(tokenize($short-path,'\\')[last()],'.')" />
             <xsl:variable name="media-type" select="if(ends-with($name,'.docx')) then 'application/docx'
                                                  else if(ends-with($name,'.pdf')) then 'application/pdf'
                                                  else if(ends-with($name,'.zip')) then 'application/zip' else 'not-allowed' " />
-
+            <test1><xsl:value-of select="$short-path" /></test1>
+            <test2><xsl:value-of select="@short-path" /></test2>
+            <name><xsl:value-of select="$name" /></name>
+            <filename><xsl:value-of select="$filename" /></filename>
+            <base><xsl:value-of select="$base" /></base>
+            <path><xsl:value-of select="@path" /></path>
             <xsl:if test="$media-type != 'not-allowed'">
-                <xsl:variable name="path" select="concat($base,'final/output/',$date-folder,'/',$name,'.psml')" />
+                <xsl:variable name="path" select="concat('../final/output/',$date-folder,'/',$filename,'.psml')" />
+                <pathorigem><xsl:value-of select="$path" /></pathorigem>
                 <xsl:result-document href="{$path}">
                     <document version="current" level="portable" type="embargo">
                         <documentinfo>
