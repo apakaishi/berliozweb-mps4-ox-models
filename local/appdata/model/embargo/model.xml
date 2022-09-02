@@ -31,6 +31,9 @@
         <step id="copy-input-file" name="Copy Input File" viewable="false" class="net.pageseeder.ox.web.step.CopyInputToFolder">
             <parameter name="output"                value="final/binary/{publish_date_year}/{publish_date_month}"/>
         </step>
+<!--        <step id="copy-input-file" name="Copy Input File" viewable="false" class="org.pageseeder.ox.step.Copy">-->
+<!--            <parameter name="output"                value="final/binary/{publish_date_year}/{publish_date_month}/{_uploaded_file}"/>-->
+<!--        </step>-->
         <step id="copy-document-xml" name="Copying document.xml" class="org.pageseeder.ox.step.Copy">
             <parameter name="input"                 value="resources" />
             <parameter name="output"                value="files/resources"/>
