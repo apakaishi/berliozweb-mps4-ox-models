@@ -202,6 +202,34 @@
     </pipeline>
 
 
+    <pipeline id="mps4-conversion" name="MPS4: Excel to PSML"
+              description="MPS4: Excel to PSML"
+              accepts="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+              default="false">
+
+        <step id="extract-data-from-spreadsheet" name="Extract data from Spreadsheet" viewable="false"
+              class="org.pageseeder.xlsx.ox.step.Import">
+            <parameter name="split-level"          value="workbook"/>
+        </step>
+
+        <step id="converting-to-psml" name="Converting to PSML documents" viewable="false"
+              class="org.pageseeder.ox.step.Transformation"
+              async="true" >
+            <parameter name="input"                 value="workbook.xml" />
+            <parameter name="xsl"    		    	  value="xslt/create-psml-documents.xsl"/>
+            <parameter name="output" 			      value="review/data.psml"/>
+        </step>
+
+        <!-- Zip output files  -->
+        <step id="zip-pbs-files" name="Zipping PBS files"
+              class="org.pageseeder.ox.step.Compression"
+              async="false" >
+            <parameter name="input" value="final" />
+            <parameter name="output" value="documents.zip"/>
+        </step>
+
+    </pipeline>
+
 </pipelines>
 
 
