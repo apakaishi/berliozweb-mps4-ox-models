@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  This document defines the pipelines for the conversion ox model.
+-->
+<pipelines>
+
+<!--
+  <pipeline
+      id="bulk-comment-change"
+      name="Bulk Comment Change"
+      accepts="application/xlsx"
+      default="false">
+
+    <step id="extract-data-from-spreadsheet" name="Extract data from Spreadsheet" viewable="false" class="org.pageseeder.xlsx.ox.step.Import">
+      <parameter name="split-level"      value="workbook"/>
+      <parameter name="output"           value="data/workbook.xml"/>
+      <parameter name="xslt"             value="xslt/workbook2xml.xsl"/>
+    </step>
+
+    <step
+        id="execute-changes"
+        name="Execute changes"
+        async="true"
+        class="org.pageseeder.ox.pageseeder.step.BulkCommentChange">
+      <parameter name="input"   value="data/workbook.xml" />
+      <parameter name="psconfig" value="dev-clone" />
+      <parameter name="output"  value="data/changes-result.xml" />
+    </step>
+
+    <step
+        id="xml2csv"
+        name="Convert from XML to CSV"
+        class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"           value="data/changes-result.xml" />
+      <parameter name="display-result"  value="false" />
+      <parameter name="xsl"             value="xslt/csv.xsl" />
+      <parameter name="output"             value="data/report.csv" />
+    </step>
+
+  </pipeline>
+-->
+</pipelines>
