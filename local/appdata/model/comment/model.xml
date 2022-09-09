@@ -4,7 +4,6 @@
 -->
 <pipelines>
 
-<!--
   <pipeline
       id="bulk-comment-change"
       name="Bulk Comment Change"
@@ -38,5 +37,5 @@
     </step>
 
   </pipeline>
--->
+
 </pipelines>
