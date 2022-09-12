@@ -12,13 +12,13 @@
   </xsl:template>
 
   <xsl:template match="workbook">
-    <publishes>
-      <xsl:apply-templates select="worksheet/row" />
-    </publishes>
+    <comments>
+      <xsl:apply-templates select="worksheet/row"/>
+    </comments>
   </xsl:template>
 
   <xsl:template match="row[@position != 1]">
-    <xsl:element name="publish">
+    <xsl:element name="comment">
       <xsl:for-each select="col">
         <xsl:variable name="pos" select="position()"/>
         <xsl:attribute name="{$headers[$pos]}" select="."/>
