@@ -7,8 +7,8 @@ ext {
   //Libraries Version
   berliozVersion = '0.11.1'
   bridgeVersion  = '0.11.28'
-  simpleVersion = '2021.09-02'
-  oxVersion   = '2.2.78'
+  simpleVersion = '2022.09-04'
+  oxVersion   = '2.2.81'
   docxVersion = '0.8.18'
   xmlVersion  = '0.4.60'
   psnPDFVersion = '0.0.5'
