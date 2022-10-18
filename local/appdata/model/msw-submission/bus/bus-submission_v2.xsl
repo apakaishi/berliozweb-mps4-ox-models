@@ -72,8 +72,8 @@
 				   <property name="purpose" title="Purpose" count="n" datatype="string">
 					  <value><xsl:value-of select="$purpose" /></value>
 				   </property>
-				   <property name="type-listing" title="Type listing" value="{type-listing}" datatype="string" />
-				   <property name="submission-type" title="Submission type" value="{submission-type}" datatype="string" />
+				   <property name="type-listing" title="Type listing" value="{fn:clean-white-spaces(type-listing)}" datatype="string" />
+				   <property name="submission-type" title="Submission type" value="{fn:clean-white-spaces(submission-type)}" datatype="string" />
 
 				   <property name="comment" title="Comment" value="{comment}" datatype="string" />
 				   <!--Property review in Template-->
