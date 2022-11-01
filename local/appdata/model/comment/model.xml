@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  This document defines the pipelines for the conversion ox model.
+-->
+<pipelines>
+
+  <pipeline
+      id="bulk-comment-change"
+      name="Bulk Comment Change"
+      accepts="application/xlsx"
+      default="false">
+    <fields>
+      <field
+          type="switch"
+          id="sort-comments"
+          name="sort-comments"
+          label="Sort by last modified date in descending order"
+          active="true"
+          hint="Column 'lastmodified' must be in format: YYYY-MM-DD HH:MM:SS"
+      />
+    </fields>
+
+    <step id="extract-data-from-spreadsheet" name="Extract data from Spreadsheet" viewable="false" class="org.pageseeder.xlsx.ox.step.Import">
+      <parameter name="split-level"      value="workbook"/>
+      <parameter name="output"           value="data/workbook.xml"/>
+      <parameter name="xslt"             value="xslt/workbook2xml.xsl"/>
+    </step>
+
+    <step id="sort-modified"
+          name="Sort last modified by descending"
+          viewable="false"
+          class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"            value="data/workbook.xml"/>
+      <parameter name="display-result"  value="false"/>
+      <parameter name="xsl"              value="xslt/sort-modified.xsl"/>
+      <parameter name="output"           value="data/workbook-sorted.xml"/>
+    </step>
+
+    <step id="remove-modified"
+          name="Remove last modified column"
+          viewable="false"
+          class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"            value="data/workbook-sorted.xml"/>
+      <parameter name="display-result"  value="false"/>
+      <parameter name="xsl"              value="xslt/remove-modified.xsl"/>
+      <parameter name="output"           value="data/workbook-removed.xml"/>
+    </step>
+
+    <step
+        id="execute-changes"
+        name="Execute changes"
+        async="true"
+        class="org.pageseeder.ox.pageseeder.step.BulkCommentChange">
+      <parameter name="input"   value="data/workbook-removed.xml" />
+      <parameter name="psconfig" value="dev-clone" />
+      <parameter name="interval" value="1000"/>
+      <parameter name="output"  value="data/changes-result.xml" />
+    </step>
+
+    <step
+        id="xml2csv"
+        name="Convert from XML to CSV"
+        class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"           value="data/changes-result.xml" />
+      <parameter name="display-result"  value="false" />
+      <parameter name="xsl"             value="xslt/csv.xsl" />
+      <parameter name="output"             value="data/report.csv" />
+    </step>
+
+  </pipeline>
+
+</pipelines>
