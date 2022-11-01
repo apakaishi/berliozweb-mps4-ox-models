@@ -4,9 +4,9 @@
 -->
 <pipelines  title="Embargo">
 
-    <pipeline id="embargo-shell-simple-file"
-              name="Upload One Document (DOCX/PDF)"
-              description="Upload One Document (DOCX/PDF)"
+    <pipeline id="embargo-single-file"
+              name="Upload One Document"
+              description="Upload only One Document each time (DOCX, PDF, XLSX, XML, CSV, etc)"
               accepts="application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
               default="true">
 
@@ -110,9 +110,9 @@
         </step>
     </pipeline>
 
-    <pipeline id="embargo-shell-multiple-files"
+    <pipeline id="embargo-multiple-files"
               name="Upload Multiple Files (ZIP)"
-              description="Upload Multiple Files (ZIP)"
+              description="Upload Multiple Files at once (ZIP)"
               accepts="application/zip"
               default="true">
 
