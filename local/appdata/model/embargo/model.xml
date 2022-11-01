@@ -11,13 +11,20 @@
               default="true">
 
         <fields>
-            <field type="month"
+            <field type="calendar"
                     id="publish_date"
                     name="publish_date"
                     label="Publish Date"
                     value=""
+                    min=""
+                    max=""
+                    noTitle="false"
+                    landscape="true"
+                    current="true"
+                    prevMonths=""
+                    nextMonths=""
                     increment="1"
-                    readonly="true"
+                    readonly="false"
             />
             <field  type="text"
                     id="title"
