@@ -2,7 +2,7 @@
 <!--
   This document defines the pipelines for the conversion ox model.
 -->
-<pipelines>
+<pipelines icon="file-move">
   <pipeline id="mps4-submission-conversion" name="MPS4 Submission Bus: Generate Document for Bus Submission" accepts="application/xlsx"  default="false">
     <!-- Unzip excel document-->
     <step id="extract-data-from-spreadsheet" name="Extract data from Spreadsheet" viewable="false" class="org.pageseeder.xlsx.ox.step.Import">

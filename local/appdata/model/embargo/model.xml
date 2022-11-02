@@ -2,7 +2,7 @@
 <!--
   This document defines the pipelines for the conversion ox model.
 -->
-<pipelines  title="Embargo">
+<pipelines title="Embargo" icon="file-upload">
 
     <pipeline id="embargo-single-file"
               name="Upload One Document"
