@@ -12,6 +12,7 @@
 
     <xsl:param name="title" />
     <xsl:param name="embargo-folder" />
+    <xsl:param name="embargo-year-folder" />
     <xsl:param name="publish_date" />
     <xsl:param name="publish_date_year" />
     <xsl:param name="publish_date_month" />
@@ -33,12 +34,50 @@
                                         else 'December'" />
 
     <xsl:variable name="title-doc" select="concat($month-text,' ',$publish_date_year)" />
+    <xsl:variable name="title-year-doc" select="$publish_date_year" />
     <xsl:variable name="filename" select="concat(lower-case($month-text),'-',$publish_date_year,'.psml')" />
+    <xsl:variable name="filename-year" select="concat($publish_date_year,'.psml')" />
     <xsl:variable name="path" select="concat($base,$embargo-folder,$filename)" />
+    <xsl:variable name="path-year" select="concat($base,$embargo-year-folder,$filename-year)" />
 
     <xsl:output method="xml" encoding="UTF-8" indent="yes" />
 
     <xsl:template match="/">
+        <!-- Year document -->
+        <xsl:result-document href="{$path-year}">
+            <document type="embargo_month" version="current" level="portable">
+                <documentinfo>
+                    <uri documenttype="embargo_month" title="{$title-year-doc}">
+                        <displaytitle><xsl:value-of select="$title-year-doc" /></displaytitle>
+                        <labels>restricted</labels>
+                    </uri>
+                </documentinfo>
+                <fragmentinfo/>
+                <metadata>
+                    <properties>
+                        <property name="date" title="Date" value="{$publish_date}" datatype="date"/>
+                    </properties>
+                </metadata>
+                <section id="title" title="Title" fragmenttype="default">
+                    <fragment id="1">
+                        <heading level="1"><xsl:value-of select="$title-year-doc" /></heading>
+                        <para>
+                            <bold>Page last updated:</bold>
+                            <placeholder name="date">date</placeholder>
+                        </para>
+                    </fragment>
+                </section>
+                <section id="content" title="Content" fragmenttype="default,embed">
+                    <fragment id="2">
+                        <para>
+                            <inline label="showsearchresults-embargo"><xsl:value-of select="$publish_date_year" /></inline>
+                        </para>
+                    </fragment>
+                </section>
+            </document>
+        </xsl:result-document>
+
+        <!-- Month document-->
         <xsl:result-document href="{$path}">
             <document type="embargo_month" version="current" level="portable">
                 <documentinfo>
