@@ -25,7 +25,7 @@
 
         <xsl:for-each select="file">
             <xsl:variable name="short-path" select="translate(@short-path,'/','\')" />
-            <xsl:variable name="filename" select="substring-before(tokenize($short-path,'\\')[last()],'.')" />
+            <xsl:variable name="filename" select="tokenize($short-path,'\\')[last()]" />
             <xsl:variable name="path" select="concat($base,$metadata-folder,$filename,'.psml')" />
 
             <xsl:result-document href="{$path}">
