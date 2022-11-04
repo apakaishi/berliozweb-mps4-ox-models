@@ -11,6 +11,7 @@
                 exclude-result-prefixes="#all">
 
     <xsl:param name="title" />
+    <xsl:param name="type" />
     <xsl:param name="embargo-folder" />
     <xsl:param name="xref-folder" select="'/ps/data_source/website/website/embargo/'" />
     <xsl:param name="embargo-path" />
@@ -19,7 +20,9 @@
     <xsl:param name="publish_date_month" />
     <xsl:param name="original_file" />
 
-    <xsl:variable name="base" select="replace(replace(base-uri(),'file:', 'file://'), 'files/resources/document.xml', '')" />
+    <xsl:variable name="reference-doc" select="if($type = 'simple') then 'files/resources/document.xml' else 'files/list-files.xml'" />
+
+    <xsl:variable name="base" select="replace(replace(base-uri(),'file:', 'file://'), $reference-doc, '')" />
     <xsl:variable name="path" select="concat($base,$embargo-path)" />
 
     <xsl:variable name="title-content" select="'Embargo Content Archive'"/>

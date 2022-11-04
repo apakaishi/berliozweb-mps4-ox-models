@@ -11,13 +11,16 @@
                 exclude-result-prefixes="#all">
 
     <xsl:param name="title" />
+    <xsl:param name="type" />
     <xsl:param name="embargo-folder" />
     <xsl:param name="embargo-year-folder" />
     <xsl:param name="publish_date" />
     <xsl:param name="publish_date_year" />
     <xsl:param name="publish_date_month" />
 
-    <xsl:variable name="base" select="replace(replace(base-uri(),'file:', 'file://'), 'files/resources/document.xml', '')" />
+    <xsl:variable name="reference-doc" select="if($type = 'simple') then 'files/resources/document.xml' else 'files/list-files.xml'" />
+
+    <xsl:variable name="base" select="replace(replace(base-uri(),'file:', 'file://'), $reference-doc, '')" />
 
     <xsl:variable name="month" select="tokenize($publish_date_month,'-')[last()]" />
     <xsl:variable name="month-text" select="if($month = '01') then 'January'
