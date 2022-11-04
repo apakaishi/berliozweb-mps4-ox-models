@@ -95,7 +95,7 @@
                         <property name="date" title="Date" value="{$publish_date}" datatype="date"/>
                     </properties>
                 </metadata>
-                <section id="title" title="Title" fragmenttype="default">
+                <section id="title" title="Title" fragmenttype="default" overwrite="false">
                     <fragment id="1">
                         <heading level="1"><xsl:value-of select="$title-doc" /></heading>
                         <para>
@@ -104,10 +104,10 @@
                         </para>
                     </fragment>
                 </section>
-                <section id="content" title="Content" fragmenttype="default,embed">
+                <section id="content" title="Content" fragmenttype="default,embed" overwrite="false">
                     <fragment id="2">
                         <para>
-                            <inline label="showsearchresults-embargo"><xsl:value-of select="$publish_date_month" /></inline>
+                            <inline label="showsearchresults-embargo"><xsl:value-of select="concat($publish_date_year, '-', $publish_date_month)" /></inline>
                         </para>
                     </fragment>
                 </section>

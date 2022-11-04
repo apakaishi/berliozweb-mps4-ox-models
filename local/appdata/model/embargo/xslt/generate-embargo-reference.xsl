@@ -53,13 +53,13 @@
                     <publication id="embargo-content-archive" hostid="1" rooturiid="102458" title="Embargo Content Archive" defaultgroupid="24" type="default"/>
                 </documentinfo>
                 <metadata/>
-                <section id="title">
+                <section id="title" overwrite="false">
                     <fragment id="1">
                         <heading level="1"><xsl:value-of select="$title-content" /></heading>
                     </fragment>
                 </section>
                 <toc/>
-                <section id="xrefs">
+                <section id="xrefs" edit="false">
                     <xref-fragment id="2">
                         <xsl:for-each select="2012 to $publish_date_year">
                             <xsl:sort select="." data-type="number" order="descending"/>
