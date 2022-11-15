@@ -16,19 +16,23 @@
     <xsl:param name="publish_date_year" />
     <xsl:param name="publish_date_month" />
 
-    <xsl:variable name="months" select="tokenize($publish_date_month,'/')[last()]" />
-    <xsl:variable name="month-actual" select="if($months = '01') then 1
-                                        else if($months = '02') then 2
-                                        else if($months = '03') then 3
-                                        else if($months = '04') then 4
-                                        else if($months = '05') then 5
-                                        else if($months = '06') then 6
-                                        else if($months = '07') then 7
-                                        else if($months = '08') then 8
-                                        else if($months = '09') then 9
-                                        else if($months = '10') then 10
-                                        else if($months = '11') then 11
-                                        else 12"/>
+    <xsl:variable name="publish_date_year_folder" select="if($publish_date_month = 12) then $publish_date_year + 1 else $publish_date_year" />
+    <xsl:variable name="publish_date_month_folder" select="if($publish_date_month = 12) then '01' else $publish_date_month + 1" />
+    <xsl:variable name="publication-month-changed" select="if(string-length(string($publish_date_month_folder)) = 1) then concat('0',string($publish_date_month_folder)) else $publish_date_month_folder" />
+
+    <xsl:variable name="month-actual" select="if($publication-month-changed = 01) then 1
+                                        else if($publication-month-changed = 02) then 2
+                                        else if($publication-month-changed = 03) then 3
+                                        else if($publication-month-changed = 04) then 4
+                                        else if($publication-month-changed = 05) then 5
+                                        else if($publication-month-changed = 06) then 6
+                                        else if($publication-month-changed = 07) then 7
+                                        else if($publication-month-changed = 08) then 8
+                                        else if($publication-month-changed = 09) then 9
+                                        else if($publication-month-changed = 10) then 10
+                                        else if($publication-month-changed = 11) then 11
+                                        else if($publication-month-changed = 12) then 12
+                                        else ''"/>
 
     <xsl:variable name="base" select="replace(replace(base-uri(),'file:', 'file://'), 'files/resources/document.xml', '')" />
 
@@ -36,7 +40,7 @@
 
     <xsl:template match="/">
         <root>
-            <xsl:for-each select="2012 to $publish_date_year">
+            <xsl:for-each select="2012 to $publish_date_year_folder">
             <xsl:variable name="year-value" select="." />
 
             <xsl:variable name="title-doc-year" select="$year-value" />
@@ -77,7 +81,7 @@
                 </document>
             </xsl:result-document>
 
-            <xsl:variable name="month-analysis" select="if($year-value = $publish_date_year) then $month-actual else 12" />
+            <xsl:variable name="month-analysis" select="if($year-value = $publish_date_year_folder) then $month-actual else 12" />
             <xsl:for-each select="1 to $month-analysis">
                 <xsl:variable name="month-value" select="." />
                 <xsl:variable name="month-data" select="if(string-length(string($month-value)) = 1) then concat('0',$month-value) else $month-value" />
