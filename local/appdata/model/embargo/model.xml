@@ -12,18 +12,18 @@
 
         <fields>
             <field type="calendar"
-                    id="publish_date"
-                    name="publish_date"
-                    label="Publish Date"
-                    value=""
-                    min=""
-                    max=""
-                    noTitle="false"
-                    current="true"
-                    prevMonths=""
-                    nextMonths=""
-                    increment="1"
-                    readonly="false"
+                   id="publish_date"
+                   name="publish_date"
+                   label="Publish Date"
+                   value=""
+                   min=""
+                   max=""
+                   noTitle="false"
+                   current="true"
+                   prevMonths=""
+                   nextMonths=""
+                   increment="0"
+                   readonly="false"
             />
             <field  type="text"
                     id="title"
@@ -32,10 +32,35 @@
                     value=""
                     rules="required"
             />
+            <field
+                    type="select"
+                    id="description"
+                    name="description"
+                    label="Description"
+                    active="embargo"
+                    values='[
+                        {
+                          "text":"embargo", "value":"embargo"
+                        },
+                        {
+                          "text": "_offlne", "value": "_offlne"
+                        },
+                        {
+                          "text":"_sqlite", "value":"_sqlite"
+                        },
+
+                        {
+                          "text":"_chemoc", "value":"_chemoc"
+                        }
+                      ]'
+                    rules="required"
+            />
         </fields>
 
         <step id="copy-input-file" name="Copy Input File" viewable="false" class="net.pageseeder.ox.web.step.CopyInputToFolder">
-            <parameter name="output"                value="final/binary/{publish_date_year}/{publish_date_month}"/>
+            <parameter name="output"                value="final/binary/"/>
+            <parameter name="month"                 value="{publish_date_month}"/>
+            <parameter name="year"                  value="{publish_date_year}"/>
         </step>
         <step id="copy-document-xml" name="Copying document.xml" class="org.pageseeder.ox.step.Copy">
             <parameter name="input"                 value="resources" />
@@ -44,14 +69,13 @@
         <step id="create-metadata-document" name="Create Metadata PSML Document" viewable="false" class="org.pageseeder.ox.step.Transformation">
             <parameter name="input"                 value="files/resources/document.xml" />
             <parameter name="xsl"                   value="xslt/metadata.xsl"/>
-            <parameter name="_xslt-metadata-folder" value="final/binary/META-INF/{publish_date_year}/{publish_date_month}/" />
+            <parameter name="_xslt-metadata-folder" value="final/binary/META-INF/" />
             <parameter name="output"                value="files/step1.psml"/>
         </step>
         <step id="create-embargo-month-psml-document" name="Create Embargo Month PSML Document" viewable="false" class="org.pageseeder.ox.step.Transformation">
             <parameter name="input"                      value="files/resources/document.xml" />
             <parameter name="xsl"                        value="xslt/embargo-month.xsl"/>
-            <parameter name="_xslt-embargo-folder"       value="final/psmlsource/{publish_date_year}/{publish_date_month}/" />
-            <parameter name="_xslt-embargo-year-folder"  value="final/psmlsource/{publish_date_year}/" />
+            <parameter name="_xslt-embargo-folder"       value="final/psmlsource/" />
             <parameter name="_xslt-type"                 value="simple" />
             <parameter name="output"                     value="files/step2.psml"/>
         </step>
@@ -149,7 +173,7 @@
                     current="true"
                     prevMonths=""
                     nextMonths=""
-                    increment="1"
+                    increment=""
                     readonly="false"
             />
             <field  type="text"
@@ -159,30 +183,55 @@
                     value=""
                     rules="required"
             />
+            <field
+                    type="select"
+                    id="description"
+                    name="description"
+                    label="Description"
+                    active="embargo"
+                    values='[
+                        {
+                          "text":"embargo", "value":"embargo"
+                        },
+                        {
+                          "text": "_offlne", "value": "_offlne"
+                        },
+                        {
+                          "text":"_sqlite", "value":"_sqlite"
+                        },
 
+                        {
+                          "text":"_chemoc", "value":"_chemoc"
+                        }
+                      ]'
+                    rules="required"
+            />
         </fields>
-        <step id="Unzip" name="Unzipping Document." class="org.pageseeder.ox.step.Decompression">
-            <parameter name="output"                value="final/binary/{publish_date_year}/{publish_date_month}" />
+        <step id="Unzip" name="Unzipping Document." class="net.pageseeder.ox.web.step.UnpackingToFolder">
+            <parameter name="output"                value="final/binary/" />
+            <parameter name="month"                 value="{publish_date_month}"/>
+            <parameter name="year"                  value="{publish_date_year}"/>
         </step>
         <step id="copy-input-file" name="Copy Input File" viewable="false" class="net.pageseeder.ox.web.step.CopyInputToFolder">
-            <parameter name="output"                value="final/binary/{publish_date_year}/{publish_date_month}"/>
+            <parameter name="output"                value="final/binary/"/>
+            <parameter name="month"                 value="{publish_date_month}"/>
+            <parameter name="year"                  value="{publish_date_year}"/>
         </step>
         <step id="list-documents-path" name="Return a XML document with a list of documents" viewable="false" class="org.pageseeder.ox.step.ListFiles" async="true">
-            <parameter name="input"                 value="final/binary/{publish_date_year}/{publish_date_month}"/>
-            <parameter name="glob-pattern"          value="*.*"/>
+            <parameter name="input"                 value="final/binary"/>
+            <parameter name="glob-pattern"          value="**/*.*"/>
             <parameter name="output"                value="files/list-files.xml"/>
         </step>
         <step id="create-metadata-documents" name="Create Metadata PSML Documents" viewable="false" class="org.pageseeder.ox.step.Transformation">
             <parameter name="input"                 value="files/list-files.xml" />
             <parameter name="xsl"                   value="xslt/multiple-metadata.xsl"/>
-            <parameter name="_xslt-metadata-folder" value="final/binary/META-INF/{publish_date_year}/{publish_date_month}/" />
+            <parameter name="_xslt-metadata-folder" value="final/binary/META-INF/" />
             <parameter name="output"                value="files/step1.psml"/>
         </step>
         <step id="create-embargo-month-psml-document" name="Create Embargo Month PSML Document" viewable="false" class="org.pageseeder.ox.step.Transformation">
             <parameter name="input"                      value="files/list-files.xml" />
             <parameter name="xsl"                        value="xslt/embargo-month.xsl"/>
-            <parameter name="_xslt-embargo-folder"       value="final/psmlsource/{publish_date_year}/{publish_date_month}/" />
-            <parameter name="_xslt-embargo-year-folder"  value="final/psmlsource/{publish_date_year}/" />
+            <parameter name="_xslt-embargo-folder"       value="final/psmlsource/" />
             <parameter name="_xslt-type"                 value="multiple" />
             <parameter name="output"                     value="files/step2.psml"/>
         </step>
@@ -266,7 +315,7 @@
               class="org.pageseeder.ox.step.Transformation"
               async="true" >
             <parameter name="input"                value="workbook.xml" />
-            <parameter name="xsl"    		       value="xslt/metadata-excel.xsl"/>
+            <parameter name="xsl"    		       value="xslt/metadata-excel-test.xsl"/>
             <parameter name="output" 			   value="review/data.psml"/>
         </step>
         <!-- Zip output files  -->
@@ -277,7 +326,19 @@
             <parameter name="output" value="documents.zip"/>
         </step>
     </pipeline>
-
+<!--
+    <pipeline id="list-xrefs-mps4-conversion" name="MPS4: List of PMSL Xrefs analysis"
+              description="MPS4: Excel to PSML"
+              accepts="application/psml"
+              default="false">
+        <step id="analysis-pmsl-xref" name="Analysis PXML Xrefs document" viewable="false"
+              class="org.pageseeder.ox.step.Transformation"
+              async="true" >
+            <parameter name="xsl"    		       value="xslt/analysis-xrefs.xsl"/>
+            <parameter name="output" 			   value="analysis/document.xml"/>
+        </step>
+    </pipeline>
+-->
 </pipelines>
 
 
