@@ -126,7 +126,7 @@
                     <metadata>
                         <properties>
                             <property name="year" title="Year" datatype="select" value="{$date_year}"/>
-                            <property name="year_month" title="Month (YYYY-MM)" value="{concat($date_year,'-',$date_month)}"/>
+                            <property name="year_month" title="Month (YYYY-MM)" value="{concat($date_year,'-',$month-text)}"/>
                             <property name="publish_date" title="Publish Date" datatype="date" value="{$validation-data-publication}"/>
                         </properties>
                     </metadata>
