@@ -314,7 +314,7 @@
               class="org.pageseeder.ox.step.Transformation"
               async="true" >
             <parameter name="input"                value="workbook.xml" />
-            <parameter name="xsl"    		       value="xslt/metadata-excel-test.xsl"/>
+            <parameter name="xsl"    		       value="xslt/metadata-excel.xsl"/>
             <parameter name="output" 			   value="review/data.psml"/>
         </step>
         <!-- Zip output files  -->
@@ -325,19 +325,7 @@
             <parameter name="output" value="documents.zip"/>
         </step>
     </pipeline>
-<!--
-    <pipeline id="list-xrefs-mps4-conversion" name="MPS4: List of PMSL Xrefs analysis"
-              description="MPS4: Excel to PSML"
-              accepts="application/psml"
-              default="false">
-        <step id="analysis-pmsl-xref" name="Analysis PXML Xrefs document" viewable="false"
-              class="org.pageseeder.ox.step.Transformation"
-              async="true" >
-            <parameter name="xsl"    		       value="xslt/analysis-xrefs.xsl"/>
-            <parameter name="output" 			   value="analysis/document.xml"/>
-        </step>
-    </pipeline>
--->
+
 </pipelines>
 
 
