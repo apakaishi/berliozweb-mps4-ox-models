@@ -37,7 +37,7 @@
                     id="description"
                     name="description"
                     label="Description"
-                    active="embargo"
+                    active="Embargo"
                     values='[
                         {
                           "text":"Embargo", "value":""
@@ -188,7 +188,7 @@
                     id="description"
                     name="description"
                     label="Description"
-                    active="embargo"
+                    active="Embargo"
                     values='[
                         {
                           "text":"Embargo", "value":""
