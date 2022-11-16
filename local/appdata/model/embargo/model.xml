@@ -43,13 +43,14 @@
                           "text":"Embargo", "value":""
                         },
                         {
-                          "text": "API Offline", "value": "_offlne"
+                          "text": "Offline API", "value": "Offline API"
                         },
                         {
-                          "text":"SQLite", "value":"_sqlite"
+                          "text":"SQLite", "value":"SQLite"
                         },
+
                         {
-                          "text":"Chemotherapy", "value":"_chemoc"
+                          "text":"Chemotherapy", "value":"Chemotherapy"
                         }
                       ]'
                     rules="required"
@@ -193,14 +194,14 @@
                           "text":"Embargo", "value":""
                         },
                         {
-                          "text": "API Offline", "value": "_offlne"
+                          "text": "Offline API", "value": "Offline API"
                         },
                         {
-                          "text":"SQLite", "value":"_sqlite"
+                          "text":"SQLite", "value":"SQLite"
                         },
 
                         {
-                          "text":"Chemotherapy", "value":"_chemoc"
+                          "text":"Chemotherapy", "value":"Chemotherapy"
                         }
                       ]'
                     rules="required"
