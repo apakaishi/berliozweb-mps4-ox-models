@@ -53,7 +53,7 @@
             <xsl:for-each select="$data/root/document">
                 <xsl:variable name="title" select="if(normalize-space(prop[@column-name='title']/text())='#N/A') then '' else prop[@column-name='title']/text()" />
                 <xsl:variable name="filename" select="prop[@column-name='Name']/text()" />
-                <xsl:variable name="description" select="prop[@column-name='Description']/text()" />
+                <xsl:variable name="description" select="if(prop[@column-name='Description']/text()='embargo') then '' else prop[@column-name='Description']/text()" />
                 <xsl:variable name="short-path" select="substring-after(prop[@column-name='Path']/text(),'data_site_embargo\')" />
                 <xsl:variable name="date_year" select="prop[@column-name='Year']/text()" />
                 <xsl:variable name="date_month-count" select="string-length(prop[@column-name='Month']/text())" />
