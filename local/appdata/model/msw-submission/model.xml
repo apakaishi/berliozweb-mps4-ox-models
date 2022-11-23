@@ -4,6 +4,140 @@
 -->
 <pipelines icon="file-move">
   <pipeline id="mps4-submission-conversion" name="MPS4 Submission Bus: Generate Document for Bus Submission" accepts="application/xlsx"  default="false">
+    <fields>
+      <field
+          type="string"
+          label="Optional input fields"
+          class="headline"
+      />
+      <field
+          type="calendar"
+          id="meeting-date"
+          name="meeting-date"
+          label="Meeting Date"
+          active="true"
+          value=""
+          current="false"
+          hint=""
+      />
+      <field
+        type="select"
+        id="step1-status"
+        name="step1-status"
+        label="Step 1 Status"
+        hint="This can be left blank"
+        values='[
+          {
+            "text":"Active", "value":"Active"
+          },
+          {
+            "text":"Canceled", "value":"Canceled"
+          },
+          {
+            "text":"Completed", "value":"Completed"
+          },
+          {
+            "text":"Pending", "value":"Pending"
+          }
+         ]'
+      />
+      <field
+          type="select"
+          id="step2-status"
+          name="step2-status"
+          label="Step 2 Status"
+          hint="This can be left blank"
+          values='[
+          {
+            "text":"Active", "value":"Active"
+          },
+          {
+            "text":"Canceled", "value":"Canceled"
+          },
+          {
+            "text":"Completed", "value":"Completed"
+          },
+          {
+            "text":"Pending", "value":"Pending"
+          }
+         ]'
+      />
+      <field
+          type="calendar"
+          id="step2-open-date"
+          name="step2-open-date"
+          label="Step 2 - Open Date"
+          active="true"
+          value=""
+          current="false"
+          hint=""
+      />
+      <field
+          type="calendar"
+          id="step2-closed-date"
+          name="step2-closed-date"
+          label="Step 2 - Closed Date"
+          active="true"
+          value=""
+          current="false"
+          hint=""
+      />
+      <field
+          id="step2-see-url"
+          name="step2-see-url"
+          label="Step 2 - See URL"
+          value=""
+      />
+      <field
+          id="step2-see-url-title"
+          name="step2-see-url-title"
+          label="Step 2 - See URL Title"
+          value=""
+      />
+      <field
+          type="select"
+          id="step3-status"
+          name="step3-status"
+          label="Step 3 Status"
+          hint="This can be left blank"
+          values='[
+          {
+            "text":"Active", "value":"Active"
+          },
+          {
+            "text":"Canceled", "value":"Canceled"
+          },
+          {
+            "text":"Completed", "value":"Completed"
+          },
+          {
+            "text":"Pending", "value":"Pending"
+          }
+         ]'
+      />
+      <field
+          type="select"
+          id="step4-status"
+          name="step4-status"
+          label="Step 4 Status"
+          hint="This can be left blank"
+          values='[
+          {
+            "text":"Active", "value":"Active"
+          },
+          {
+            "text":"Canceled", "value":"Canceled"
+          },
+          {
+            "text":"Completed", "value":"Completed"
+          },
+          {
+            "text":"Pending", "value":"Pending"
+          }
+         ]'
+      />
+    </fields>
+
     <!-- Unzip excel document-->
     <step id="extract-data-from-spreadsheet" name="Extract data from Spreadsheet" viewable="false" class="org.pageseeder.xlsx.ox.step.Import">
       <parameter name="split-level"      value="workbook"/>

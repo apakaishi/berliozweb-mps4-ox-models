@@ -14,6 +14,15 @@
 
   <xsl:import href="util/function.xsl" />
   <xsl:param name="output-folder" />
+	<xsl:param name="meeting-date" />
+	<xsl:param name="step1-status" />
+	<xsl:param name="step2-status" />
+	<xsl:param name="step2-open-date" />
+	<xsl:param name="step2-closed-date" />
+	<xsl:param name="step2-see-url" />
+	<xsl:param name="step2-see-url-title" />
+	<xsl:param name="step3-status" />
+	<xsl:param name="step4-status" />
 
   <xsl:output method="xml" encoding="UTF-8" indent="yes" />
 
@@ -28,9 +37,18 @@
 	<xsl:variable name="folder" select="$output" />
 
     <xsl:for-each select="row[case-id!='']">
-
+			<xsl:variable name="final-meeting-date">
+				<xsl:choose>
+					<xsl:when test="meeting-date/text() != ''">
+						<xsl:value-of select="fn:format-yyyy-mm-dd(meeting-date/text())" />
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="$meeting-date" />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
   	  <xsl:variable name="case-id" select="normalize-space(lower-case(case-id/text()))" />
-      <xsl:variable name="filename" select="concat($case-id,'-',fn:format-yyyy-mm-dd(meeting-date/text()),'.psml')" />
+      <xsl:variable name="filename" select="concat($case-id,'-',$final-meeting-date,'.psml')" />
 	    <xsl:variable name="path-report" select="concat($folder,$filename)" />
 	    <xsl:variable name="drug-name" select="fn:clean-white-spaces(drug-name)"/>
 		  <xsl:variable name="brand-names" select="fn:clean-white-spaces(brand-names)"/>
@@ -59,7 +77,7 @@
 
 				   <property name="case-id" title="Case id" value="{$case-id}" datatype="string" />
 				   <property name="pbac-outcome-status" title="PBAC Outcome Status" value="{pbac-outcome-status}" datatype="string" />
-				   <property name="meeting-date" title="Meeting date" value="{fn:format-yyyy-mm-dd(meeting-date/text())}" datatype="date" />
+				   <property name="meeting-date" title="Meeting date" value="{$final-meeting-date}" datatype="date" />
 				   <property name="listed-date" title="Listed date" value="{$list-date}" datatype="date" />
 				   <property name="drug-name" title="Drug name" value="{$drug-name}" datatype="string" />
 				   <property name="brand-names" title="Brand Names" count="n" datatype="string">
@@ -97,21 +115,59 @@
 
 				   <property name="step-numbers" title="Number Of Steps" value="8" datatype="string" />
 				   <property name="step-1-label" title="Step 1 - label" value="{$step1-label}" datatype="string" />
-				   <property name="step-1-status" title="Step 1 - status" value="{if(step-1-status) then step-1-status else 'active'}" datatype="string" />
+				   <property name="step-1-status" title="Step 1 - status" value="{
+					 	if(step-1-status != '') then step-1-status
+						 else if($step1-status) then $step1-status
+						 else 'Active'
+					 }" datatype="string" />
 				   <property name="step-2-label" title="Step 2 - label" value="Opportunity for consumer comment" datatype="string" />
-				   <property name="step-2-status" title="Step 2 - status" value="{if(step-2-status) then step-2-status else 'pending'}" datatype="string" />
-				   <property name="step-2-open-date" title="Step 2 - Open Date" value="{fn:format-yyyy-mm-dd(step-2-open-date/text())}" datatype="date" />
-				   <property name="step-2-closed-date" title="Step 2 - Closed Date" value="{fn:format-yyyy-mm-dd(step-2-closed-date/text())}" datatype="date"/>
+				   <property name="step-2-status" title="Step 2 - status" value="{
+					 	if(step-2-status != '') then step-2-status
+						 else if($step2-status) then $step2-status
+						 else 'pending'
+					 }" datatype="string" />
+				   <property name="step-2-open-date" title="Step 2 - Open Date" value="{
+				   	if(step-2-open-date/text() != '') then fn:format-yyyy-mm-dd(step-2-open-date/text())
+				   	else $step2-open-date
+					 }" datatype="date" />
+				   <property name="step-2-closed-date" title="Step 2 - Closed Date" value="{
+				   	if(step-2-closed-date/text() != '') then fn:format-yyyy-mm-dd(step-2-closed-date/text())
+				   	else $step2-closed-date
+					 }" datatype="date"/>
+					 <xsl:variable name="s2-final-url-title">
+						 <xsl:choose>
+							 <xsl:when test="step-2-see-url-title/text()">
+								 <xsl:value-of select="step-2-see-url-title/text()"/>
+							 </xsl:when>
+							 <xsl:otherwise>
+								 <xsl:value-of select="$step2-see-url-title"/>
+							 </xsl:otherwise>
+						 </xsl:choose>
+					 </xsl:variable>
 				   <property name="step-2-see-url" title="Step 2 - See URL" datatype="link">
-				     <xsl:if test="step-2-see-url/text()">
-							 <!-- TODO the text and href should come form the uriid. but currently it is not working in this way.-->
-						   <link href="{step-2-see-url/text()}"><xsl:value-of select="step-2-see-url-title/text()"/></link>
-						 </xsl:if>
+						 <xsl:choose>
+							 <xsl:when test="step-2-see-url/text()">
+								 <!-- TODO the text and href should come form the uriid. but currently it is not working in this way.-->
+								 <link href="{step-2-see-url/text()}"><xsl:value-of select="$s2-final-url-title"/></link>
+							 </xsl:when>
+							 <xsl:otherwise>
+								 <link href="{$step2-see-url}"><xsl:value-of select="$s2-final-url-title"/></link>
+							 </xsl:otherwise>
+						 </xsl:choose>
+
 				   </property>
 				   <property name="step-3-label" title="Step 3 - label" value="PBAC meeting" datatype="string" />
-				   <property name="step-3-status" title="Step 3 - status" value="{if(step-3-status) then step-3-status else 'pending'}" datatype="string" />
+				   <property name="step-3-status" title="Step 3 - status" value="{
+					 	if(step-3-status != '') then step-3-status
+						 else if($step3-status) then $step3-status
+						 else 'pending'
+					 }" datatype="string" />
 				   <property name="step-4-label" title="Step 4 - label" value="PBAC outcome published" datatype="string" />
-				   <property name="step-4-status" title="Step 4 - status" value="{if(step-4-status) then step-4-status else 'pending'}" datatype="string" />
+				   <property name="step-4-status" title="Step 4 - status" value="{
+					 	if(step-4-status != '') then step-4-status
+						 else if($step4-status) then $step4-status
+						 else 'pending'
+					 }" datatype="string" />
 				   <property name="step-4-notice-pricing-received-date" title="Step 4 - Notice of intent for pricing received:" value="{fn:verify-data-for-format-date(step-4-notice-pricing-received-date/text())}" datatype="date" />
 				   <property name="step-4-notice-pricing-exception-applied"      title="Step 4 - Notice of intent - Exception applied"  value="false"      datatype="string"/>
 				   <property name="step-4-see-url" title="Step 4 - See URL" datatype="link"/>
