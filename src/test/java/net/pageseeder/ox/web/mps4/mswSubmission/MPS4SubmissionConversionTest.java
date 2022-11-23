@@ -7,6 +7,7 @@ import org.pageseeder.ox.api.Result;
 import org.pageseeder.ox.core.Model;
 import org.pageseeder.ox.core.Pipeline;
 import org.pageseeder.ox.step.StepSimulator;
+import org.pageseeder.ox.xml.utils.XMLComparator;
 
 import java.io.File;
 import java.util.HashMap;
@@ -55,6 +56,11 @@ public abstract class MPS4SubmissionConversionTest extends MPS4OXTest {
 
   protected Result performZipFullPackage(StepSimulator simulator) {
     return performGeneric(simulator, "zip-full-package");
+  }
+
+  protected void compareActualExpected(File expectedResultBase, String folderOrFileName, StepSimulator simulator) {
+    File actualResultBase = new File(simulator.getData().directory(), folderOrFileName);
+    XMLComparator.compareXMLFile(expectedResultBase, actualResultBase);
   }
 
   protected Model getModel() {
