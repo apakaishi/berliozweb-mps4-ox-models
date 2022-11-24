@@ -28,6 +28,9 @@
         hint="This can be left blank"
         values='[
           {
+            "text":"None", "value":""
+          },
+          {
             "text":"Active", "value":"Active"
           },
           {
@@ -48,6 +51,9 @@
           label="Step 2 Status"
           hint="This can be left blank"
           values='[
+          {
+            "text":"None", "value":""
+          },
           {
             "text":"Active", "value":"Active"
           },
@@ -102,6 +108,9 @@
           hint="This can be left blank"
           values='[
           {
+            "text":"None", "value":""
+          },
+          {
             "text":"Active", "value":"Active"
           },
           {
@@ -122,6 +131,9 @@
           label="Step 4 Status"
           hint="This can be left blank"
           values='[
+          {
+            "text":"None", "value":""
+          },
           {
             "text":"Active", "value":"Active"
           },

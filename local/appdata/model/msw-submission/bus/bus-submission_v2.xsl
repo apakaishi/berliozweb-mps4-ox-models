@@ -118,7 +118,7 @@
 				   <property name="step-1-status" title="Step 1 - status" value="{
 					 	if(step-1-status != '') then step-1-status
 						 else if($step1-status) then $step1-status
-						 else 'Active'
+						 else 'active'
 					 }" datatype="string" />
 				   <property name="step-2-label" title="Step 2 - label" value="Opportunity for consumer comment" datatype="string" />
 				   <property name="step-2-status" title="Step 2 - status" value="{
