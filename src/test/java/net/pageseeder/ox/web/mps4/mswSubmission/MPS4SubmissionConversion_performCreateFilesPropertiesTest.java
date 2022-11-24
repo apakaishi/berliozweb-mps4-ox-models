@@ -56,7 +56,7 @@ public class MPS4SubmissionConversion_performCreateFilesPropertiesTest extends M
 
   /**
    * Test the following fields added through OX frontend when they are empty or not present in the input spreadsheet
-   * Meeting Dategit p
+   * Meeting Date
    * Step 1 - Status
    * Step 2 - Status
    * Step 2 - Open Date
