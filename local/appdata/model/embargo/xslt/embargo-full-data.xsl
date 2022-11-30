@@ -49,9 +49,9 @@
             <xsl:variable name="path-year" select="concat($base,$embargo-folder,$year-value,'/',$filename-year)" />
 
             <xsl:result-document href="{$path-year}">
-                <document type="embargo_month" version="current" level="portable">
+                <document type="default" version="current" level="portable">
                     <documentinfo>
-                        <uri documenttype="embargo_month" title="{$title-doc-year}">
+                        <uri documenttype="default" title="{$title-doc-year}">
                             <displaytitle><xsl:value-of select="$title-doc-year" /></displaytitle>
                             <labels>restricted</labels>
                         </uri>
@@ -73,9 +73,7 @@
                     </section>
                     <section id="content" title="Content" fragmenttype="default,embed">
                         <fragment id="2">
-                            <para>
-                                <inline label="showsearchresults-embargo"><xsl:value-of select="$publish_date_year" /></inline>
-                            </para>
+                            <para>Please select a month to see the Embargo files</para>
                         </fragment>
                     </section>
                 </document>
@@ -133,6 +131,18 @@
                                 <para>
                                     <inline label="showsearchresults-embargo"><xsl:value-of select="$publish_date_year_month" /></inline>
                                 </para>
+                            </fragment>
+                            <fragment id="3">
+                                <blockxref  frag="default"
+                                            docid="api-sqlite-links"
+                                            display="document"
+                                            config="default"
+                                            type="transclude"
+                                            urititle="PBS API and SQLite links"
+                                            urilabels="ps-noindex,restricted"
+                                            mediatype="application/vnd.pageseeder.psml+xml">
+                                    PBS API and SQLite
+                                </blockxref>
                             </fragment>
                         </section>
                     </document>

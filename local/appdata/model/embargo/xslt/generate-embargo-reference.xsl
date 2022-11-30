@@ -78,7 +78,7 @@
                             <blockxref frag="default" reversefrag="2" reversetitle="References" reverselink="true" reversetype="none" display="document"
                                        config="default" type="embed" href="{$path-year}"
                                        urititle="{$title-doc-year}" urilabels="restricted" mediatype="application/vnd.pageseeder.psml+xml"
-                                       documenttype="embargo_month"><xsl:value-of select="$publish_date_year_folder" /></blockxref>
+                                       documenttype="default"><xsl:value-of select="$publish_date_year_folder" /></blockxref>
 
                             <xsl:variable name="month-analysis" select="if($year-value = $publish_date_year_folder) then $month-actual else 12" />
                             <xsl:for-each select="1 to $month-analysis">

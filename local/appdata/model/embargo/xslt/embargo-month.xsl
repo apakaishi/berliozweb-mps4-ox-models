@@ -53,9 +53,9 @@
         <xsl:value-of select="$path-year" />
         <!-- Year document -->
         <xsl:result-document href="{$path-year}">
-            <document type="embargo_month" version="current" level="portable">
+            <document type="default" version="current" level="portable">
                 <documentinfo>
-                    <uri documenttype="embargo_month" title="{$title-year-doc}">
+                    <uri documenttype="default" title="{$title-year-doc}">
                         <displaytitle><xsl:value-of select="$title-year-doc" /></displaytitle>
                         <labels>restricted</labels>
                     </uri>
@@ -77,9 +77,7 @@
                 </section>
                 <section id="content" title="Content" fragmenttype="default,embed">
                     <fragment id="2">
-                        <para>
-                            <inline label="showsearchresults-embargo"><xsl:value-of select="$publish_date_year_folder" /></inline>
-                        </para>
+                        <para>Please select a month to see the Embargo files</para>
                     </fragment>
                 </section>
             </document>
@@ -114,6 +112,18 @@
                         <para>
                             <inline label="showsearchresults-embargo"><xsl:value-of select="concat($publish_date_year_folder, '-', $publication-month-changed)" /></inline>
                         </para>
+                    </fragment>
+                    <fragment id="3">
+                        <blockxref  frag="default"
+                                    docid="api-sqlite-links"
+                                    display="document"
+                                    config="default"
+                                    type="transclude"
+                                    urititle="PBS API and SQLite links"
+                                    urilabels="ps-noindex,restricted"
+                                    mediatype="application/vnd.pageseeder.psml+xml">
+                            PBS API and SQLite
+                        </blockxref>
                     </fragment>
                 </section>
             </document>
