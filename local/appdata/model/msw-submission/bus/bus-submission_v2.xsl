@@ -97,7 +97,7 @@
 				   <!--Property review in Template-->
 				   <property name="related-medicines" title="Related Medicines" datatype="xref" multiple="true">
 					 <xsl:if test="related-medicines != ''">
-					   <xsl:for-each select="tokenize(related-medicines, ',')">
+					   <xsl:for-each select="tokenize(related-medicines, ',|\n')">
 						 <xsl:variable name="related-medicine-doc-id" select="replace(., '[^a-zA-Z0-9]', '')"/>
 						   <xsl:if test="$related-medicine-doc-id != ''">
 							 <xref frag="default" reversefrag="application" reversetitle="" reverselink="true" reversetype="none" display="document"
