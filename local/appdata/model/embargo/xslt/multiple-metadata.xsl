@@ -11,42 +11,40 @@
                 exclude-result-prefixes="#all">
 
     <xsl:param name="title" />
-    <xsl:param name="description" />
+    <xsl:param name="data_type" />
     <xsl:param name="metadata-folder" />
     <xsl:param name="publish_date" />
-    <xsl:param name="publish_date_year" />
-    <xsl:param name="publish_date_month" />
+    <xsl:param name="current_date" />
+    <xsl:param name="current_date_year" />
     <xsl:param name="original_file" />
-
-    <xsl:variable name="publish_date_year_folder" select="if($publish_date_month = 12) then $publish_date_year + 1 else $publish_date_year" />
-    <xsl:variable name="publish_date_month_folder" select="if($publish_date_month = 12) then '01' else $publish_date_month + 1" />
-    <xsl:variable name="publication-month-changed" select="if(string-length(string($publish_date_month_folder)) = 1) then concat('0',string($publish_date_month_folder)) else $publish_date_month_folder" />
 
     <xsl:variable name="base" select="replace(replace(base-uri(),'file:', 'file://'), 'files/list-files.xml', '')" />
 
     <xsl:output method="xml" encoding="UTF-8" indent="yes" />
+
+    <xsl:variable name="label" select="if($data_type = '' or $data_type = 'Chemotherapy') then 'restricted,embargo' else 'restricted'" />
 
     <xsl:template match="files">
 
         <xsl:for-each select="file">
             <xsl:variable name="short-path" select="translate(@short-path,'/','\')" />
             <xsl:variable name="filename" select="tokenize($short-path,'\\')[last()]" />
-            <xsl:variable name="path" select="concat($base,$metadata-folder,$publish_date_year_folder,'/',$publication-month-changed,'/',$filename,'.psml')" />
+            <xsl:variable name="path" select="concat($base,$metadata-folder,$filename,'.psml')" />
 
             <xsl:result-document href="{$path}">
                 <document version="current" level="metadata">
                     <documentinfo>
                         <uri title="{$title}">
                             <displaytitle><xsl:value-of select="$title" /></displaytitle>
-                            <description><xsl:value-of select="$description" /></description>
-                            <labels>restricted</labels>
+                            <description><xsl:value-of select="$data_type" /></description>
+                            <labels><xsl:value-of select="$label" /></labels>
                         </uri>
                     </documentinfo>
                     <fragmentinfo/>
                     <metadata>
                         <properties>
-                            <property name="year" title="Year" datatype="select" value="{$publish_date_year_folder}"/>
-                            <property name="year_month" title="Month (YYYY-MM)" value="{concat($publish_date_year_folder,'-',$publication-month-changed)}"/>
+                            <property name="year" title="Year" datatype="select" value="{$current_date_year}"/>
+                            <property name="year_month" title="Month (YYYY-MM)" value="{$current_date}"/>
                             <property name="publish_date" title="Publish Date" datatype="date" value="{$publish_date}"/>
                         </properties>
                     </metadata>
