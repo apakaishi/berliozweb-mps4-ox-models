@@ -14,43 +14,38 @@
     <xsl:param name="type" />
     <xsl:param name="embargo-folder" />
     <xsl:param name="publish_date" />
-    <xsl:param name="publish_date_year" />
-    <xsl:param name="publish_date_month" />
-
-    <xsl:variable name="publish_date_year_folder" select="if($publish_date_month = 12) then $publish_date_year + 1 else $publish_date_year" />
-    <xsl:variable name="publish_date_month_folder" select="if($publish_date_month = 12) then '01' else $publish_date_month + 1" />
-    <xsl:variable name="publication-month-changed" select="if(string-length(string($publish_date_month_folder)) = 1) then concat('0',string($publish_date_month_folder)) else $publish_date_month_folder" />
+    <xsl:param name="current_date" />
+    <xsl:param name="current_date_year" />
+    <xsl:param name="current_date_month" />
 
     <xsl:variable name="reference-doc" select="if($type = 'simple') then 'files/resources/document.xml' else 'files/list-files.xml'" />
 
     <xsl:variable name="base" select="replace(replace(base-uri(),'file:', 'file://'), $reference-doc, '')" />
 
-    <xsl:variable name="month-text" select="if($publication-month-changed = 01) then 'January'
-                                        else if($publication-month-changed = 02) then 'February'
-                                        else if($publication-month-changed = 03) then 'March'
-                                        else if($publication-month-changed = 04) then 'April'
-                                        else if($publication-month-changed = 05) then 'May'
-                                        else if($publication-month-changed = 06) then 'June'
-                                        else if($publication-month-changed = 07) then 'July'
-                                        else if($publication-month-changed = 08) then 'August'
-                                        else if($publication-month-changed = 09) then 'September'
-                                        else if($publication-month-changed = 10) then 'October'
-                                        else if($publication-month-changed = 11) then 'November'
-                                        else if($publication-month-changed = 12) then 'December'
+    <xsl:variable name="month-text" select="if($current_date_month = 01) then 'January'
+                                        else if($current_date_month = 02) then 'February'
+                                        else if($current_date_month = 03) then 'March'
+                                        else if($current_date_month = 04) then 'April'
+                                        else if($current_date_month = 05) then 'May'
+                                        else if($current_date_month = 06) then 'June'
+                                        else if($current_date_month = 07) then 'July'
+                                        else if($current_date_month = 08) then 'August'
+                                        else if($current_date_month = 09) then 'September'
+                                        else if($current_date_month = 10) then 'October'
+                                        else if($current_date_month = 11) then 'November'
+                                        else if($current_date_month = 12) then 'December'
                                         else ''" />
 
-    <xsl:variable name="title-doc" select="concat($month-text,' ',$publish_date_year_folder)" />
-    <xsl:variable name="title-year-doc" select="$publish_date_year_folder" />
-    <xsl:variable name="filename" select="concat(lower-case($month-text),'-',$publish_date_year_folder,'.psml')" />
-    <xsl:variable name="filename-year" select="concat($publish_date_year_folder,'.psml')" />
-    <xsl:variable name="path" select="concat($base,$embargo-folder,$publish_date_year_folder,'/',$publication-month-changed,'/',$filename)" />
-    <xsl:variable name="path-year" select="concat($base,$embargo-folder,$publish_date_year_folder,'/',$filename-year)" />
+    <xsl:variable name="title-doc" select="concat($month-text,' ',$current_date_year)" />
+    <xsl:variable name="title-year-doc" select="$current_date_year" />
+    <xsl:variable name="filename" select="concat(lower-case($month-text),'-',$current_date_year,'.psml')" />
+    <xsl:variable name="filename-year" select="concat($current_date_year,'.psml')" />
+    <xsl:variable name="path" select="concat($base,$embargo-folder,$current_date_year,'/',$current_date_month,'/',$filename)" />
+    <xsl:variable name="path-year" select="concat($base,$embargo-folder,$current_date_year,'/',$filename-year)" />
 
     <xsl:output method="xml" encoding="UTF-8" indent="yes" />
 
     <xsl:template match="/">
-        <xsl:value-of select="$path" />
-        <xsl:value-of select="$path-year" />
         <!-- Year document -->
         <xsl:result-document href="{$path-year}">
             <document type="default" version="current" level="portable">
@@ -110,7 +105,7 @@
                 <section id="content" title="Content" fragmenttype="default,embed" overwrite="false">
                     <fragment id="2">
                         <para>
-                            <inline label="showsearchresults-embargo"><xsl:value-of select="concat($publish_date_year_folder, '-', $publication-month-changed)" /></inline>
+                            <inline label="showsearchresults-embargo"><xsl:value-of select="$current_date" /></inline>
                         </para>
                     </fragment>
                     <fragment id="3">
@@ -122,7 +117,7 @@
                                     urititle="PBS API and SQLite links"
                                     urilabels="ps-noindex,restricted"
                                     mediatype="application/vnd.pageseeder.psml+xml">
-                            PBS API and SQLite
+                            PBS API and SQLite links
                         </blockxref>
                     </fragment>
                 </section>
