@@ -63,14 +63,13 @@
                           "text":"Embargo", "value":""
                         },
                         {
-                          "text": "Offline API", "value": "Offline API"
+                          "text": "Offline API", "value": "_offline"
                         },
                         {
-                          "text":"SQLite", "value":"SQLite"
+                          "text":"SQLite", "value":"_sqlite"
                         },
-
                         {
-                          "text":"Chemotherapy", "value":"Chemotherapy"
+                          "text":"Chemotherapy", "value":"_chemoc"
                         }
                       ]'
                     rules="required"
@@ -78,7 +77,7 @@
         </fields>
 
         <step id="copy-input-file" name="Copy Input File" viewable="false" class="org.pageseeder.ox.step.Copy">
-            <parameter name="output"                value="final/binary/{current_date_year}/{current_date_month}/{_uploaded_file}"/>
+            <parameter name="output"                value="final/binary/{data_type}/{current_date_year}/{current_date_month}/{_uploaded_file}"/>
         </step>
         <step id="copy-document-xml" name="Copying document.xml" class="org.pageseeder.ox.step.Copy">
             <parameter name="input"                 value="resources" />
@@ -87,7 +86,7 @@
         <step id="create-metadata-document" name="Create Metadata PSML Document" viewable="false" class="org.pageseeder.ox.step.Transformation">
             <parameter name="input"                 value="files/resources/document.xml" />
             <parameter name="xsl"                   value="xslt/metadata.xsl"/>
-            <parameter name="_xslt-metadata-folder" value="final/binary/META-INF/{current_date_year}/{current_date_month}/" />
+            <parameter name="_xslt-metadata-folder" value="final/binary/META-INF/{data_type}/{current_date_year}/{current_date_month}/" />
             <parameter name="output"                value="files/step1.psml"/>
         </step>
         <step id="create-embargo-month-psml-document" name="Create Embargo Month PSML Document" viewable="false" class="org.pageseeder.ox.step.Transformation">
@@ -230,24 +229,23 @@
                           "text":"Embargo", "value":""
                         },
                         {
-                          "text": "Offline API", "value": "Offline API"
+                          "text": "Offline API", "value": "_offline"
                         },
                         {
-                          "text":"SQLite", "value":"SQLite"
+                          "text":"SQLite", "value":"_sqlite"
                         },
-
                         {
-                          "text":"Chemotherapy", "value":"Chemotherapy"
+                          "text":"Chemotherapy", "value":"_chemoc"
                         }
                       ]'
                     rules="required"
             />
         </fields>
         <step id="Unzip" name="Unzipping Document." class="org.pageseeder.ox.step.Decompression">
-            <parameter name="output"                value="final/binary/{current_date_year}/{current_date_month}/" />
+            <parameter name="output"                value="final/binary/{data_type}/{current_date_year}/{current_date_month}/" />
         </step>
         <step id="copy-input-file" name="Copy Input File" viewable="false" class="org.pageseeder.ox.step.Copy">
-            <parameter name="output"                value="final/binary/{current_date_year}/{current_date_month}/{_uploaded_file}"/>
+            <parameter name="output"                value="final/binary/{data_type}/{current_date_year}/{current_date_month}/{_uploaded_file}"/>
         </step>
         <step id="list-documents-path" name="Return a XML document with a list of documents" viewable="false" class="org.pageseeder.ox.step.ListFiles" async="true">
             <parameter name="input"                 value="final/binary"/>
@@ -257,7 +255,7 @@
         <step id="create-metadata-documents" name="Create Metadata PSML Documents" viewable="false" class="org.pageseeder.ox.step.Transformation">
             <parameter name="input"                 value="files/list-files.xml" />
             <parameter name="xsl"                   value="xslt/multiple-metadata.xsl"/>
-            <parameter name="_xslt-metadata-folder" value="final/binary/META-INF/{current_date_year}/{current_date_month}/" />
+            <parameter name="_xslt-metadata-folder" value="final/binary/META-INF/{data_type}/{current_date_year}/{current_date_month}/" />
             <parameter name="output"                value="files/step1.psml"/>
         </step>
         <step id="create-embargo-month-psml-document" name="Create Embargo Month PSML Document" viewable="false" class="org.pageseeder.ox.step.Transformation">
@@ -269,12 +267,12 @@
         </step>
         <step id="zip-psml-output" name="Zipping PSML Document." class="org.pageseeder.ox.step.Compression">
             <parameter name="input"                 value="final/binary" />
-            <parameter name="output"                value="embargo.zip"/>
+            <parameter name="output"                value="binary.zip"/>
         </step>
         <step id="upload-to-pageseeder-loadingzone" name="Upload ZIP to Pageseeder - Binary Document" class="org.pageseeder.ox.pageseeder.step.UploadToLoadingZone"
               async="false" >
-            <parameter name="input"                 value="embargo.zip" />
-            <parameter name="filename"              value="embargo.zip" />
+            <parameter name="input"                 value="binary.zip" />
+            <parameter name="filename"              value="binary.zip" />
             <parameter name="autoload"              value="false" />
             <parameter name="psconfig"              value="dev-clone" />
             <parameter name="overwrite"             value="true" />
@@ -283,7 +281,7 @@
         </step>
         <step id="unzip-loadingzone-content" name="Unzip File in Pageseeder - Binary Document" class="org.pageseeder.ox.pageseeder.step.UnzipLoadingZoneContent">
             <parameter name="group"                 value="data_source-files" />
-            <parameter name="path"                  value="embargo.zip" />
+            <parameter name="path"                  value="binary.zip" />
             <parameter name="psconfig"              value="dev-clone" />
             <parameter name="deleteoriginal"        value="true" />
             <parameter name="uploadid"              value="{_package_id}"/>
@@ -301,12 +299,12 @@
         </step>
         <step id="zip-source-documents" name="Zipping Source Documents." class="org.pageseeder.ox.step.Compression">
             <parameter name="input"                 value="final/psmlsource" />
-            <parameter name="output"                value="binary.zip"/>
+            <parameter name="output"                value="psmlsource.zip"/>
         </step>
         <step id="upload-to-pageseeder-loadingzone-source" name="Upload ZIP to Pageseeder - Source Documents" class="org.pageseeder.ox.pageseeder.step.UploadToLoadingZone"
               async="false" >
-            <parameter name="input"                 value="binary.zip" />
-            <parameter name="filename"              value="binary.zip" />
+            <parameter name="input"                 value="psmlsource.zip" />
+            <parameter name="filename"              value="psmlsource.zip" />
             <parameter name="autoload"              value="false" />
             <parameter name="psconfig"              value="dev-clone" />
             <parameter name="overwrite"             value="false" />
@@ -315,7 +313,7 @@
         </step>
         <step id="unzip-loadingzone-content-source" name="Unzip File in Pageseeder - Source Documents" class="org.pageseeder.ox.pageseeder.step.UnzipLoadingZoneContent">
             <parameter name="group"                 value="data_source-website" />
-            <parameter name="path"                  value="binary.zip" />
+            <parameter name="path"                  value="psmlsource.zip" />
             <parameter name="psconfig"              value="dev-clone" />
             <parameter name="deleteoriginal"        value="true" />
             <parameter name="uploadid"              value="{_package_id}"/>
