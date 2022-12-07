@@ -22,7 +22,10 @@
 
     <xsl:output method="xml" encoding="UTF-8" indent="yes" />
 
-    <xsl:variable name="label" select="if($data_type = '' or $data_type = 'Chemotherapy') then 'restricted,embargo' else 'restricted'" />
+    <xsl:variable name="label" select="if($data_type = '' or $data_type = '_chemoc') then 'restricted,embargo' else 'restricted'" />
+    <xsl:variable name="description" select="if($data_type = '_chemoc') then 'Chemotherapy'
+                                    else if($data_type = '_sqlite') then 'SQLite'
+                                    else if($data_type = '_offline') then 'Offline API' else ''" />
 
     <xsl:template match="files">
 
@@ -36,7 +39,7 @@
                     <documentinfo>
                         <uri title="{$title}">
                             <displaytitle><xsl:value-of select="$title" /></displaytitle>
-                            <description><xsl:value-of select="$data_type" /></description>
+                            <description><xsl:value-of select="$description" /></description>
                             <labels><xsl:value-of select="$label" /></labels>
                         </uri>
                     </documentinfo>

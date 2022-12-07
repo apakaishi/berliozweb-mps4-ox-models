@@ -11,6 +11,7 @@
                 exclude-result-prefixes="#all">
 
     <xsl:param name="title" />
+    <xsl:param name="data_type" />
     <xsl:param name="type" />
     <xsl:param name="embargo-folder" />
     <xsl:param name="publish_date" />
@@ -46,6 +47,7 @@
     <xsl:output method="xml" encoding="UTF-8" indent="yes" />
 
     <xsl:template match="/">
+
         <!-- Year document -->
         <xsl:result-document href="{$path-year}">
             <document type="default" version="current" level="portable">
@@ -123,6 +125,7 @@
                 </section>
             </document>
         </xsl:result-document>
+
     </xsl:template>
 
 </xsl:stylesheet>
