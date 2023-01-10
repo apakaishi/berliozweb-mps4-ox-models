@@ -29,7 +29,7 @@
 
   <xsl:template match="row[not(@position='1')]">
     <xsl:variable name="uriid" select="col[@ref=$uriid-col-ref]"/>
-    <xsl:if test="matches($uriid, '^\d+$')">
+<!--    <xsl:if test="matches($uriid, '^\d+$')">-->
       <metadata>
         <xsl:variable name="data-type" select="col[@ref=$data-type-col-ref]"/>
         <uriid><xsl:value-of select="$uriid"/></uriid>
@@ -49,7 +49,7 @@
           <property name="publish_date" type="date" title="Publish Date" value="{col[@ref=$publish-date-col-ref]}"/>
         </properties>
       </metadata>
-    </xsl:if>
+<!--    </xsl:if>-->
   </xsl:template>
 
   <xsl:template match="@*|node()">

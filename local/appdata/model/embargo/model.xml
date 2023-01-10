@@ -337,7 +337,7 @@
         <step id="extract-data-from-spreadsheet" name="Extract data from Spreadsheet" viewable="false" class="org.pageseeder.xlsx.ox.step.Import">
             <parameter name="split-level"      value="workbook"/>
             <parameter name="output"           value="data"/>
-            <parameter name="xslt"             value="xslt/excel-to-input-metadata.xsl"/>
+            <parameter name="xslt"             value="add-metadata/excel-to-input-metadata.xsl"/>
         </step>
         <!--    <step id="validate-extracted-data" name="Validate extracted data"-->
         <!--          class="org.pageseeder.ox.schematron.step.SchematronValidation"-->

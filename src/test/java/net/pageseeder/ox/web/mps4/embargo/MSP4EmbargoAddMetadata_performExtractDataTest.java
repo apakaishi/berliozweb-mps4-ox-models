@@ -10,6 +10,8 @@ import org.pageseeder.xmlwriter.XML;
 import org.pageseeder.xmlwriter.XMLStringWriter;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,18 +36,22 @@ public class MSP4EmbargoAddMetadata_performExtractDataTest extends MPS4EmbargoAd
       if (!ResultStatus.OK.equals(result.status())) {
         XMLStringWriter writer = new XMLStringWriter(XML.NamespaceAware.No);
         result.toXML(writer);
-//        System.out.println("Result");
-//        System.out.println(writer);
+        System.out.println("Result");
+        System.out.println(writer);
       }
       Assert.assertEquals(ResultStatus.OK, result.status());
+      List<File> filesToIgnore = new ArrayList<>();
+      super.validateXML("data", simulator, filesToIgnore);
     } catch (Exception ex) {
+      ex.printStackTrace();
+      System.out.println(ex.getMessage());
       Assert.fail(ex.getMessage());
     }
   }
 
   @Override
   protected File getExpectedResultDirectory() {
-    return null;
+    return new File("src/test/resources/net/pageseeder/ox/web/mps4/addmetadata/basic/result/");
   }
 }
 
