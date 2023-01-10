@@ -331,6 +331,39 @@
         </step>
     </pipeline>
 
+    <pipeline id="embargo-add-metadata" name="Add metadata to embargo files" accepts="application/xlsx"  default="false">
+
+        <!-- Unzip excel document-->
+        <step id="extract-data-from-spreadsheet" name="Extract data from Spreadsheet" viewable="false" class="org.pageseeder.xlsx.ox.step.Import">
+            <parameter name="split-level"      value="workbook"/>
+            <parameter name="output"           value="data"/>
+            <parameter name="xslt"             value="xslt/excel-to-input-metadata.xsl"/>
+        </step>
+        <!--    <step id="validate-extracted-data" name="Validate extracted data"-->
+        <!--          class="org.pageseeder.ox.schematron.step.SchematronValidation"-->
+        <!--          async="false">-->
+        <!--      <parameter name="input"  value="data/workbook.xml" />-->
+        <!--      <parameter name="schema" value="sch/validate-extracted-data.sch" />-->
+        <!--    </step>-->
+        <!--    <step-->
+        <!--        id="add-metadatas"-->
+        <!--        name="Adding metadatas"-->
+        <!--        async="true"-->
+        <!--        class="org.pageseeder.ox.pageseeder.step.BulkAddMetadata">-->
+        <!--      <parameter name="input"   value="data/workbook.xml" />-->
+        <!--&lt;!&ndash;      <parameter name="psconfig" value="dev-clone" />&ndash;&gt;-->
+        <!--      <parameter name="output"  value="data/result.xml" />-->
+        <!--    </step>-->
+        <!--    <step-->
+        <!--        id="xml2csv"-->
+        <!--        name="Convert from XML to CSV"-->
+        <!--        class="org.pageseeder.ox.step.Transformation">-->
+        <!--      <parameter name="input"           value="data/result.xml" />-->
+        <!--      <parameter name="display-result"  value="false" />-->
+        <!--      <parameter name="xsl"             value="xslt/csv.xsl" />-->
+        <!--      <parameter name="output"             value="data/add-metadata-report.csv" />-->
+        <!--    </step>-->
+    </pipeline>
 </pipelines>
 
 
