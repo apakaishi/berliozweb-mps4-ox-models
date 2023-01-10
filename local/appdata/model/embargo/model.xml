@@ -339,12 +339,12 @@
             <parameter name="output"           value="data"/>
             <parameter name="xslt"             value="add-metadata/excel-to-input-metadata.xsl"/>
         </step>
-        <!--    <step id="validate-extracted-data" name="Validate extracted data"-->
-        <!--          class="org.pageseeder.ox.schematron.step.SchematronValidation"-->
-        <!--          async="false">-->
-        <!--      <parameter name="input"  value="data/workbook.xml" />-->
-        <!--      <parameter name="schema" value="sch/validate-extracted-data.sch" />-->
-        <!--    </step>-->
+        <step id="validate-extracted-data" name="Validate extracted data"
+              class="org.pageseeder.ox.schematron.step.SchematronValidation"
+              async="false">
+          <parameter name="input"  value="data/workbook.xml" />
+          <parameter name="schema" value="add-metadata/validate-input-metadata.sch" />
+        </step>
         <!--    <step-->
         <!--        id="add-metadatas"-->
         <!--        name="Adding metadatas"-->
