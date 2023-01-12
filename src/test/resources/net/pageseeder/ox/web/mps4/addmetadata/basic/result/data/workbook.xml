@@ -7,7 +7,7 @@
       <labels>restricted</labels>
       <properties>
          <property name="year" type="string" title="Year" value="2020"/>
-         <property name="year_month" type="string" title="Year" value="1"/>
+         <property name="year_month" type="string" title="Year" value="2020-01"/>
          <property name="publish_date"
                    type="date"
                    title="Publish Date"
@@ -21,7 +21,7 @@
       <labels>restricted,embargo</labels>
       <properties>
          <property name="year" type="string" title="Year" value="2020"/>
-         <property name="year_month" type="string" title="Year" value="1"/>
+         <property name="year_month" type="string" title="Year" value="2020-01"/>
          <property name="publish_date"
                    type="date"
                    title="Publish Date"
@@ -35,7 +35,7 @@
       <labels>restricted</labels>
       <properties>
          <property name="year" type="string" title="Year" value="2020"/>
-         <property name="year_month" type="string" title="Year" value="1"/>
+         <property name="year_month" type="string" title="Year" value="2020-01"/>
          <property name="publish_date"
                    type="date"
                    title="Publish Date"

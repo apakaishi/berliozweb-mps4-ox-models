@@ -44,8 +44,10 @@
           </xsl:otherwise>
         </xsl:choose>
         <properties>
-          <property name="year" type="string" title="Year" value="{col[@ref=$year-col-ref]}"/>
-          <property name="year_month" type="string" title="Year" value="{col[@ref=$year-month-col-ref]}"/>
+          <xsl:variable name="year" select="col[@ref=$year-col-ref]"/>
+          <xsl:variable name="month" select="format-number(col[@ref=$year-month-col-ref], '#00')"/>
+          <property name="year" type="string" title="Year" value="{$year}"/>
+          <property name="year_month" type="string" title="Year" value="{concat($year, '-', $month)}"/>
           <property name="publish_date" type="date" title="Publish Date" value="{col[@ref=$publish-date-col-ref]}"/>
         </properties>
       </metadata>
