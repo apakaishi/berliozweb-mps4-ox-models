@@ -367,24 +367,25 @@
       <parameter name="input" value="data/workbook.xml"/>
       <parameter name="schema" value="add-metadata/validate-input-metadata.sch"/>
     </step>
-    <!--    <step-->
-    <!--        id="add-metadatas"-->
-    <!--        name="Adding metadatas"-->
-    <!--        async="true"-->
-    <!--        class="org.pageseeder.ox.pageseeder.step.BulkAddMetadata">-->
-    <!--      <parameter name="input"   value="data/workbook.xml" />-->
-    <!--&lt;!&ndash;      <parameter name="psconfig" value="dev-clone" />&ndash;&gt;-->
-    <!--      <parameter name="output"  value="data/result.xml" />-->
-    <!--    </step>-->
-    <!--    <step-->
-    <!--        id="xml2csv"-->
-    <!--        name="Convert from XML to CSV"-->
-    <!--        class="org.pageseeder.ox.step.Transformation">-->
-    <!--      <parameter name="input"           value="data/result.xml" />-->
-    <!--      <parameter name="display-result"  value="false" />-->
-    <!--      <parameter name="xsl"             value="xslt/csv.xsl" />-->
-    <!--      <parameter name="output"             value="data/add-metadata-report.csv" />-->
-    <!--    </step>-->
+    <step
+        id="add-metadatas"
+        name="Adding metadatas"
+        async="true"
+        class="org.pageseeder.ox.pageseeder.step.BulkAddURIMetadata">
+      <parameter name="input"   value="data/workbook.xml" />
+      <parameter name="psconfig" value="dev-clone" />
+      <parameter name="output"  value="data/result.xml" />
+      <parameter name="psgroup" value="data_source-files" />
+    </step>
+    <step
+        id="xml2csv"
+        name="Convert from XML to CSV"
+        class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"           value="data/result.xml" />
+      <parameter name="display-result"  value="false" />
+      <parameter name="xsl"             value="add-metadata/result-metadata-to-csv.xsl" />
+      <parameter name="output"          value="data/add-metadata-report.csv" />
+    </step>
   </pipeline>
 </pipelines>
 
