@@ -4,7 +4,6 @@ import net.pageseeder.app.simple.berlioz.GlobalSettingsUtils;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.pageseeder.berlioz.GlobalSettings;
 import org.pageseeder.ox.api.Result;
 import org.pageseeder.ox.core.ResultStatus;
 import org.pageseeder.ox.step.StepSimulator;
@@ -18,7 +17,7 @@ import java.util.Map;
  * @author vku
  * @since 04 November 2021
  */
-public class MSP4EmbargoAddMetadata_performAddMetadataTest extends MPS4EmbargoAddMetadataTest {
+public class MSP4EmbargoAddMetadata_performAddURIMetadataTest extends MPS4EmbargoAddMetadataTest {
   private static Map<String, String> REQUEST_PARAMETER = null;
 
   @BeforeClass
@@ -28,7 +27,7 @@ public class MSP4EmbargoAddMetadata_performAddMetadataTest extends MPS4EmbargoAd
   }
 
   @Test
-  public void performAddMetadata() {
+  public void performAddURIMetadata() {
     try {
       GlobalSettingsUtils.setup("local/appdata","mps4local");
       File input = new File("src/test/resources/net/pageseeder/ox/web/mps4/addmetadata/basic/embargo-add-metadata-test.xlsx");
@@ -36,7 +35,7 @@ public class MSP4EmbargoAddMetadata_performAddMetadataTest extends MPS4EmbargoAd
       super.performExtractDataFromSpreadsheet(simulator);
       super.performValidateExtractedData(simulator);
 
-      Result result = super.performAddMetadatas(simulator);
+      Result result = super.performAddURIMetadatas(simulator);
       Assert.assertEquals(ResultStatus.OK, result.status());
 
       XMLStringWriter writer = new XMLStringWriter(XML.NamespaceAware.No);

@@ -368,23 +368,42 @@
       <parameter name="schema" value="add-metadata/validate-input-metadata.sch"/>
     </step>
     <step
-        id="add-metadatas"
+        id="add-uri-metadatas"
         name="Adding metadatas"
         async="true"
         class="org.pageseeder.ox.pageseeder.step.BulkAddURIMetadata">
       <parameter name="input"   value="data/workbook.xml" />
       <parameter name="psconfig" value="dev-clone" />
-      <parameter name="output"  value="data/result.xml" />
+      <parameter name="output"  value="data/result-add-metadatas.xml" />
       <parameter name="psgroup" value="data_source-files" />
     </step>
     <step
         id="xml2csv"
-        name="Convert from XML to CSV"
+        name="Create a CSV with the result of Add Metadata"
         class="org.pageseeder.ox.step.Transformation">
-      <parameter name="input"           value="data/result.xml" />
+      <parameter name="input"           value="data/result-add-metadatas.xml" />
       <parameter name="display-result"  value="false" />
       <parameter name="xsl"             value="add-metadata/result-metadata-to-csv.xsl" />
       <parameter name="output"          value="data/add-metadata-report.csv" />
+    </step>
+    <step
+        id="edit-uri"
+        name="Edit title, description and labels."
+        async="true"
+        class="org.pageseeder.ox.pageseeder.step.BulkEditURI">
+      <parameter name="input"   value="data/workbook.xml" />
+      <parameter name="psconfig" value="dev-clone" />
+      <parameter name="output"  value="data/result-edit-uri.xml" />
+      <parameter name="psgroup" value="data_source-files" />
+    </step>
+    <step
+        id="xml2csv2"
+        name="Create a CSV with the result of Add Metadata"
+        class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"           value="data/result-edit-uri.xml" />
+      <parameter name="display-result"  value="false" />
+      <parameter name="xsl"             value="add-metadata/result-edit-to-csv.xsl" />
+      <parameter name="output"          value="data/edit-uri-report.csv" />
     </step>
   </pipeline>
 </pipelines>

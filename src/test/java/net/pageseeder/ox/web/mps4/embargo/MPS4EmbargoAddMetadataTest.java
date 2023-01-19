@@ -50,12 +50,20 @@ public abstract class MPS4EmbargoAddMetadataTest extends MPS4OXTest {
     return performGeneric(simulator, "validate-extracted-data");
   }
 
-  protected Result performAddMetadatas(StepSimulator simulator) {
-    return performGeneric(simulator, "add-metadatas");
+  protected Result performAddURIMetadatas(StepSimulator simulator) {
+    return performGeneric(simulator, "add-uri-metadatas");
   }
 
   protected Result performXMLToCSV(StepSimulator simulator) {
     return performGeneric(simulator, "xml2csv");
+  }
+
+  protected Result performEditURI(StepSimulator simulator) {
+    return performGeneric(simulator, "edit-uri");
+  }
+
+  protected Result performXMLToCSV2(StepSimulator simulator) {
+    return performGeneric(simulator, "xml2csv2");
   }
 
   protected void compareActualExpected(File expectedResultBase, String folderOrFileName, StepSimulator simulator) {
