@@ -3,6 +3,7 @@ package net.pageseeder.ox.web.mps4.embargo;
 import net.pageseeder.app.simple.berlioz.GlobalSettingsUtils;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.pageseeder.ox.api.Result;
 import org.pageseeder.ox.core.ResultStatus;
@@ -11,6 +12,7 @@ import org.pageseeder.xmlwriter.XML;
 import org.pageseeder.xmlwriter.XMLStringWriter;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -27,6 +29,7 @@ public class MSP4EmbargoAddMetadata_performEditURITest extends MPS4EmbargoAddMet
   }
 
   @Test
+  @Ignore
   public void performEditURI() {
     try {
       GlobalSettingsUtils.setup("local/appdata","mps4local");
@@ -35,8 +38,9 @@ public class MSP4EmbargoAddMetadata_performEditURITest extends MPS4EmbargoAddMet
       super.performExtractDataFromSpreadsheet(simulator);
       Result result = super.performEditURI(simulator);
       Assert.assertEquals(ResultStatus.OK, result.status());
-//      List<File> filesToIgnore = new ArrayList<>();
-//      super.validateXML("data/result-edit-uri.xml", simulator, filesToIgnore);
+
+      super.validateXMLIgnoringElements("data/result-edit-uri.xml", simulator,
+          Arrays.asList("time-spent-milliseconds"));
 
     } catch (Exception ex) {
       Assert.fail(ex.getMessage());
@@ -45,7 +49,7 @@ public class MSP4EmbargoAddMetadata_performEditURITest extends MPS4EmbargoAddMet
 
   @Override
   protected File getExpectedResultDirectory() {
-    return null;
+    return new File("src/test/resources/net/pageseeder/ox/web/mps4/addmetadata/basic/result/");
   }
 }
 

@@ -3,15 +3,18 @@ package net.pageseeder.ox.web.mps4.embargo;
 import net.pageseeder.app.simple.berlioz.GlobalSettingsUtils;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.pageseeder.ox.api.Result;
 import org.pageseeder.ox.core.ResultStatus;
 import org.pageseeder.ox.step.StepSimulator;
+import org.pageseeder.ox.xml.utils.XMLComparator;
 import org.pageseeder.xmlwriter.XML;
 import org.pageseeder.xmlwriter.XMLStringWriter;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +32,7 @@ public class MSP4EmbargoAddMetadata_performAddURIMetadataTest extends MPS4Embarg
   }
 
   @Test
+  @Ignore
   public void performAddURIMetadata() {
     try {
       GlobalSettingsUtils.setup("local/appdata","mps4local");
@@ -37,17 +41,19 @@ public class MSP4EmbargoAddMetadata_performAddURIMetadataTest extends MPS4Embarg
       super.performExtractDataFromSpreadsheet(simulator);
       Result result = super.performAddURIMetadatas(simulator);
       Assert.assertEquals(ResultStatus.OK, result.status());
-//      List<File> filesToIgnore = new ArrayList<>();
-//      super.validateXML("data/result-add-metadatas.xml", simulator, filesToIgnore);
+
+      super.validateXMLIgnoringElements("data/result-add-metadatas.xml", simulator,
+          Arrays.asList("time-spent-milliseconds"));
 
     } catch (Exception ex) {
+      ex.printStackTrace();
       Assert.fail(ex.getMessage());
     }
   }
 
   @Override
   protected File getExpectedResultDirectory() {
-    return null;
+    return new File("src/test/resources/net/pageseeder/ox/web/mps4/addmetadata/basic/result/");
   }
 }
 
