@@ -6,7 +6,7 @@
     <xsl:apply-templates select="edit-uris/edit-uri"/>
   </xsl:template>
 
-  <xsl:template match="metadata">
+  <xsl:template match="edit-uri">
     <xsl:value-of select="'&#xa;'"/>
     <xsl:value-of select="uriid"/>       <xsl:text>,</xsl:text>
     <xsl:value-of select="title"/>       <xsl:text>,</xsl:text>
