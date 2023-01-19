@@ -405,6 +405,19 @@
       <parameter name="xsl"             value="add-metadata/result-edit-to-csv.xsl" />
       <parameter name="output"          value="data/edit-uri-report.csv" />
     </step>
+    <step
+        id="results-to-csv"
+        name="Create a CSV with the results"
+        class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"                     value="data/workbook.xml" />
+      <!-- it just needs to have the file name because it is in the same folder of data/workbook.xml -->
+      <parameter name="_xslt-result-add-metadata" value="result-add-metadatas.xml" />
+      <!-- it just needs to put the file name because it is in the same folder of data/workbook.xml -->
+      <parameter name="_xslt-result-edit-uri"     value="result-edit-uri.xml" />
+      <parameter name="display-result"            value="false" />
+      <parameter name="xsl"                       value="add-metadata/results-to-csv.xsl" />
+      <parameter name="output"                    value="data/results-report.csv" />
+    </step>
   </pipeline>
 </pipelines>
 

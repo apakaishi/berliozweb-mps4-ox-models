@@ -66,6 +66,10 @@ public abstract class MPS4EmbargoAddMetadataTest extends MPS4OXTest {
     return performGeneric(simulator, "xml2csv2");
   }
 
+  protected Result performResultsLToCSV(StepSimulator simulator) {
+    return performGeneric(simulator, "results-to-csv");
+  }
+
   protected void compareActualExpected(File expectedResultBase, String folderOrFileName, StepSimulator simulator) {
     File actualResultBase = new File(simulator.getData().directory(), folderOrFileName);
     XMLComparator.compareXMLFile(expectedResultBase, actualResultBase);

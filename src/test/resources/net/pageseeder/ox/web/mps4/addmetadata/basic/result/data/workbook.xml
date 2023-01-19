@@ -1,45 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<metadatas>
-   <metadata>
-      <uriid>#N/A</uriid>
-      <title>Efficient Funding of Chemotherapy Supplement Summary of Changes</title>
-      <description/>
-      <labels>restricted</labels>
-      <properties>
-         <property name="year" type="string" title="Year" value="2020"/>
-         <property name="year_month" type="string" title="Year" value="2020-01"/>
-         <property name="publish_date"
-                   type="date"
-                   title="Publish Date"
-                   value="2019-12-06"/>
-      </properties>
-   </metadata>
-   <metadata>
-      <uriid>110605</uriid>
-      <title>Efficient Funding of Chemotherapy Supplement Summary of Changes</title>
-      <description>_chemoc</description>
-      <labels>restricted,embargo</labels>
-      <properties>
-         <property name="year" type="string" title="Year" value="2020"/>
-         <property name="year_month" type="string" title="Year" value="2020-01"/>
-         <property name="publish_date"
-                   type="date"
-                   title="Publish Date"
-                   value="2019-12-06"/>
-      </properties>
-   </metadata>
-   <metadata>
-      <uriid>110603</uriid>
-      <title>Efficient Funding of Chemotherapy Supplement Summary of Changes</title>
-      <description/>
-      <labels>restricted</labels>
-      <properties>
-         <property name="year" type="string" title="Year" value="2020"/>
-         <property name="year_month" type="string" title="Year" value="2020-01"/>
-         <property name="publish_date"
-                   type="date"
-                   title="Publish Date"
-                   value="2019-12-06"/>
-      </properties>
-   </metadata>
-</metadatas>
+<inputs>
+   <metadatas>
+      <metadata>
+         <uriid>#N/A</uriid>
+         <properties>
+            <property name="year" type="string" title="Year" value="2020"/>
+            <property name="year_month" type="string" title="Year" value="2020-01"/>
+            <property name="publish_date"
+                      type="date"
+                      title="Publish Date"
+                      value="2019-12-06"/>
+         </properties>
+      </metadata>
+      <metadata>
+         <uriid>110605</uriid>
+         <properties>
+            <property name="year" type="string" title="Year" value="2020"/>
+            <property name="year_month" type="string" title="Year" value="2020-01"/>
+            <property name="publish_date"
+                      type="date"
+                      title="Publish Date"
+                      value="2019-12-06"/>
+         </properties>
+      </metadata>
+      <metadata>
+         <uriid>110603</uriid>
+         <properties>
+            <property name="year" type="string" title="Year" value="2020"/>
+            <property name="year_month" type="string" title="Year" value="2020-01"/>
+            <property name="publish_date"
+                      type="date"
+                      title="Publish Date"
+                      value="2019-12-06"/>
+         </properties>
+      </metadata>
+   </metadatas>
+   <edit-uris>
+      <edit-uri>
+         <uriid>#N/A</uriid>
+         <title>Efficient Funding of Chemotherapy Supplement Summary of Changes</title>
+         <description/>
+         <labels>restricted</labels>
+      </edit-uri>
+      <edit-uri>
+         <uriid>110605</uriid>
+         <title>Efficient Funding of Chemotherapy Supplement Summary of Changes</title>
+         <description>_chemoc</description>
+         <labels>restricted,embargo</labels>
+      </edit-uri>
+      <edit-uri>
+         <uriid>110603</uriid>
+         <title>Efficient Funding of Chemotherapy Supplement Summary of Changes</title>
+         <description/>
+         <labels>restricted</labels>
+      </edit-uri>
+   </edit-uris>
+</inputs>
