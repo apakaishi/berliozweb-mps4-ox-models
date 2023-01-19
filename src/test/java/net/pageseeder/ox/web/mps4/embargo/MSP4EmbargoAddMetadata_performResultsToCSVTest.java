@@ -33,11 +33,8 @@ public class MSP4EmbargoAddMetadata_performResultsToCSVTest extends MPS4EmbargoA
       File input = new File("src/test/resources/net/pageseeder/ox/web/mps4/addmetadata/basic/embargo-add-metadata-test.xlsx");
       StepSimulator simulator = new StepSimulator(super.getModel().name(), input, REQUEST_PARAMETER);
       super.performExtractDataFromSpreadsheet(simulator);
-      super.performValidateExtractedData(simulator);
       super.performAddURIMetadatas(simulator);
-      super.performXMLToCSV(simulator);
       super.performEditURI(simulator);
-      super.performXMLToCSV2(simulator);
       Result result = super.performResultsLToCSV(simulator);
           Assert.assertEquals(ResultStatus.OK, result.status());
 

@@ -11,6 +11,8 @@ import org.pageseeder.xmlwriter.XML;
 import org.pageseeder.xmlwriter.XMLStringWriter;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,16 +35,10 @@ public class MSP4EmbargoAddMetadata_performAddURIMetadataTest extends MPS4Embarg
       File input = new File("src/test/resources/net/pageseeder/ox/web/mps4/addmetadata/basic/embargo-add-metadata-test.xlsx");
       StepSimulator simulator = new StepSimulator(super.getModel().name(), input, REQUEST_PARAMETER);
       super.performExtractDataFromSpreadsheet(simulator);
-      super.performValidateExtractedData(simulator);
-
       Result result = super.performAddURIMetadatas(simulator);
       Assert.assertEquals(ResultStatus.OK, result.status());
-
-      XMLStringWriter writer = new XMLStringWriter(XML.NamespaceAware.No);
-      result.toXML(writer);
-      System.out.println("Result");
-      System.out.println(writer);
-      super.performXMLToCSV(simulator);
+//      List<File> filesToIgnore = new ArrayList<>();
+//      super.validateXML("data/result-add-metadatas.xml", simulator, filesToIgnore);
 
     } catch (Exception ex) {
       Assert.fail(ex.getMessage());

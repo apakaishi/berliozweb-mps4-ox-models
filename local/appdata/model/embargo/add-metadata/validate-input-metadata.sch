@@ -17,13 +17,16 @@
     <sch:rule context="metadatas/metadata">
       <sch:assert test="uriid" flag="ALERT">Column uriid does not exist.</sch:assert>
       <sch:assert test="matches(uriid/text(), '^\d+$')" flag="ALERT">Uriid is not valid <sch:value-of select="uriid/text()"/> .</sch:assert>
-      <sch:assert test="title" flag="ALERT">Column title does not exist.</sch:assert>
-      <sch:assert test="description" flag="ALERT">Column description does not exist.</sch:assert>
-      <sch:assert test="labels" flag="ALERT">Column labels does not exist.</sch:assert>
       <sch:assert test="properties/property[@name='year']" flag="ALERT">Column year does not exist.</sch:assert>
       <sch:assert test="properties/property[@name='year_month']" flag="ALERT">Column year_month does not exist.</sch:assert>
       <sch:assert test="properties/property[@name='publish_date']" flag="ALERT">Column publish_date does not exist.</sch:assert>
-
+    </sch:rule>
+    <sch:rule context="edit-uris/edit-uris">
+      <sch:assert test="uriid" flag="ALERT">Column uriid does not exist.</sch:assert>
+      <sch:assert test="matches(uriid/text(), '^\d+$')" flag="ALERT">Uriid is not valid <sch:value-of select="uriid/text()"/> .</sch:assert>
+      <sch:assert test="title" flag="ALERT">Column title does not exist.</sch:assert>
+      <sch:assert test="description" flag="ALERT">Column description does not exist.</sch:assert>
+      <sch:assert test="labels" flag="ALERT">Column labels does not exist.</sch:assert>
     </sch:rule>
   </sch:pattern>
 

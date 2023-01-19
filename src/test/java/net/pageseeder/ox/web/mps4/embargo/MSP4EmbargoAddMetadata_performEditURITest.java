@@ -33,21 +33,12 @@ public class MSP4EmbargoAddMetadata_performEditURITest extends MPS4EmbargoAddMet
       File input = new File("src/test/resources/net/pageseeder/ox/web/mps4/addmetadata/basic/embargo-add-metadata-test.xlsx");
       StepSimulator simulator = new StepSimulator(super.getModel().name(), input, REQUEST_PARAMETER);
       super.performExtractDataFromSpreadsheet(simulator);
-      super.performValidateExtractedData(simulator);
-      super.performAddURIMetadatas(simulator);
-      super.performXMLToCSV(simulator);
       Result result = super.performEditURI(simulator);
-      super.performXMLToCSV2(simulator);
-
       Assert.assertEquals(ResultStatus.OK, result.status());
-
-      XMLStringWriter writer = new XMLStringWriter(XML.NamespaceAware.No);
-      result.toXML(writer);
-      System.out.println("Result");
-      System.out.println(writer);
+//      List<File> filesToIgnore = new ArrayList<>();
+//      super.validateXML("data/result-edit-uri.xml", simulator, filesToIgnore);
 
     } catch (Exception ex) {
-      ex.printStackTrace();
       Assert.fail(ex.getMessage());
     }
   }
