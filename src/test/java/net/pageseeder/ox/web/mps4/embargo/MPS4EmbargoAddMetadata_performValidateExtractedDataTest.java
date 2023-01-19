@@ -5,10 +5,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.pageseeder.ox.api.Result;
 import org.pageseeder.ox.core.ResultStatus;
-import org.pageseeder.ox.schematron.tool.SchematronCommand;
 import org.pageseeder.ox.step.StepSimulator;
-import org.pageseeder.xmlwriter.XML;
-import org.pageseeder.xmlwriter.XMLStringWriter;
 
 import java.io.File;
 import java.util.Map;
@@ -17,7 +14,7 @@ import java.util.Map;
  * @author vku
  * @since 04 November 2021
  */
-public class MSP4EmbargoAddMetadata_performValidateExtractedDataTest extends MPS4EmbargoAddMetadataTest {
+public class MPS4EmbargoAddMetadata_performValidateExtractedDataTest extends MPS4EmbargoAddMetadataTest {
   private static Map<String, String> REQUEST_PARAMETER = null;
 
   @BeforeClass
