@@ -41,7 +41,7 @@ public class MPS4EmbargoAddMetadata_performExtractDataTest extends MPS4EmbargoAd
       }
       Assert.assertEquals(ResultStatus.OK, result.status());
       List<File> filesToIgnore = new ArrayList<>();
-      super.validateXML("data", simulator, filesToIgnore);
+      super.validateXML("data/workbook.xml", simulator, filesToIgnore);
     } catch (Exception ex) {
       ex.printStackTrace();
       System.out.println(ex.getMessage());
