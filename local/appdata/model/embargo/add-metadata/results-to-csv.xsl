@@ -8,23 +8,15 @@
 
   <xsl:template match="/">
 
-<!--    <xsl:message><xsl:value-of select="$result-add-metadata-file"/></xsl:message>-->
-<!--    <xsl:message><xsl:value-of select="$result-edit-uri-file"/></xsl:message>-->
     <xsl:variable name="metadatas-input" select="inputs/metadatas/metadata"/>
     <xsl:variable name="edits-input" select="inputs/edit-uris/edit-uri"/>
     <xsl:variable name="metadatas-result" select="$result-add-metadata-file//metadatas/metadata"/>
     <xsl:variable name="edits-result" select="$result-edit-uri-file//edit-uris/edit-uri"/>
-<!--    <xsl:message><xsl:value-of select="$metadatas-result"/></xsl:message>-->
-    <xsl:message><xsl:value-of select="count($metadatas-input)"/></xsl:message>
-    <xsl:message><xsl:value-of select="count($edits-input)"/></xsl:message>
-    <xsl:message><xsl:value-of select="count($metadatas-result)"/></xsl:message>
-    <xsl:message><xsl:value-of select="count($edits-result)"/></xsl:message>
     <!-- create headers -->
     <xsl:text>uriid,title,description,labels,year,year-month,publish date,status (Add Metadata), error message (Add Metadata),time spent (Add Metadata),status (Edit URI), error message (Edit URI), time spent (Edit URI)</xsl:text>
     <!-- create each row -->
     <xsl:for-each select="$edits-input">
       <xsl:variable name="position" select="position()"/>
-      <xsl:message><xsl:value-of select="$position"/></xsl:message>
       <!-- add break line -->
       <xsl:value-of select="'&#xa;'"/>
       <!-- common value -->
