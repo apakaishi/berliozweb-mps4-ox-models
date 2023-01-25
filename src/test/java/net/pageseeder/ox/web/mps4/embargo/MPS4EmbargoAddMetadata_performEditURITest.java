@@ -27,7 +27,6 @@ public class MPS4EmbargoAddMetadata_performEditURITest extends MPS4EmbargoAddMet
   }
 
   @Test
-  @Ignore
   public void performEditURI() {
     try {
       GlobalSettingsUtils.setup("local/appdata","mps4local");

@@ -10,6 +10,7 @@
                       type="date"
                       title="Publish Date"
                       value="2019-12-06"/>
+            <property name="order" title="Display Order" type="string" value="1"/>
          </properties>
       </metadata>
       <metadata>
@@ -21,6 +22,7 @@
                       type="date"
                       title="Publish Date"
                       value="2019-12-06"/>
+            <property name="order" title="Display Order" type="string" value="2"/>
          </properties>
       </metadata>
       <metadata>
@@ -32,6 +34,7 @@
                       type="date"
                       title="Publish Date"
                       value="2019-12-06"/>
+            <property name="order" title="Display Order" type="string" value="3"/>
          </properties>
       </metadata>
    </metadatas>
@@ -45,13 +48,13 @@
       <edit-uri>
          <uriid>110605</uriid>
          <title>Efficient Funding of Chemotherapy Supplement Summary of Changes</title>
-         <description>_chemoc</description>
+         <description>Chemotherapy</description>
          <labels>restricted,embargo</labels>
       </edit-uri>
       <edit-uri>
          <uriid>110603</uriid>
          <title>Efficient Funding of Chemotherapy Supplement Summary of Changes</title>
-         <description/>
+         <description>_embargo</description>
          <labels>restricted</labels>
       </edit-uri>
    </edit-uris>

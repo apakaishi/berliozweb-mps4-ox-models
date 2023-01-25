@@ -12,6 +12,7 @@
   <xsl:variable name="year-col-ref" select="$header-cols[lower-case(text()) = 'year']/@ref"/>
   <xsl:variable name="year-month-col-ref" select="$header-cols[lower-case(text()) = 'month']/@ref"/>
   <xsl:variable name="publish-date-col-ref" select="$header-cols[lower-case(text()) = 'pub-date']/@ref"/>
+  <xsl:variable name="order-col-ref" select="$header-cols[lower-case(text()) = 'order']/@ref"/>
 
   <!-- Main template -->
   <xsl:template match="/">
@@ -43,6 +44,7 @@
         <property name="year" type="string" title="Year" value="{$year}"/>
         <property name="year_month" type="string" title="Year" value="{concat($year, '-', $month)}"/>
         <property name="publish_date" type="date" title="Publish Date" value="{col[@ref=$publish-date-col-ref]}"/>
+        <property name="order" type="string" title="Display Order" value="{col[@ref=$order-col-ref]}"/>
       </properties>
     </metadata>
   </xsl:template>
@@ -53,7 +55,12 @@
       <xsl:variable name="data-type" select="col[@ref=$data-type-col-ref]"/>
       <uriid><xsl:value-of select="$uriid"/></uriid>
       <title><xsl:value-of select="col[@ref=$title-col-ref]"/></title>
-      <description><xsl:value-of select="$data-type"/></description>
+      <description>
+        <xsl:choose>
+          <xsl:when test="$data-type = '_chemoc'">Chemotherapy</xsl:when>
+          <xsl:otherwise><xsl:value-of select="$data-type"/></xsl:otherwise>
+        </xsl:choose>
+      </description>
       <xsl:choose>
         <xsl:when test="lower-case($data-type) = ('embargo', '_chemoc')">
           <labels>restricted,embargo</labels>
