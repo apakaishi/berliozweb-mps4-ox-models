@@ -8,6 +8,7 @@
   <xsl:variable name="header-cols" select="/workbook/worksheet[@title='metadata']/row[@position='1']/col"/>
   <xsl:variable name="uriid-col-ref" select="$header-cols[lower-case(text()) = 'uriid']/@ref"/>
   <xsl:variable name="title-col-ref" select="$header-cols[lower-case(text()) = 'title']/@ref"/>
+  <xsl:variable name="description-col-ref" select="$header-cols[lower-case(text()) = 'description']/@ref"/>
   <xsl:variable name="data-type-col-ref" select="$header-cols[lower-case(text()) = 'path']/@ref"/>
   <xsl:variable name="year-col-ref" select="$header-cols[lower-case(text()) = 'year']/@ref"/>
   <xsl:variable name="year-month-col-ref" select="$header-cols[lower-case(text()) = 'month']/@ref"/>
@@ -58,11 +59,15 @@
       <description>
         <xsl:choose>
           <xsl:when test="$data-type = '_chemoc'">Chemotherapy</xsl:when>
-          <xsl:otherwise><xsl:value-of select="$data-type"/></xsl:otherwise>
+          <xsl:when test="$data-type = '_sqlite'">SQLite</xsl:when>
+          <xsl:when test="$data-type = '_offline'">Offline API</xsl:when>
+          <xsl:otherwise>
+            <xsl:variable name="description" select="col[@ref=$description-col-ref]"/>
+            <xsl:value-of select="if ($description/text()) then $description else ''"/></xsl:otherwise>
         </xsl:choose>
       </description>
       <xsl:choose>
-        <xsl:when test="lower-case($data-type) = ('embargo', '_chemoc')">
+        <xsl:when test="lower-case($data-type) = ('_embargo', '_chemoc')">
           <labels>restricted,embargo</labels>
         </xsl:when>
         <xsl:otherwise>

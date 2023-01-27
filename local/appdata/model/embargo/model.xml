@@ -353,7 +353,7 @@
   </pipeline>
 
   <pipeline id="embargo-add-metadata" name="Add metadata to embargo files" accepts="application/xlsx" default="false"
-            description="It receives an spreadsheet with sheet named metadata. It is required to have the columns 'uriid', 'year', 'month', 'path' (_chemo, _sqlite, _offline, _embargo), 'pub-date' and 'order'. There is one optional columns 'title'.">
+            description="It receives an spreadsheet with sheet named metadata. It is required to have the columns 'uriid', 'year', 'month', 'path' (_chemo, _sqlite, _offline, _embargo), 'pub-date' and 'order'. There is two optional columns 'title' and 'description'.">
 
     <!-- Unzip excel document-->
     <step id="extract-data-from-spreadsheet" name="Extract data from Spreadsheet" viewable="false"

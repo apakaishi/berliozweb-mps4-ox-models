@@ -45,6 +45,7 @@
     <xsl:value-of select="properties/property[@name='year']/@value"/>       <xsl:text>,</xsl:text>
     <xsl:value-of select="properties/property[@name='year_month']/@value"/>       <xsl:text>,</xsl:text>
     <xsl:value-of select="properties/property[@name='publish_date']/@value"/>       <xsl:text>,</xsl:text>
+    <xsl:value-of select="properties/property[@name='order']/@value"/>       <xsl:text>,</xsl:text>
   </xsl:template>
 
   <xsl:template match="edit-uri" mode="result">

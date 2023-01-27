@@ -4,37 +4,73 @@
       <metadata>
          <uriid>#N/A</uriid>
          <properties>
-            <property name="year" type="string" title="Year" value="2020"/>
-            <property name="year_month" type="string" title="Year" value="2020-01"/>
+            <property name="year" type="string" title="Year" value="2018"/>
+            <property name="year_month" type="string" title="Year" value="2018-06"/>
             <property name="publish_date"
                       type="date"
                       title="Publish Date"
-                      value="2019-12-06"/>
-            <property name="order" title="Display Order" type="string" value="1"/>
+                      value="2018-06-06"/>
+            <property name="order" type="string" title="Display Order" value="1"/>
          </properties>
       </metadata>
       <metadata>
-         <uriid>110605</uriid>
+         <uriid>110902</uriid>
          <properties>
-            <property name="year" type="string" title="Year" value="2020"/>
-            <property name="year_month" type="string" title="Year" value="2020-01"/>
+            <property name="year" type="string" title="Year" value="2019"/>
+            <property name="year_month" type="string" title="Year" value="2019-05"/>
             <property name="publish_date"
                       type="date"
                       title="Publish Date"
-                      value="2019-12-06"/>
-            <property name="order" title="Display Order" type="string" value="2"/>
+                      value="2019-05-07"/>
+            <property name="order" type="string" title="Display Order" value="2"/>
          </properties>
       </metadata>
       <metadata>
-         <uriid>110603</uriid>
+         <uriid>110899</uriid>
          <properties>
             <property name="year" type="string" title="Year" value="2020"/>
-            <property name="year_month" type="string" title="Year" value="2020-01"/>
+            <property name="year_month" type="string" title="Year" value="2020-04"/>
             <property name="publish_date"
                       type="date"
                       title="Publish Date"
-                      value="2019-12-06"/>
-            <property name="order" title="Display Order" type="string" value="3"/>
+                      value="2020-04-08"/>
+            <property name="order" type="string" title="Display Order" value="3"/>
+         </properties>
+      </metadata>
+      <metadata>
+         <uriid>110903</uriid>
+         <properties>
+            <property name="year" type="string" title="Year" value="2021"/>
+            <property name="year_month" type="string" title="Year" value="2021-03"/>
+            <property name="publish_date"
+                      type="date"
+                      title="Publish Date"
+                      value="2021-03-09"/>
+            <property name="order" type="string" title="Display Order" value="4"/>
+         </properties>
+      </metadata>
+      <metadata>
+         <uriid>110900</uriid>
+         <properties>
+            <property name="year" type="string" title="Year" value="2022"/>
+            <property name="year_month" type="string" title="Year" value="2022-02"/>
+            <property name="publish_date"
+                      type="date"
+                      title="Publish Date"
+                      value="2022-02-10"/>
+            <property name="order" type="string" title="Display Order" value="5"/>
+         </properties>
+      </metadata>
+      <metadata>
+         <uriid>110901</uriid>
+         <properties>
+            <property name="year" type="string" title="Year" value="2023"/>
+            <property name="year_month" type="string" title="Year" value="2023-01"/>
+            <property name="publish_date"
+                      type="date"
+                      title="Publish Date"
+                      value="2023-01-11"/>
+            <property name="order" type="string" title="Display Order" value="6"/>
          </properties>
       </metadata>
    </metadatas>
@@ -42,19 +78,37 @@
       <edit-uri>
          <uriid>#N/A</uriid>
          <title>Efficient Funding of Chemotherapy Supplement Summary of Changes</title>
-         <description/>
+         <description>invalid uriid</description>
          <labels>restricted</labels>
       </edit-uri>
       <edit-uri>
-         <uriid>110605</uriid>
-         <title>Efficient Funding of Chemotherapy Supplement Summary of Changes</title>
+         <uriid>110902</uriid>
+         <title>Chemo example</title>
          <description>Chemotherapy</description>
          <labels>restricted,embargo</labels>
       </edit-uri>
       <edit-uri>
-         <uriid>110603</uriid>
-         <title>Efficient Funding of Chemotherapy Supplement Summary of Changes</title>
-         <description>_embargo</description>
+         <uriid>110899</uriid>
+         <title>Embargo without description</title>
+         <description/>
+         <labels>restricted,embargo</labels>
+      </edit-uri>
+      <edit-uri>
+         <uriid>110903</uriid>
+         <title>Embargo with description</title>
+         <description>Description example</description>
+         <labels>restricted,embargo</labels>
+      </edit-uri>
+      <edit-uri>
+         <uriid>110900</uriid>
+         <title>Offline Example</title>
+         <description>Offline API</description>
+         <labels>restricted</labels>
+      </edit-uri>
+      <edit-uri>
+         <uriid>110901</uriid>
+         <title>Sqlite example</title>
+         <description>SQLite</description>
          <labels>restricted</labels>
       </edit-uri>
    </edit-uris>
