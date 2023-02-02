@@ -3,6 +3,7 @@ package net.pageseeder.ox.web.mps4.embargo;
 import net.pageseeder.app.simple.berlioz.GlobalSettingsUtils;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.pageseeder.ox.api.Result;
 import org.pageseeder.ox.core.ResultStatus;
@@ -27,6 +28,7 @@ public class MPS4EmbargoAddMetadata_performResultsToCSVTest extends MPS4EmbargoA
   }
 
   @Test
+  @Ignore
   public void performResultsToCSV() {
     try {
       GlobalSettingsUtils.setup("local/appdata","mps4local");

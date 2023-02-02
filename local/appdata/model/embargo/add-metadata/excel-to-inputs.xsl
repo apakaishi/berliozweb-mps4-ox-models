@@ -44,7 +44,6 @@
         <xsl:variable name="month" select="format-number(col[@ref=$year-month-col-ref], '#00')"/>
         <property name="year" type="string" title="Year" value="{$year}"/>
         <property name="year_month" type="string" title="Year" value="{concat($year, '-', $month)}"/>
-        <property name="publish_date" type="date" title="Publish Date" value="{col[@ref=$publish-date-col-ref]}"/>
         <property name="order" type="string" title="Display Order" value="{col[@ref=$order-col-ref]}"/>
       </properties>
     </metadata>
@@ -56,16 +55,12 @@
       <xsl:variable name="data-type" select="col[@ref=$data-type-col-ref]"/>
       <uriid><xsl:value-of select="$uriid"/></uriid>
       <title><xsl:value-of select="col[@ref=$title-col-ref]"/></title>
-      <description>
-        <xsl:choose>
-          <xsl:when test="$data-type = '_chemoc'">Chemotherapy</xsl:when>
-          <xsl:when test="$data-type = '_sqlite'">SQLite</xsl:when>
-          <xsl:when test="$data-type = '_offline'">Offline API</xsl:when>
-          <xsl:otherwise>
-            <xsl:variable name="description" select="col[@ref=$description-col-ref]"/>
-            <xsl:value-of select="if ($description/text()) then $description else ''"/></xsl:otherwise>
-        </xsl:choose>
-      </description>
+      <xsl:variable name="description" select="col[@ref=$description-col-ref]"/>
+      <xsl:if test="$description/text()">
+        <description>
+          <xsl:value-of select="$description"/>
+        </description>
+      </xsl:if>
       <xsl:choose>
         <xsl:when test="lower-case($data-type) = ('_embargo', '_chemoc')">
           <labels>restricted,embargo</labels>
