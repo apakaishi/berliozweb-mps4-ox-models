@@ -139,11 +139,7 @@
               </section>
               <section id="content" title="Content" fragmenttype="default,embed">
                 <fragment id="2">
-                  <para>
-                    <inline label="showsearchresults-embargo">
-                      <xsl:value-of select="$publish_date_year_month" />
-                    </inline>
-                  </para>
+                  <para>--- Add references to files here ---</para>
                 </fragment>
                 <fragment id="3">
                   <blockxref frag="default" docid="api-sqlite-links" display="document" config="default" type="transclude" urititle="PBS API and SQLite links" urilabels="ps-noindex,restricted" mediatype="application/vnd.pageseeder.psml+xml">

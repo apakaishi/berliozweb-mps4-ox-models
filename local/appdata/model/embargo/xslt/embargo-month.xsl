@@ -50,9 +50,9 @@
 
     <!-- Year document -->
     <xsl:result-document href="{$path-year}">
-      <document type="default" version="current" level="portable">
+      <document type="embargo_year" version="current" level="portable">
         <documentinfo>
-          <uri documenttype="default" title="{$title-year-doc}">
+          <uri documenttype="embargo_year" title="{$title-year-doc}">
             <displaytitle>
               <xsl:value-of select="$title-year-doc" />
             </displaytitle>
@@ -114,11 +114,7 @@
         </section>
         <section id="content" title="Content" fragmenttype="default,embed" overwrite="false">
           <fragment id="2">
-            <para>
-              <inline label="showsearchresults-embargo">
-                <xsl:value-of select="$current_date" />
-              </inline>
-            </para>
+            <para>--- Add references to files here ---</para>
           </fragment>
           <fragment id="3">
             <blockxref frag="default" docid="api-sqlite-links" display="document" config="default" type="transclude" urititle="PBS API and SQLite links" urilabels="ps-noindex,restricted" mediatype="application/vnd.pageseeder.psml+xml">
