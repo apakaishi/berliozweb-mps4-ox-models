@@ -50,9 +50,9 @@
         <xsl:variable name="path-year" select="concat($base,$embargo-folder,$year-value,'/',$filename-year)" />
 
         <xsl:result-document href="{$path-year}">
-          <document type="default" version="current" level="portable">
+          <document type="embargo_year" version="current" level="portable">
             <documentinfo>
-              <uri documenttype="default" title="{$title-doc-year}">
+              <uri documenttype="embargo_year" title="{$title-doc-year}">
                 <displaytitle>
                   <xsl:value-of select="$title-doc-year" />
                 </displaytitle>
@@ -142,9 +142,11 @@
                   <para>--- Add references to files here ---</para>
                 </fragment>
                 <fragment id="3">
-                  <blockxref frag="default" docid="api-sqlite-links" display="document" config="default" type="transclude" urititle="PBS API and SQLite links" urilabels="ps-noindex,restricted" mediatype="application/vnd.pageseeder.psml+xml">
-                                    PBS API and SQLite
-                  </blockxref>
+                  <para>
+                    <xref frag="default" docid="api-beta-document" display="document" config="default" type="none" labels="no-publication" urititle="PBS API Beta" urilabels="restricted" mediatype="application/vnd.pageseeder.psml+xml" documenttype="default">PBS API Beta</xref>
+                    <br/>
+                    <xref frag="default" docid="api-sqlite-document" display="document" config="default" type="none" labels="no-publication" urititle="PBS SQLite Beta" urilabels="restricted" mediatype="application/vnd.pageseeder.psml+xml" documenttype="default">PBS SQLite Beta</xref>
+                  </para>
                 </fragment>
               </section>
             </document>
