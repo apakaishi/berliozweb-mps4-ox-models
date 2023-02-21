@@ -205,6 +205,31 @@
     </step>
   </pipeline>
 
+  <pipeline id="pivot-analysis"
+            name="Pivot analysis"
+            description="Pivot analysis"
+            accepts="application/json"
+            default="true">
+    <step id="Copy-Document-XML" name="Copy document xml" class="org.pageseeder.ox.step.Copy">
+      <parameter name="input" value="resources/document.xml" />
+      <parameter name="output" value="example/document.xml"/>
+    </step>
+    <step id="Copy-Pivot-Folder" name="Copying the CSS and JS Pivot folder" class="org.pageseeder.ox.step.Copy">
+      <parameter name="input" value="resources/pivot" />
+      <parameter name="output" value="files"/>
+    </step>
+    <step id="Copy-Json-Data" name="Copying Json Data" class="org.pageseeder.ox.step.Copy">
+      <parameter name="output" value="files/data/errors.json"/>
+    </step>
+    <step id="viewer-pivot-paragraph-report" name="Paragraph Pivot Report" viewable="true" class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input" value="example/document.xml" />
+      <parameter name="display-result"  value="false"/>
+      <parameter name="_xslt-type" value="error" />
+      <parameter name="xsl"    value="dds-json-to-dds-xml/pivot-html-viewer.xsl"/>
+      <parameter name="output" value="files/index.html"/>
+    </step>
+  </pipeline>
+
 </pipelines>
 
 
