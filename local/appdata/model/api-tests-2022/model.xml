@@ -37,7 +37,7 @@
       <parameter name="input"                 value="data-processed/cleaned-document.xml"/>
       <parameter name="xsl"                   value="dds-json-to-dds-xml/sort-li-item-id-no-pig.xsl"/>
       <parameter name="display-result"        value="false"/>
-      <parameter name="_xslt-schedule-code"   value="3436" />
+      <parameter name="_xslt-schedule-code"   value="2830" />
       <parameter name="output"                value="data-processed/sorted.xml"/>
     </step>
     <!-- Create full items list (Related with Prescribe-Text and Restrictions -->
@@ -45,14 +45,14 @@
       <parameter name="input"                 value="data-processed/sorted.xml"/>
       <parameter name="xsl"                   value="dds-json-to-dds-xml/create-full-item-list.xsl"/>
       <parameter name="display-result"        value="false"/>
-      <parameter name="_xslt-schedule-code"   value="3436" />
+      <parameter name="_xslt-schedule-code"   value="2830" />
       <parameter name="output"                value="data-processed/full-items-document.xml"/>
     </step>
     <step id="split-dds-xml-document" name="Split DDS XML DDS Document" viewable="false" class="org.pageseeder.ox.step.Transformation">
       <parameter name="input"                 value="data-processed/full-items-document.xml"/>
       <parameter name="xsl"                   value="dds-json-to-dds-xml/split-dds-xml-document.xsl"/>
       <parameter name="display-result"        value="false"/>
-      <parameter name="_xslt-schedule-code"   value="3436" />
+      <parameter name="_xslt-schedule-code"   value="2830" />
       <parameter name="_xslt-edition-type"    value="dds" />
       <parameter name="_xslt-folder"          value="pg-folder" />
       <parameter name="output"                value="files/split-document.xml"/>
@@ -75,7 +75,7 @@
       <parameter name="input"                 value="data-processed/grouped-proofer.xml"/>
       <parameter name="xsl"                   value="dds-json-to-dds-xml/GenerateProofersXmlfromDdsXml.xsl"/>
       <parameter name="display-result"        value="false"/>
-      <parameter name="_xslt-schedule-code"   value="3436" />
+      <parameter name="_xslt-schedule-code"   value="2830" />
       <parameter name="_xslt-edition-type"    value="dds" />
       <parameter name="_xslt-folder"          value="pg-folder" />
       <parameter name="output"                value="data-processed/generated-proofer-psml.xml"/>
@@ -84,7 +84,7 @@
       <parameter name="input"                 value="data-processed/full-items-document.xml"/>
       <parameter name="xsl"                   value="dds-json-to-dds-xml/counting-elements.xsl"/>
       <parameter name="display-result"        value="false"/>
-      <parameter name="_xslt-schedule-code"   value="3436" />
+      <parameter name="_xslt-schedule-code"   value="2830" />
       <parameter name="_xslt-edition-type"    value="dds" />
       <parameter name="_xslt-folder"          value="pg-folder" />
       <parameter name="output"                value="data-processed/counting-psml-documents.xml"/>
@@ -93,7 +93,7 @@
       <parameter name="input"                 value="data-processed/full-items-document.xml"/>
       <parameter name="xsl"                   value="dds-json-to-dds-xml/create-psml-documents.xsl"/>
       <parameter name="display-result"        value="false"/>
-      <parameter name="_xslt-schedule-code"   value="3436" />
+      <parameter name="_xslt-schedule-code"   value="2830" />
       <parameter name="_xslt-edition-type"    value="dds" />
       <parameter name="_xslt-folder"          value="pg-folder" />
       <parameter name="output"                value="files/split-document.xml"/>
@@ -136,7 +136,7 @@
       <parameter name="input"                 value="data-processed/cleaned-document.xml"/>
       <parameter name="xsl"                   value="dds-json-to-dds-xml/extra/create-psml-element-documents.xsl"/>
       <parameter name="display-result"        value="false"/>
-      <parameter name="_xslt-schedule-code"   value="3436" />
+      <parameter name="_xslt-schedule-code"   value="2830" />
       <parameter name="_xslt-edition-type"    value="dds" />
       <parameter name="_xslt-folder"          value="pg-folder/data" />
       <parameter name="output"                value="files/psml-element-documents.xml"/>
@@ -180,7 +180,7 @@
       <parameter name="input"                 value="data-processed/cleaned-document.xml"/>
       <parameter name="xsl"                   value="dds-json-to-dds-xml/sort-li-item-id-no-pig.xsl"/>
       <parameter name="display-result"        value="false"/>
-      <parameter name="_xslt-schedule-code"   value="3436" />
+      <parameter name="_xslt-schedule-code"   value="2830" />
       <parameter name="output"                value="data-processed/sorted.xml"/>
     </step>
     <!-- Create full items list (Related with Prescribe-Text and Restrictions -->
@@ -188,20 +188,47 @@
       <parameter name="input"                 value="data-processed/sorted.xml"/>
       <parameter name="xsl"                   value="dds-json-to-dds-xml/create-full-item-list.xsl"/>
       <parameter name="display-result"        value="false"/>
-      <parameter name="_xslt-schedule-code"   value="3436" />
+      <parameter name="_xslt-schedule-code"   value="2830" />
       <parameter name="output"                value="data-processed/full-items-document.xml"/>
     </step>
     <step id="create-v2-report-documents" name="Create PBS XML v2 Report Documents" viewable="false" class="org.pageseeder.ox.step.Transformation">
       <parameter name="input"                 value="data-processed/full-items-document.xml"/>
       <parameter name="xsl"                   value="dds-json-to-dds-xml/extra/create-v2-report-documents.xsl"/>
       <parameter name="display-result"        value="false"/>
-      <parameter name="_xslt-schedule-code"   value="3436" />
+      <parameter name="_xslt-schedule-code"   value="2830" />
       <parameter name="_xslt-folder"          value="pg-folder/analysis/api-dds" />
       <parameter name="output"                value="files/v2-report-documents.xml"/>
     </step>
     <step id="zip-source-documents" name="Zipping Source Documents." class="org.pageseeder.ox.step.Compression">
       <parameter name="input"                 value="pg-folder" />
       <parameter name="output"                value="upload-document.zip"/>
+    </step>
+  </pipeline>
+
+  <pipeline id="pivot-li-json"
+            name="Pivot - LI - Json - API"
+            description="Pivot - LI - Json - API"
+            accepts="application/xml"
+            default="true">
+    <step id="Copy-Document-XML" name="Copy document xml" class="org.pageseeder.ox.step.Copy">
+      <parameter name="input" value="resources/document.xml" />
+      <parameter name="output" value="example/document.xml"/>
+    </step>
+    <step id="Copy-Pivot-Folder" name="Copying the CSS and JS Pivot folder" class="org.pageseeder.ox.step.Copy">
+      <parameter name="input" value="resources/pivot" />
+      <parameter name="output" value="files"/>
+    </step>
+    <step id="create-li-json-document" name="Create LI - Json Document" viewable="false" class="org.pageseeder.ox.step.Transformation">
+      <parameter name="xsl"                   value="dds-json-to-dds-xml/extra/create-li-json-document.xsl"/>
+      <parameter name="display-result"        value="false"/>
+      <parameter name="output"                value="files/data/li.json"/>
+    </step>
+    <step id="viewer-pivot-paragraph-report" name="Paragraph Pivot Report" viewable="true" class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input" value="example/document.xml" />
+      <parameter name="display-result"  value="false"/>
+      <parameter name="_xslt-type" value="li" />
+      <parameter name="xsl"    value="dds-json-to-dds-xml/pivot-html-viewer.xsl"/>
+      <parameter name="output" value="files/index.html"/>
     </step>
   </pipeline>
 
@@ -219,12 +246,12 @@
       <parameter name="output" value="files"/>
     </step>
     <step id="Copy-Json-Data" name="Copying Json Data" class="org.pageseeder.ox.step.Copy">
-      <parameter name="output" value="files/data/errors.json"/>
+      <parameter name="output" value="files/data/document.json"/>
     </step>
     <step id="viewer-pivot-paragraph-report" name="Paragraph Pivot Report" viewable="true" class="org.pageseeder.ox.step.Transformation">
       <parameter name="input" value="example/document.xml" />
       <parameter name="display-result"  value="false"/>
-      <parameter name="_xslt-type" value="error" />
+      <parameter name="_xslt-type" value="document" />
       <parameter name="xsl"    value="dds-json-to-dds-xml/pivot-html-viewer.xsl"/>
       <parameter name="output" value="files/index.html"/>
     </step>
