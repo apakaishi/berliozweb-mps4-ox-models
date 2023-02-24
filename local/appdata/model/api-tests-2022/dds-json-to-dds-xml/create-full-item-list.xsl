@@ -58,8 +58,21 @@
                             <xsl:if test="PREFERRED_TERM"><xsl:element name="PREFERRED_TERM"><xsl:value-of select="PREFERRED_TERM" /></xsl:element></xsl:if>
                         </xsl:for-each>
                     </amt-items>
+                    <amt-items>
+                        <xsl:for-each select="key('amt-items-no-concept-id', ('MPUU',$LI_ITEM_ID,$schedule-code))">
+                            <xsl:element name="PBS_CONCEPT_ID"><xsl:value-of select="PBS_CONCEPT_ID" /></xsl:element>
+                            <xsl:element name="CONCEPT_TYPE_CODE"><xsl:value-of select="CONCEPT_TYPE_CODE" /></xsl:element>
+                            <xsl:if test="AMT_CODE"><xsl:element name="AMT_CODE"><xsl:value-of select="AMT_CODE" /></xsl:element></xsl:if>
+                            <xsl:if test="PREFERRED_TERM"><xsl:element name="PREFERRED_TERM"><xsl:value-of select="PREFERRED_TERM" /></xsl:element></xsl:if>
+                        </xsl:for-each>
+                    </amt-items>
 
                     <xsl:copy-of select="*[not(name()='CAUTION_INDICATOR' or name()='NOTE_INDICATOR')]" />
+                    <xsl:element name="PRESCRIBER_CODE">
+                        <xsl:for-each select="key('Prescriber', ($PBS_CODE,$schedule-code))">
+                            <xsl:value-of select="if(position()!= last()) then concat(PRESCRIBER_CODE, ' ') else PRESCRIBER_CODE" />
+                        </xsl:for-each>
+                    </xsl:element>
 
                     <xsl:for-each select="key('ItemPrescribingTxtRltd', ($PBS_CODE,$schedule-code))">
                         <xsl:variable name="PRESCRIBING_TXT_REL_ID" select="PRESCRIBING_TXT_ID" />
