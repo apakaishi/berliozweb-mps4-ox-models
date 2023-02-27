@@ -318,57 +318,6 @@
       <parameter name="uploadid" value="{_package_id}"/>
     </step>
   </pipeline>
-
-  <pipeline id="embargo-add-metadata" name="Add metadata to embargo files" accepts="application/xlsx" default="false"
-            description="It receives an spreadsheet with sheet named metadata. It is required to have the columns 'uriid', 'year', 'month', 'path' (_chemo, _sqlite, _offline, _embargo) and 'order'. There are two optional columns 'title' and 'description'.">
-
-    <!-- Unzip excel document-->
-    <step id="extract-data-from-spreadsheet" name="Extract data from Spreadsheet" viewable="false"
-          class="org.pageseeder.xlsx.ox.step.Import">
-      <parameter name="split-level" value="workbook"/>
-      <parameter name="output" value="data"/>
-      <parameter name="xslt" value="add-metadata/excel-to-inputs.xsl"/>
-    </step>
-    <step id="validate-extracted-data" name="Validate extracted data"
-          class="org.pageseeder.ox.schematron.step.SchematronValidation"
-          async="false">
-      <parameter name="input" value="data/workbook.xml"/>
-      <parameter name="schema" value="add-metadata/validate-input-metadata.sch"/>
-    </step>
-    <step
-        id="add-uri-metadatas"
-        name="Adding metadatas"
-        async="true"
-        class="org.pageseeder.ox.pageseeder.step.BulkAddURIMetadata">
-      <parameter name="input"   value="data/workbook.xml" />
-      <parameter name="psconfig" value="dev-clone" />
-      <parameter name="output"  value="data/result-add-metadatas.xml" />
-      <parameter name="psgroup" value="data_source-files" />
-    </step>
-    <step
-        id="edit-uri"
-        name="Edit title, description and labels."
-        async="true"
-        class="org.pageseeder.ox.pageseeder.step.BulkEditURI">
-      <parameter name="input"   value="data/workbook.xml" />
-      <parameter name="psconfig" value="dev-clone" />
-      <parameter name="output"  value="data/result-edit-uri.xml" />
-      <parameter name="psgroup" value="data_source-files" />
-    </step>
-    <step
-        id="results-to-csv"
-        name="Create a CSV with the results"
-        class="org.pageseeder.ox.step.Transformation">
-      <parameter name="input"                     value="data/workbook.xml" />
-      <!-- it just needs to have the file name because it is in the same folder of data/workbook.xml -->
-      <parameter name="_xslt-result-add-metadata" value="result-add-metadatas.xml" />
-      <!-- it just needs to put the file name because it is in the same folder of data/workbook.xml -->
-      <parameter name="_xslt-result-edit-uri"     value="result-edit-uri.xml" />
-      <parameter name="display-result"            value="false" />
-      <parameter name="xsl"                       value="add-metadata/results-to-csv.xsl" />
-      <parameter name="output"                    value="data/results-report.csv" />
-    </step>
-  </pipeline>
 </pipelines>
 
 
