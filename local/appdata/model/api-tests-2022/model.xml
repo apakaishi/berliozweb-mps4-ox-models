@@ -205,9 +205,9 @@
     </step>
   </pipeline>
 
-  <pipeline id="pivot-li-json"
-            name="Pivot - LI - Json - API"
-            description="Pivot - LI - Json - API"
+  <pipeline id="pivot-source-xml"
+            name="Pivot Source XML"
+            description="Pivot Source XML"
             accepts="application/xml"
             default="true">
     <step id="Copy-Document-XML" name="Copy document xml" class="org.pageseeder.ox.step.Copy">
@@ -219,22 +219,22 @@
       <parameter name="output" value="files"/>
     </step>
     <step id="create-li-json-document" name="Create LI - Json Document" viewable="false" class="org.pageseeder.ox.step.Transformation">
-      <parameter name="xsl"                   value="dds-json-to-dds-xml/extra/create-li-json-document.xsl"/>
+      <parameter name="xsl"                   value="dds-json-to-dds-xml/extra/create-source-json-document.xsl"/>
       <parameter name="display-result"        value="false"/>
-      <parameter name="output"                value="files/data/li.json"/>
+      <parameter name="output"                value="files/data/source.json"/>
     </step>
-    <step id="viewer-pivot-paragraph-report" name="Paragraph Pivot Report" viewable="true" class="org.pageseeder.ox.step.Transformation">
+    <step id="viewer-pivot-paragraph-report" name="Results" viewable="true" class="org.pageseeder.ox.step.Transformation">
       <parameter name="input" value="example/document.xml" />
       <parameter name="display-result"  value="false"/>
-      <parameter name="_xslt-type" value="li" />
+      <parameter name="_xslt-type" value="source" />
       <parameter name="xsl"    value="dds-json-to-dds-xml/pivot-html-viewer.xsl"/>
       <parameter name="output" value="files/index.html"/>
     </step>
   </pipeline>
 
-  <pipeline id="pivot-analysis"
-            name="Pivot analysis"
-            description="Pivot analysis"
+  <pipeline id="pivot-errors-json"
+            name="Pivot Errors Json"
+            description="Pivot Errors Json"
             accepts="application/json"
             default="true">
     <step id="Copy-Document-XML" name="Copy document xml" class="org.pageseeder.ox.step.Copy">
@@ -246,12 +246,12 @@
       <parameter name="output" value="files"/>
     </step>
     <step id="Copy-Json-Data" name="Copying Json Data" class="org.pageseeder.ox.step.Copy">
-      <parameter name="output" value="files/data/document.json"/>
+      <parameter name="output" value="files/data/errors.json"/>
     </step>
-    <step id="viewer-pivot-paragraph-report" name="Paragraph Pivot Report" viewable="true" class="org.pageseeder.ox.step.Transformation">
+    <step id="viewer-pivot-paragraph-report" name="Results" viewable="true" class="org.pageseeder.ox.step.Transformation">
       <parameter name="input" value="example/document.xml" />
       <parameter name="display-result"  value="false"/>
-      <parameter name="_xslt-type" value="document" />
+      <parameter name="_xslt-type" value="error" />
       <parameter name="xsl"    value="dds-json-to-dds-xml/pivot-html-viewer.xsl"/>
       <parameter name="output" value="files/index.html"/>
     </step>
