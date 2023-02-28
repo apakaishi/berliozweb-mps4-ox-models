@@ -10,16 +10,16 @@
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
     <xsl:param name="type" />
-    <xsl:variable name="file" select="if($type ='document') then 'document.json'
-                                      else if($type ='li') then 'li.json'
+    <xsl:variable name="file" select="if($type ='error') then 'errors.json'
+                                      else if($type ='source') then 'source.json'
   												else ''" />
 
-    <xsl:variable name="parameters-row" select="if($type ='document') then 'ERROR'
-                                                else if($type ='li') then 'PBS_CODE'
+    <xsl:variable name="parameters-row" select="if($type ='error') then 'ERROR'
+                                                else if($type ='source') then 'PBS_CODE'
   												else ''" />
 
-    <xsl:variable name="parameters-col" select="if($type ='document') then 'PBS CODE'
-                                                else if($type ='li') then 'PROGRAM_CODE'
+    <xsl:variable name="parameters-col" select="if($type ='error') then 'PBS CODE'
+                                                else if($type ='source') then 'PROGRAM_CODE'
  												else ''" />
 
     <xsl:output method="html" version="5.0" encoding="UTF-8" indent="yes" />
