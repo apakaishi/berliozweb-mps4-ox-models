@@ -5,10 +5,10 @@ plugins {
 ext {
   globalVersion = file('version.txt').text
   //Libraries Version
-  berliozVersion = '0.12.2'
-  bridgeVersion = '0.11.33'
-  simpleVersion = '2023.01-03'
-  oxVersion   = '2.2.85'
+  berliozVersion = '0.12.3'
+  bridgeVersion = '0.11.34'
+  simpleVersion = '2023.02-12'
+  oxVersion   = '2.2.86'
   docxVersion = '0.8.18'
   xmlVersion  = '0.4.60'
   psnPDFVersion = '0.0.5'
