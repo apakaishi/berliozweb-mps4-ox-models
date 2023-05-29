@@ -27,17 +27,7 @@
                 <xsl:variable name="filename-input" select="concat(substring-before(tokenize(@short-path,'/')[last()],'.json'),'.xml')" />
                 <xsl:variable name="path" select="document(concat($base-input,$filename-input))" />
                 <xsl:variable name="filename" select="substring-before(tokenize(@short-path,'/')[last()],'.json')" />
-                <xsl:variable name="element-name" select="if($filename = 'items') then 'Item'
-                                                            else if($filename = 'schedules') then 'Schedule'
-                                                            else if($filename = 'items-restrictions-relationships') then 'ItemRestrictionRltd'
-                                                            else if($filename = 'items-prescribing-text-relationships') then 'ItemPrescribingTxtRltd'
-                                                            else if($filename = 'restrictions') then 'RestrictionText'
-                                                            else if($filename = 'restrictions-prescribing-text-relationships') then 'RstrctnPrscrbngTxtRltd'
-                                                            else if($filename = 'prescribing-text') then 'PrescribingTxt'
-                                                            else if($filename = 'criteria') then 'Criteria'
-                                                            else if($filename = 'criteria-parameters-relationships') then 'CriteriaParameterRltd'
-                                                            else if($filename = 'indications') then 'Indication'
-                                                            else $filename" />
+                <xsl:variable name="element-name" select="$filename" />
 
                 <xsl:apply-templates select="$path" mode="full">
                     <xsl:with-param name="element-name" select="$element-name" />
@@ -76,22 +66,15 @@
     </xsl:template>
 
     <xsl:template match="fn:number|fn:string">
-        <xsl:if test="not(@key = 'effective_year')">
-            <xsl:element name="{@key}">
-                <xsl:value-of select="." />
-            </xsl:element>
-        </xsl:if>
+      <xsl:element name="{@key}">
+         <xsl:value-of select="." />
+      </xsl:element>
     </xsl:template>
 
     <xsl:template match="fn:null">
-        <xsl:choose>
-            <xsl:when test="@key = 'maximum_prescribable_pack' or @key = 'number_of_repeats' or @key = 'manufacturer_code' or @key = 'pack_size'">
-                <xsl:element name="{@key}">
-                    <xsl:value-of select="0" />
-                </xsl:element>
-            </xsl:when>
-            <xsl:otherwise></xsl:otherwise>
-        </xsl:choose>
+       <xsl:element name="{@key}">
+          <xsl:value-of select="." />
+       </xsl:element>
     </xsl:template>
 
     <xsl:template match="text()" />
