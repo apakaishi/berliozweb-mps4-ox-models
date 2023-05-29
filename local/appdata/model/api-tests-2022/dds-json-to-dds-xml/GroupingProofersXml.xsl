@@ -7,7 +7,7 @@
     <xsl:template match="proof-text">
         <proof-text>
             <xsl:sequence select="@*"/>
-            <xsl:for-each-group select="Item" group-by="@PBS_CODE">
+            <xsl:for-each-group select="Item" group-by="@pbs_code">
                <Item>
                  <xsl:sequence select="@*"/>
                  <xsl:apply-templates />

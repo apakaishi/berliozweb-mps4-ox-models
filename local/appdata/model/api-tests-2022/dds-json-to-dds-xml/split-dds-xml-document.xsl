@@ -27,11 +27,11 @@
     <xsl:template match="Schedule">
 
         <xsl:for-each select="Item">
-            <xsl:variable name="PROGRAM_CODE" select="@PROGRAM_CODE" />
-            <xsl:variable name="PBS_CODE" select="@PBS_CODE" />
-            <xsl:variable name="name" select="@LI_ITEM_ID" />
-            <xsl:variable name="program-path" select="concat($edition-path,'',$PROGRAM_CODE,'/')" />
-            <xsl:variable name="pbs-path" select="concat($program-path,'Items/',$PBS_CODE,'/')" />
+            <xsl:variable name="program_code" select="@program_code" />
+            <xsl:variable name="pbs_code" select="@pbs_code" />
+            <xsl:variable name="name" select="@li_item_id" />
+            <xsl:variable name="program-path" select="concat($edition-path,'',$program_code,'/')" />
+            <xsl:variable name="pbs-path" select="concat($program-path,'Items/',$pbs_code,'/')" />
             <xsl:variable name="path-xml" select="concat($output, $pbs-path, 'xml/', $name,'.xml')" />
 
             <xsl:result-document href="{$path-xml}">

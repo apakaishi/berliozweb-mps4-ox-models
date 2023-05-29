@@ -23,14 +23,14 @@
 
     <xsl:template match="Schedule">
         <xsl:variable name="date" select="concat(tokenize(@effective_date,'-')[2],'_',tokenize(@effective_date,'-')[1])" />
-        <xsl:variable name="summary-amt-path" select="concat($output,'Schedule - ', $schedule-code, ' - ', $date, ' data - summary-amt.xml')" />
-        <xsl:variable name="summary-drugtype-path" select="concat($output,'Schedule - ', $schedule-code, ' - ', $date, ' data - summary-drugtype.xml')" />
-        <xsl:variable name="superli-report-path" select="concat($output,'Schedule - ', $schedule-code, ' - ', $date, ' data - superli-report.xml')" />
+        <xsl:variable name="summary-amt-path" select="concat($output,'Schedule - ', $schedule-code, ' - ', $date, ' data - summary-amt-not-supply-only.xml')" />
+        <xsl:variable name="summary-drugtype-path" select="concat($output,'Schedule - ', $schedule-code, ' - ', $date, ' data - summary-drugtype-not-supply-only.xml')" />
+        <xsl:variable name="superli-report-path" select="concat($output,'Schedule - ', $schedule-code, ' - ', $date, ' data - superli-report-not-supply-only.xml')" />
 
         <!-- Create Superli Report PBS XML v2 document -->
         <xsl:result-document href="{$superli-report-path}">
             <elements>
-                <xsl:for-each-group select="Item" group-by="drug_name">
+                <xsl:for-each-group select="Item[supply_only_indicator='N']" group-by="drug_name">
                     <xsl:sort select="drug_name" />
                     <xsl:variable name="drug_name" select="drug_name" />
                     <drug>
@@ -51,7 +51,7 @@
         <!-- Create Summary Drugtype PBS XML v2 document -->
         <xsl:result-document href="{$summary-drugtype-path}">
             <elements>
-                <xsl:for-each-group select="Item" group-by="@program_code">
+                <xsl:for-each-group select="Item[supply_only_indicator='N']" group-by="@program_code">
                     <xsl:sort select="@program_code" />
                     <xsl:variable name="program_code" select="@program_code" />
                     <program>
@@ -74,7 +74,7 @@
         <!-- Create Summary AMT PBS XML v2 document -->
         <xsl:result-document href="{$summary-amt-path}">
             <elements>
-                <xsl:for-each select="Item">
+                <xsl:for-each select="Item[supply_only_indicator='N']">
                     <xsl:variable name="pbs_code" select="@pbs_code" />
                     <item>
                         <xsl:attribute name="drug_name"><xsl:value-of select="drug_name/text()" /></xsl:attribute>

@@ -22,17 +22,17 @@
                 <Item>
                     <xsl:for-each select="Item/element">
                         <xsl:element name="{self::*/local-name()}">
-                            <xsl:variable name="MP" select="tokenize(LI_ITEM_ID/text(),'_')[3]" />
-                            <xsl:variable name="MPP" select="tokenize(LI_ITEM_ID/text(),'_')[4]" />
-                            <xsl:variable name="TPP" select="tokenize(LI_ITEM_ID/text(),'_')[5]" />
-                            <xsl:attribute name="LI_ITEM_ID_no_PIG"><xsl:value-of select="concat(tokenize(LI_ITEM_ID/text(),'_')[1],'_',
-                                                                            $MP ,'_',$MPP ,'_', $TPP)" /></xsl:attribute>
-                            <xsl:for-each select="child::*[name()='LI_ITEM_ID' or name()='PROGRAM_CODE'
-                                   or name()='PBS_CODE' or name()='BENEFIT_TYPE_CODE' or name()='SCHEDULE_CODE']">
-                                <xsl:if test="self::*[name()='LI_ITEM_ID' or name()='PROGRAM_CODE']">
+                            <xsl:variable name="mp" select="tokenize(li_item_id/text(),'_')[3]" />
+                            <xsl:variable name="mpp" select="tokenize(li_item_id/text(),'_')[4]" />
+                            <xsl:variable name="tpp" select="tokenize(li_item_id/text(),'_')[5]" />
+                            <xsl:attribute name="li_item_id_no_pig"><xsl:value-of select="concat(tokenize(li_item_id/text(),'_')[1],'_',
+                                                                            $mp ,'_',$mpp ,'_', $tpp)" /></xsl:attribute>
+                            <xsl:for-each select="child::*[name()='li_item_id' or name()='program_code'
+                                   or name()='pbs_code' or name()='benefit_type_code' or name()='schedule_code']">
+                                <xsl:if test="self::*[name()='li_item_id' or name()='program_code']">
                                     <xsl:attribute name="{local-name()}"><xsl:value-of select="." /></xsl:attribute>
                                 </xsl:if>
-                                <xsl:if test="self::*[name()='PBS_CODE']">
+                                <xsl:if test="self::*[name()='pbs_code']">
                                     <xsl:variable name="count" select="string-length(.)" />
                                     <xsl:attribute name="{local-name()}">
                                         <xsl:value-of select="if($count = 3) then concat('000',.)
@@ -41,13 +41,13 @@
                                     </xsl:attribute>
                                     <xsl:attribute name="{concat(local-name(),'-count')}"><xsl:value-of select="$count" /></xsl:attribute>
                                 </xsl:if>
-                                <xsl:if test="self::*[name()='BENEFIT_TYPE_CODE' or name()='SCHEDULE_CODE']">
+                                <xsl:if test="self::*[name()='benefit_type_code' or name()='schedule_code']">
                                     <xsl:attribute name="{local-name()}"><xsl:value-of select="." /></xsl:attribute>
                                 </xsl:if>
                             </xsl:for-each>
 
-                            <xsl:for-each select="child::*[not(name()='LI_ITEM_ID' or name()='PROGRAM_CODE'
-                                    or name()='PBS_CODE' or name()='BENEFIT_TYPE_CODE' or name()='SCHEDULE_CODE')]">
+                            <xsl:for-each select="child::*[not(name()='li_item_id' or name()='program_code'
+                                    or name()='pbs_code' or name()='benefit_type_code' or name()='schedule_code')]">
                                 <xsl:element name="{local-name()}"><xsl:value-of select="." /></xsl:element>
                             </xsl:for-each>
                         </xsl:element>
@@ -58,17 +58,17 @@
             <xsl:variable name="xml-content">
                 <Item>
                     <xsl:for-each select="$xml-add-drugs/Item/element">
-                        <xsl:sort select="@LI_ITEM_ID_no_PIG"  />
-                        <xsl:variable name="PBS_CODE" select="@PBS_CODE" />
+                        <xsl:sort select="@li_item_id_no_pig"  />
+                        <xsl:variable name="pbs_code" select="@pbs_code" />
                         <element>
-                            <xsl:variable name="PBS_CODE-count" select="@PBS_CODE-count" />
-                            <xsl:for-each select="@*[not(name()='LI_ITEM_ID_no_PIG' or name()='PBS_CODE-count')]">
+                            <xsl:variable name="pbs_code-count" select="@pbs_code-count" />
+                            <xsl:for-each select="@*[not(name()='li_item_id_no_pig' or name()='pbs_code-count')]">
                                 <xsl:choose>
-                                    <xsl:when test="local-name() = 'PBS_CODE'">
-                                        <xsl:attribute name="PBS_CODE"><xsl:value-of select="if($PBS_CODE-count = '3') then substring($PBS_CODE,4,3)
-                                                                    else if ($PBS_CODE-count = '4') then substring($PBS_CODE,3,4)
-                                                                    else if ($PBS_CODE-count = '5') then substring($PBS_CODE,2,5)
-                                                                    else $PBS_CODE" /></xsl:attribute>
+                                    <xsl:when test="local-name() = 'pbs_code'">
+                                        <xsl:attribute name="pbs_code"><xsl:value-of select="if($pbs_code-count = '3') then substring($pbs_code,4,3)
+                                                                    else if ($pbs_code-count = '4') then substring($pbs_code,3,4)
+                                                                    else if ($pbs_code-count = '5') then substring($pbs_code,2,5)
+                                                                    else $pbs_code" /></xsl:attribute>
                                     </xsl:when>
                                     <xsl:otherwise><xsl:attribute name="{local-name()}"><xsl:value-of select="." /></xsl:attribute></xsl:otherwise>
                                 </xsl:choose>

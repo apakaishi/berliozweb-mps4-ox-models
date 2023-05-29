@@ -17,16 +17,17 @@
            and AND and OR at the top-level. 
            
       -->
-
     <xsl:param name="edition-type" />
+
+    <xsl:output method="xml" encoding="UTF-8" indent="yes" />
 
     <xsl:template match="Schedule">
         <proof-text>
-            <xsl:if test="Item/@PROGRAM_CODE or Item/PROGRAM_CODE">
-                <xsl:attribute name="programCode" select="(Item/@PROGRAM_CODE | Item/PROGRAM_CODE)[1]"/>
+            <xsl:if test="Item/@program_code or Item/program_code">
+                <xsl:attribute name="programCode" select="(Item/@program_code | Item/program_code)[1]"/>
             </xsl:if>
-            <xsl:if test="@SCHEDULE_CODE or SCHEDULE_CODE">
-                <xsl:attribute name="scheduleCode" select="(@SCHEDULE_CODE | SCHEDULE_CODE)[1]"/>
+            <xsl:if test="@schedule_code or schedule_code">
+                <xsl:attribute name="scheduleCode" select="(@schedule_code | schedule_code)[1]"/>
             </xsl:if>
             <xsl:attribute name="edition" select="$edition-type"/>
             <xsl:apply-templates/>
@@ -45,26 +46,26 @@
                 <H1>
                     <xsl:value-of select="
                             concat(
-                            if (NOTE_INDICATOR = 'Y') then
+                            if (note_indicator = 'Y') then
                                 'Note '
                             else
-                                if (CAUTION_INDICATOR = 'Y') then
+                                if (caution_indicator = 'Y') then
                                     'Caution '
                                 else
                                     'Restriction ',
-                            RESTRICTION_NUMBER)"/>
+                            restriction_number)"/>
                 </H1>
-                <P>Treatment Phase: <xsl:value-of select="TREATMENT_PHASE"/></P>
+                <P>Treatment Phase: <xsl:value-of select="treatment_phase"/></P>
 
-                <P>Authority Method: <xsl:value-of select="AUTHORITY_METHOD"/></P>
+                <P>Authority Method: <xsl:value-of select="authority_method"/></P>
 
-                <P>Treatment-Of Code: <xsl:value-of select="TREATMENT_OF_CODE"/></P>
+                <P>Treatment-Of Code: <xsl:value-of select="treatment_of_code"/></P>
             </div>
             <div>
                 <H2>LI HTML TEXT</H2>
                 <block label="LI">
                     <HTML_TEXT>
-                        <xsl:value-of disable-output-escaping="yes" select="LI_HTML_TEXT"/>
+                        <xsl:value-of disable-output-escaping="yes" select="li_html_text"/>
                     </HTML_TEXT>
                 </block>
             </div>
@@ -72,7 +73,7 @@
                 <H2>SCHEDULE HTML TEXT</H2>
                 <block label="SCHEDULE">
                     <HTML_TEXT>
-                        <xsl:value-of disable-output-escaping="yes" select="SCHEDULE_HTML_TEXT"/>
+                        <xsl:value-of disable-output-escaping="yes" select="schedule_html_text"/>
                     </HTML_TEXT>
                 </block>
             </div>
@@ -81,30 +82,30 @@
                 <HTML_TEXT>
 
                     <P>
-                        <xsl:value-of select="TREATMENT_PHASE"/>
+                        <xsl:value-of select="treatment_phase"/>
                     </P>
 
                     <xsl:for-each select="RstrctnPrscrbngTxtRltd">
 
-                        <xsl:sort select="@PT_POSITION"  data-type="number"/>
-                        <xsl:for-each select="PrescribingTxt[not(PRESCRIBING_TYPE = 'PARAMETER')]">
+                        <xsl:sort select="@pt_position"  data-type="number"/>
+                        <xsl:for-each select="PrescribingTxt[not(prescribing_type = 'PARAMETER')]">
 
-                            <block label="{PRESCRIBING_TYPE}">
+                            <block label="{prescribing_type}">
                                 <xsl:variable name="is-criteria-but-not-last-criteria" select="
-                                        PRESCRIBING_TYPE = 'CRITERIA' and
-                                        ../following-sibling::*[1][self::RstrctnPrscrbngTxtRltd]/PrescribingTxt[1]/PRESCRIBING_TYPE = 'CRITERIA'"/>
+                                        prescribing_type = 'CRITERIA' and
+                                        ../following-sibling::*[1][self::RstrctnPrscrbngTxtRltd]/PrescribingTxt[1]/prescribing_type = 'CRITERIA'"/>
                                 <P>
-                                    <xsl:value-of select="PRESCRIBING_TXT"/>
+                                    <xsl:value-of select="prescribing_txt"/>
                                     <xsl:choose>
                                         <xsl:when
-                                            test="normalize-space(../../CRITERIA_RELATIONSHIP) = 'ALL'">
+                                            test="normalize-space(../../criteria_relationship) = 'ALL'">
 
                                             <xsl:if test="$is-criteria-but-not-last-criteria">
                                                 <B> AND </B>
                                             </xsl:if>
                                         </xsl:when>
                                         <xsl:when test="
-                                                normalize-space(../../CRITERIA_RELATIONSHIP) = 'ANY' or normalize-space(../../CRITERIA_RELATIONSHIP) = 'ONE_OF'">
+                                                normalize-space(../../criteria_relationship) = 'ANY' or normalize-space(../../criteria_relationship) = 'ONE_OF'">
 
                                             <xsl:if test="$is-criteria-but-not-last-criteria">
                                                 <B> OR </B>
@@ -114,7 +115,7 @@
                                             <xsl:if test="$is-criteria-but-not-last-criteria">
                                                 <xsl:message>Unhandled restriction parameter
                                                   relationship: '<xsl:value-of
-                                                  select="../../CRITERIA_RELATIONSHIP"
+                                                  select="../../criteria_relationship"
                                                   />'</xsl:message>
                                             </xsl:if>
                                         </xsl:otherwise>
@@ -132,56 +133,56 @@
                     <HTML_TEXT>
 
                         <P>
-                            <xsl:value-of select="TREATMENT_PHASE"/>
+                            <xsl:value-of select="treatment_phase"/>
                         </P>
 
                         <xsl:for-each select="RstrctnPrscrbngTxtRltd">
-                            <xsl:sort select="@PT_POSITION"  data-type="number"/>
+                            <xsl:sort select="@pt_position"  data-type="number"/>
 
 
                             <xsl:for-each select="PrescribingTxt">
                                 <xsl:variable name="is-not-last-criteria" select="
-                                        ../following-sibling::*[1][self::RstrctnPrscrbngTxtRltd]/PrescribingTxt[1]/PRESCRIBING_TYPE = 'CRITERIA'"/>
+                                        ../following-sibling::*[1][self::RstrctnPrscrbngTxtRltd]/PrescribingTxt[1]/prescribing_type = 'CRITERIA'"/>
                                 <xsl:choose>
-                                    <xsl:when test="PRESCRIBING_TYPE = 'CRITERIA'">
+                                    <xsl:when test="prescribing_type = 'CRITERIA'">
                                         <xsl:if test="
                                                 not(parent::*/preceding-sibling::*[1])
-                                                or not(parent::*/preceding-sibling::*[1]/PrescribingTxt[PRESCRIBING_TYPE = 'CRITERIA'])
+                                                or not(parent::*/preceding-sibling::*[1]/PrescribingTxt[prescribing_type = 'CRITERIA'])
                                                 ">
                                             <H3>CRITERIA</H3>
                                         </xsl:if>
                                         <xsl:for-each select="Criteria">
                                             <UL>
                                                 <xsl:for-each select="CriteriaParameterRltd">
-                                                    <xsl:sort select="@PT_POSITION"   data-type="number"/>
+                                                    <xsl:sort select="@pt_position"   data-type="number"/>
                                                   <xsl:for-each select="PrescribingTxt">
                                                   <xsl:variable name="is-not-last-nested-criteria"
                                                   select="../following-sibling::*[1][self::CriteriaParameterRltd]"/>
 
                                                   <xsl:if
-                                                  test="$is-not-last-nested-criteria and ancestor::Criteria[1]/PARAMETER_RELATIONSHIP = 'ONE_OF'">
+                                                  test="$is-not-last-nested-criteria and ancestor::Criteria[1]/parameter_relationship = 'ONE_OF'">
                                                   <P>
                                                   <B>Either:</B>
                                                   </P>
                                                   </xsl:if>
                                                   <LI>
-                                                  <xsl:value-of select="PRESCRIBING_TXT"/>
+                                                  <xsl:value-of select="prescribing_txt"/>
                                                   <xsl:choose>
                                                   <xsl:when
-                                                  test="ancestor::Criteria[1]/PARAMETER_RELATIONSHIP = 'ANY'">
+                                                  test="ancestor::Criteria[1]/parameter_relationship = 'ANY'">
                                                   <xsl:if test="$is-not-last-nested-criteria">
                                                   <B> or </B>
                                                   </xsl:if>
                                                   </xsl:when>
                                                   <xsl:when
-                                                  test="ancestor::Criteria[1]/PARAMETER_RELATIONSHIP = 'ALL'">
+                                                  test="ancestor::Criteria[1]/parameter_relationship = 'ALL'">
 
                                                   <xsl:if test="$is-not-last-nested-criteria">
                                                   <B> and </B>
                                                   </xsl:if>
                                                   </xsl:when>
                                                   <xsl:when
-                                                  test="ancestor::Criteria[1]/PARAMETER_RELATIONSHIP = 'ONE_OF'">
+                                                  test="ancestor::Criteria[1]/parameter_relationship = 'ONE_OF'">
                                                   <xsl:if test="$is-not-last-nested-criteria">
                                                   <B> or</B>
                                                   </xsl:if>
@@ -189,7 +190,7 @@
                                                   <xsl:otherwise>
                                                   <xsl:message>Unhandled criteria-parameter
                                                   relationship: '<xsl:value-of
-                                                  select="ancestor::Criteria[1]/PARAMETER_RELATIONSHIP"
+                                                  select="ancestor::Criteria[1]/parameter_relationship"
                                                   />'</xsl:message>
                                                   </xsl:otherwise>
                                                   </xsl:choose>
@@ -200,7 +201,7 @@
                                                 </xsl:for-each>
                                             </UL>
                                             <xsl:if test="
-                                                (ancestor::*/CRITERIA_RELATIONSHIP = 'ANY' or ancestor::*/CRITERIA_RELATIONSHIP = 'ONE_OF')">
+                                                (ancestor::*/criteria_relationship = 'ANY' or ancestor::*/criteria_relationship = 'ONE_OF')">
                                                 <xsl:if test="$is-not-last-criteria">
                                                   <P>
                                                   <B> EITHER </B>
@@ -209,7 +210,7 @@
                                             </xsl:if>
                                             <xsl:choose>
                                                 <xsl:when test="
-                                                    ancestor::*/CRITERIA_RELATIONSHIP = 'ALL'">
+                                                    ancestor::*/criteria_relationship = 'ALL'">
 
                                                   <xsl:if test="$is-not-last-criteria">
                                                   <P>
@@ -218,7 +219,7 @@
                                                   </xsl:if>
                                                 </xsl:when>
                                                 <xsl:when test="
-                                                    ancestor::*/CRITERIA_RELATIONSHIP = 'ANY'">
+                                                    ancestor::*/criteria_relationship = 'ANY'">
 
                                                   <xsl:if test="$is-not-last-criteria">
                                                   <P>
@@ -227,7 +228,7 @@
                                                   </xsl:if>
                                                 </xsl:when>
                                                 <xsl:when test="
-                                                    (ancestor::*/CRITERIA_RELATIONSHIP = 'ANY' or ancestor::*/CRITERIA_RELATIONSHIP = 'ONE_OF')">
+                                                    (ancestor::*/criteria_relationship = 'ANY' or ancestor::*/criteria_relationship = 'ONE_OF')">
 
                                                   <xsl:if test="$is-not-last-criteria">
                                                   <P>
@@ -238,34 +239,34 @@
                                                 <xsl:otherwise>
                                                   <xsl:message>Unhandled restriction parameter
                                                   relationship: '<xsl:value-of
-                                                      select="ancestor::*/CRITERIA_RELATIONSHIP"
+                                                      select="ancestor::*/criteria_relationship"
                                                   />'</xsl:message>
                                                 </xsl:otherwise>
                                             </xsl:choose>
                                         </xsl:for-each>
 
                                     </xsl:when>
-                                    <xsl:when test="starts-with(PRESCRIBING_TYPE, 'IND')">
+                                    <xsl:when test="starts-with(prescribing_type, 'IND')">
                                         <H3>INDICATION</H3>
                                         <P>
-                                            <xsl:value-of select="PRESCRIBING_TXT"/>
+                                            <xsl:value-of select="prescribing_txt"/>
                                         </P>
                                     </xsl:when>
                                     <xsl:when test="
-                                            PRESCRIBING_TYPE = 'PRESCRIBING_INSTRUCTIONS'
+                                            prescribing_type = 'PRESCRIBING_INSTRUCTIONS'
                                             and
                                             (not(parent::*/preceding-sibling::*[1])
-                                            or not(parent::*/preceding-sibling::*[1]/PrescribingTxt[PRESCRIBING_TYPE = 'PRESCRIBING_INSTRUCTIONS'])
+                                            or not(parent::*/preceding-sibling::*[1]/PrescribingTxt[prescribing_type = 'PRESCRIBING_INSTRUCTIONS'])
                                             )">
                                         <H3>PRESCRIBING INSTRUCTIONS</H3>
 
                                         <P>
-                                            <xsl:value-of select="PRESCRIBING_TXT"/>
+                                            <xsl:value-of select="prescribing_txt"/>
                                         </P>
                                     </xsl:when>
                                     <xsl:otherwise>
                                         <P>
-                                            <xsl:value-of select="PRESCRIBING_TXT"/>
+                                            <xsl:value-of select="prescribing_txt"/>
                                         </P>
                                     </xsl:otherwise>
                                 </xsl:choose>
@@ -280,26 +281,28 @@
     </xsl:template>
 
     <xsl:template match="Item">
-        <!-- BECAUSE LI_ITEM_ID are not uniques due to mistake -->
-        <xsl:if test="not(preceding-sibling::Item/@LI_ITEM_ID = @LI_ITEM_ID)">
+        <!-- BECAUSE li_item_id are not uniques due to mistake -->
+        <xsl:if test="not(preceding-sibling::Item/@li_item_id = @li_item_id)">
             <xsl:copy>
                 <xsl:sequence select="@*"/>
-                <xsl:attribute name="MANUFACTURER_CODE"><xsl:value-of select="MANUFACTURER_CODE" /></xsl:attribute>
+                <xsl:attribute name="manufacturer_code"><xsl:value-of select="manufacturer_code" /></xsl:attribute>
                 <section>
                     <H1>
                         <xsl:value-of select="
-                                concat(parent::*/@SCHEDULE_CODE, ' (',
-                                parent::*/@REVISION_NUMBER, ') ',
-                                @PROGRAM_CODE, ' ',
-                                @PBS_CODE, ' ''',
-                                LI_DRUG_NAME, ''' ')"/>
+                                concat(parent::*/@schedule_code, ' (',
+                                parent::*/@revision_number, ') ',
+                                @program_code, ' ',
+                                @pbs_code, ' ''',
+                                li_drug_name, ''' ')"/>
                     </H1>
 
+                    <xsl:apply-templates select="item-increases/item-increase[@res_code][1]"/>
                     <xsl:apply-templates select="
                             *[contains(name(), 'Rltd')]
-                            [RESTRICTION_INDICATOR = 'Y' or not(RESTRICTION_INDICATOR)]"/>
+                            [restriction_indicator = 'Y' or not(restriction_indicator)]"/>
                     <xsl:apply-templates
-                        select="*[contains(name(), 'Rltd')][RESTRICTION_INDICATOR and not(RESTRICTION_INDICATOR = 'Y')]"/>
+                        select="*[contains(name(), 'Rltd')][restriction_indicator and not(restriction_indicator = 'Y')]"/>
+
 
                 </section>
             </xsl:copy>
@@ -315,10 +318,19 @@
         </xsl:copy>
     </xsl:template>
 
+    <xsl:template match="item-increases/item-increase[@res_code]">
+        <xsl:element name="ItemRestrictionRltd">
+            <xsl:attribute name="benefit_type_code" select="benefit_type_code" />
+            <xsl:copy-of select="@*" />
+
+            <xsl:apply-templates select="(RestrictionTxt | RestrictionText)"/>
+        </xsl:element>
+    </xsl:template>
+
 
     <xsl:template match="
-            PRESCRIBING_TXT_ID | PRESCRIBING_TYPE | COMPLEX_AUTHORITY_RQRD_IND |
-            DRUG_NAME | LI_DRUG_NAME | SCHEDULE_FORM | BRAND_NAME"/>
+            prescribing_txt_id | prescribing_type | complex_authority_rqrd_ind |
+            drug_name | li_drug_name | schedule_form | brand_name"/>
 
     <!-- for now, we suppress these - not handled -->
     <xsl:template match="ItemPrescribingTxtRltd"/>
@@ -341,7 +353,7 @@
             <xsl:apply-templates select="node() except RstrctnPrscrbngTxtRltd" mode="sort-restriction" />
             
             <xsl:for-each select="RstrctnPrscrbngTxtRltd"> 
-                <xsl:sort select="@PT_POSITION"  data-type="number"/>
+                <xsl:sort select="@pt_position"  data-type="number"/>
                 <xsl:apply-templates select="." mode="sort-restriction" />
             </xsl:for-each>
         
@@ -355,7 +367,7 @@
             <xsl:apply-templates select="node() except CriteriaParameterRltd" mode="sort-restriction" />
             
             <xsl:for-each select="CriteriaParameterRltd"> 
-                <xsl:sort select="@PT_POSITION"  data-type="number"/>
+                <xsl:sort select="@pt_position"  data-type="number"/>
                 <xsl:apply-templates select="." mode="sort-restriction" />
             </xsl:for-each>
             

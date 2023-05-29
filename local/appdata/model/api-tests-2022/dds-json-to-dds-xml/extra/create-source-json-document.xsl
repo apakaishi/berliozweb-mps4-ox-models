@@ -25,18 +25,18 @@
             <xsl:for-each select="@*">
                 <xsl:text>"</xsl:text><xsl:value-of select="local-name()" /><xsl:text>": "</xsl:text><xsl:value-of select="." /><xsl:text>",</xsl:text>
             </xsl:for-each>
-            <xsl:text>"MP_CONCEPT_ID": "</xsl:text><xsl:value-of select="amt-items[CONCEPT_TYPE_CODE='MP']/PBS_CONCEPT_ID" /><xsl:text>",</xsl:text>
-            <xsl:text>"MP_AMT_CODE": "</xsl:text><xsl:value-of select="amt-items[CONCEPT_TYPE_CODE='MP']/AMT_CODE" /><xsl:text>",</xsl:text>
-            <xsl:text>"MPP_CONCEPT_ID": "</xsl:text><xsl:value-of select="amt-items[CONCEPT_TYPE_CODE='MPP']/PBS_CONCEPT_ID" /><xsl:text>",</xsl:text>
-            <xsl:text>"MPP_AMT_CODE": "</xsl:text><xsl:value-of select="amt-items[CONCEPT_TYPE_CODE='MPP']/AMT_CODE" /><xsl:text>",</xsl:text>
-            <xsl:text>"TPP_CONCEPT_ID": "</xsl:text><xsl:value-of select="amt-items[CONCEPT_TYPE_CODE='TPP']/PBS_CONCEPT_ID" /><xsl:text>",</xsl:text>
-            <xsl:text>"TPP_AMT_CODE": "</xsl:text><xsl:value-of select="amt-items[CONCEPT_TYPE_CODE='TPP']/AMT_CODE" /><xsl:text>",</xsl:text>
-            <xsl:text>"MPUU_CONCEPT_ID": "</xsl:text><xsl:value-of select="amt-items[CONCEPT_TYPE_CODE='MPUU']/PBS_CONCEPT_ID" /><xsl:text>",</xsl:text>
-            <xsl:text>"MPUU_AMT_CODE": "</xsl:text><xsl:value-of select="amt-items[CONCEPT_TYPE_CODE='MPUU']/AMT_CODE" /><xsl:text>",</xsl:text>
-            <xsl:for-each select="child::*[name()='DRUG_NAME' or name()='LI_DRUG_NAME' or name()='LI_FORM' or name()='SCHEDULE_FORM'
-                            or name()='BRAND_NAME' or name()='MANNER_OF_ADMINISTRATION' or name()='MAXIMUM_QUANTITY_UNITS' or name()='PACK_SIZE'
-                            or name()='NUMBER_OF_REPEATS' or name()='MANUFACTURER_CODE' or name()='SUPPLY_ONLY_INDICATOR' or name()='BRAND_SUBSTITUTION_GROUP_CODE'
-                            or name()='PRESCRIBER_CODE']">
+            <xsl:text>"MP_CONCEPT_ID": "</xsl:text><xsl:value-of select="amt-items[concept_type_code='MP']/pbs_concept_id" /><xsl:text>",</xsl:text>
+            <xsl:text>"MP_AMT_CODE": "</xsl:text><xsl:value-of select="amt-items[concept_type_code='MP']/amt_code" /><xsl:text>",</xsl:text>
+            <xsl:text>"MPP_CONCEPT_ID": "</xsl:text><xsl:value-of select="amt-items[concept_type_code='MPP']/pbs_concept_id" /><xsl:text>",</xsl:text>
+            <xsl:text>"MPP_AMT_CODE": "</xsl:text><xsl:value-of select="amt-items[concept_type_code='MPP']/amt_code" /><xsl:text>",</xsl:text>
+            <xsl:text>"TPP_CONCEPT_ID": "</xsl:text><xsl:value-of select="amt-items[concept_type_code='TPP']/pbs_concept_id" /><xsl:text>",</xsl:text>
+            <xsl:text>"TPP_AMT_CODE": "</xsl:text><xsl:value-of select="amt-items[concept_type_code='TPP']/amt_code" /><xsl:text>",</xsl:text>
+            <xsl:text>"MPUU_CONCEPT_ID": "</xsl:text><xsl:value-of select="amt-items[concept_type_code='MPUU']/pbs_concept_id" /><xsl:text>",</xsl:text>
+            <xsl:text>"MPUU_AMT_CODE": "</xsl:text><xsl:value-of select="amt-items[concept_type_code='MPUU']/amt_code" /><xsl:text>",</xsl:text>
+            <xsl:for-each select="child::*[name()='drug_name' or name()='li_drug_name' or name()='li_form' or name()='schedule_form'
+                            or name()='brand_name' or name()='manner_of_administration' or name()='maximum_quantity_units' or name()='pack_size'
+                            or name()='number_of_repeats' or name()='manufacturer_code' or name()='supply_only_indicator' or name()='brand_substitution_group_code'
+                            or name()='prescriber_code']">
                 <xsl:text>"</xsl:text><xsl:value-of select="local-name()" /><xsl:text>": "</xsl:text><xsl:value-of select="." /><xsl:text>"</xsl:text>
                 <xsl:choose>
                     <xsl:when test="position() != last()">,</xsl:when>

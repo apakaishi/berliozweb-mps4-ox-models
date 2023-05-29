@@ -47,38 +47,38 @@
                 <xsl:attribute name="CriteriaParameterRltd-unique"><xsl:value-of select="count(distinct-values(Item/descendant::CriteriaParameterRltd))" /></xsl:attribute>
                 <xsl:attribute name="CriteriaParameterRltd-ref"><xsl:value-of select="count(Item/descendant::CriteriaParameterRltd)" /></xsl:attribute>
                 <RestrictionText>
-                    <xsl:attribute name="as:Caution-unique"><xsl:value-of select="count(distinct-values(Item/ItemRestrictionRltd/RestrictionText[CAUTION_INDICATOR/text() = 'Y']))" /></xsl:attribute>
-                    <xsl:attribute name="as:Caution-ref"><xsl:value-of select="count(Item/ItemRestrictionRltd/RestrictionText[CAUTION_INDICATOR/text() = 'Y'])" /></xsl:attribute>
-                    <xsl:attribute name="as:Note-unique"><xsl:value-of select="count(distinct-values(Item/ItemRestrictionRltd/RestrictionText[NOTE_INDICATOR/text() = 'Y']))" /></xsl:attribute>
-                    <xsl:attribute name="as:Note-ref"><xsl:value-of select="count(Item/ItemRestrictionRltd/RestrictionText[NOTE_INDICATOR/text() = 'Y'])" /></xsl:attribute>
-                    <xsl:attribute name="as:Restriction-unique"><xsl:value-of select="count(distinct-values(Item/ItemRestrictionRltd/RestrictionText[CAUTION_INDICATOR/text() = 'N' and NOTE_INDICATOR/text() = 'N']))" /></xsl:attribute>
-                    <xsl:attribute name="as:Restriction-ref"><xsl:value-of select="count(Item/ItemRestrictionRltd/RestrictionText[CAUTION_INDICATOR/text() = 'N' and NOTE_INDICATOR/text() = 'N'])" /></xsl:attribute>
+                    <xsl:attribute name="as:Caution-unique"><xsl:value-of select="count(distinct-values(Item/ItemRestrictionRltd/RestrictionText[caution_indicator/text() = 'Y']))" /></xsl:attribute>
+                    <xsl:attribute name="as:Caution-ref"><xsl:value-of select="count(Item/ItemRestrictionRltd/RestrictionText[caution_indicator/text() = 'Y'])" /></xsl:attribute>
+                    <xsl:attribute name="as:Note-unique"><xsl:value-of select="count(distinct-values(Item/ItemRestrictionRltd/RestrictionText[note_indicator/text() = 'Y']))" /></xsl:attribute>
+                    <xsl:attribute name="as:Note-ref"><xsl:value-of select="count(Item/ItemRestrictionRltd/RestrictionText[note_indicator/text() = 'Y'])" /></xsl:attribute>
+                    <xsl:attribute name="as:Restriction-unique"><xsl:value-of select="count(distinct-values(Item/ItemRestrictionRltd/RestrictionText[caution_indicator/text() = 'N' and note_indicator/text() = 'N']))" /></xsl:attribute>
+                    <xsl:attribute name="as:Restriction-ref"><xsl:value-of select="count(Item/ItemRestrictionRltd/RestrictionText[caution_indicator/text() = 'N' and note_indicator/text() = 'N'])" /></xsl:attribute>
                 </RestrictionText>
                 <PrescribingTxt>
-                    <xsl:attribute name="PRESCRIBING_TYPE-ADMINISTRATIVE_ADVICE-unique"><xsl:value-of select="count(distinct-values(Item/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='ADMINISTRATIVE_ADVICE']))" /></xsl:attribute>
-                    <xsl:attribute name="PRESCRIBING_TYPE-ADMINISTRATIVE_ADVICE-ref"><xsl:value-of select="count(Item/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='ADMINISTRATIVE_ADVICE'])" /></xsl:attribute>
-                    <xsl:attribute name="PRESCRIBING_TYPE-PRESCRIBING_INSTRUCTIONS-unique"><xsl:value-of select="count(distinct-values(Item/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='PRESCRIBING_INSTRUCTIONS']))" /></xsl:attribute>
-                    <xsl:attribute name="PRESCRIBING_TYPE-PRESCRIBING_INSTRUCTIONS-ref"><xsl:value-of select="count(Item/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='PRESCRIBING_INSTRUCTIONS'])" /></xsl:attribute>
-                    <xsl:attribute name="PRESCRIBING_TYPE-PARAMETER-unique"><xsl:value-of select="count(distinct-values(Item/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='PARAMETER']))" /></xsl:attribute>
-                    <xsl:attribute name="PRESCRIBING_TYPE-PARAMETER-ref"><xsl:value-of select="count(Item/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='PARAMETER'])" /></xsl:attribute>
-                    <xsl:attribute name="PRESCRIBING_TYPE-CRITERIA-unique"><xsl:value-of select="count(distinct-values(Item/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='CRITERIA']))" /></xsl:attribute>
-                    <xsl:attribute name="PRESCRIBING_TYPE-CRITERIA-ref"><xsl:value-of select="count(Item/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='CRITERIA'])" /></xsl:attribute>
-                    <xsl:attribute name="PRESCRIBING_TYPE-LEGACY_SCHEDULE_TEXT-unique"><xsl:value-of select="count(distinct-values(Item/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='LEGACY_SCHEDULE_TEXT']))" /></xsl:attribute>
-                    <xsl:attribute name="PRESCRIBING_TYPE-LEGACY_SCHEDULE_TEXT-ref"><xsl:value-of select="count(Item/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='LEGACY_SCHEDULE_TEXT'])" /></xsl:attribute>
-                    <xsl:attribute name="PRESCRIBING_TYPE-LEGACY_LI_TEXT-unique"><xsl:value-of select="count(distinct-values(Item/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='LEGACY_LI_TEXT']))" /></xsl:attribute>
-                    <xsl:attribute name="PRESCRIBING_TYPE-LEGACY_LI_TEXT-ref"><xsl:value-of select="count(Item/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='LEGACY_LI_TEXT'])" /></xsl:attribute>
-                    <xsl:attribute name="PRESCRIBING_TYPE-CAUTION-unique"><xsl:value-of select="count(distinct-values(Item/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='CAUTION']))" /></xsl:attribute>
-                    <xsl:attribute name="PRESCRIBING_TYPE-CAUTION-ref"><xsl:value-of select="count(Item/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='CAUTION'])" /></xsl:attribute>
-                    <xsl:attribute name="PRESCRIBING_TYPE-INDICATION-unique"><xsl:value-of select="count(distinct-values(Item/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='INDICATION']))" /></xsl:attribute>
-                    <xsl:attribute name="PRESCRIBING_TYPE-INDICATION-ref"><xsl:value-of select="count(Item/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='INDICATION'])" /></xsl:attribute>
-                    <xsl:attribute name="PRESCRIBING_TYPE-FOREWORD-unique"><xsl:value-of select="count(distinct-values(Item/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='FOREWORD']))" /></xsl:attribute>
-                    <xsl:attribute name="PRESCRIBING_TYPE-FOREWORD-ref"><xsl:value-of select="count(Item/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='FOREWORD'])" /></xsl:attribute>
+                    <xsl:attribute name="PRESCRIBING_TYPE-ADMINISTRATIVE_ADVICE-unique"><xsl:value-of select="count(distinct-values(Item/descendant::PrescribingTxt[prescribing_type/text()='ADMINISTRATIVE_ADVICE']))" /></xsl:attribute>
+                    <xsl:attribute name="PRESCRIBING_TYPE-ADMINISTRATIVE_ADVICE-ref"><xsl:value-of select="count(Item/descendant::PrescribingTxt[prescribing_type/text()='ADMINISTRATIVE_ADVICE'])" /></xsl:attribute>
+                    <xsl:attribute name="PRESCRIBING_TYPE-PRESCRIBING_INSTRUCTIONS-unique"><xsl:value-of select="count(distinct-values(Item/descendant::PrescribingTxt[prescribing_type/text()='PRESCRIBING_INSTRUCTIONS']))" /></xsl:attribute>
+                    <xsl:attribute name="PRESCRIBING_TYPE-PRESCRIBING_INSTRUCTIONS-ref"><xsl:value-of select="count(Item/descendant::PrescribingTxt[prescribing_type/text()='PRESCRIBING_INSTRUCTIONS'])" /></xsl:attribute>
+                    <xsl:attribute name="PRESCRIBING_TYPE-PARAMETER-unique"><xsl:value-of select="count(distinct-values(Item/descendant::PrescribingTxt[prescribing_type/text()='PARAMETER']))" /></xsl:attribute>
+                    <xsl:attribute name="PRESCRIBING_TYPE-PARAMETER-ref"><xsl:value-of select="count(Item/descendant::PrescribingTxt[prescribing_type/text()='PARAMETER'])" /></xsl:attribute>
+                    <xsl:attribute name="PRESCRIBING_TYPE-CRITERIA-unique"><xsl:value-of select="count(distinct-values(Item/descendant::PrescribingTxt[prescribing_type/text()='CRITERIA']))" /></xsl:attribute>
+                    <xsl:attribute name="PRESCRIBING_TYPE-CRITERIA-ref"><xsl:value-of select="count(Item/descendant::PrescribingTxt[prescribing_type/text()='CRITERIA'])" /></xsl:attribute>
+                    <xsl:attribute name="PRESCRIBING_TYPE-LEGACY_SCHEDULE_TEXT-unique"><xsl:value-of select="count(distinct-values(Item/descendant::PrescribingTxt[prescribing_type/text()='LEGACY_SCHEDULE_TEXT']))" /></xsl:attribute>
+                    <xsl:attribute name="PRESCRIBING_TYPE-LEGACY_SCHEDULE_TEXT-ref"><xsl:value-of select="count(Item/descendant::PrescribingTxt[prescribing_type/text()='LEGACY_SCHEDULE_TEXT'])" /></xsl:attribute>
+                    <xsl:attribute name="PRESCRIBING_TYPE-LEGACY_LI_TEXT-unique"><xsl:value-of select="count(distinct-values(Item/descendant::PrescribingTxt[prescribing_type/text()='LEGACY_LI_TEXT']))" /></xsl:attribute>
+                    <xsl:attribute name="PRESCRIBING_TYPE-LEGACY_LI_TEXT-ref"><xsl:value-of select="count(Item/descendant::PrescribingTxt[prescribing_type/text()='LEGACY_LI_TEXT'])" /></xsl:attribute>
+                    <xsl:attribute name="PRESCRIBING_TYPE-CAUTION-unique"><xsl:value-of select="count(distinct-values(Item/descendant::PrescribingTxt[prescribing_type/text()='CAUTION']))" /></xsl:attribute>
+                    <xsl:attribute name="PRESCRIBING_TYPE-CAUTION-ref"><xsl:value-of select="count(Item/descendant::PrescribingTxt[prescribing_type/text()='CAUTION'])" /></xsl:attribute>
+                    <xsl:attribute name="PRESCRIBING_TYPE-INDICATION-unique"><xsl:value-of select="count(distinct-values(Item/descendant::PrescribingTxt[prescribing_type/text()='INDICATION']))" /></xsl:attribute>
+                    <xsl:attribute name="PRESCRIBING_TYPE-INDICATION-ref"><xsl:value-of select="count(Item/descendant::PrescribingTxt[prescribing_type/text()='INDICATION'])" /></xsl:attribute>
+                    <xsl:attribute name="PRESCRIBING_TYPE-FOREWORD-unique"><xsl:value-of select="count(distinct-values(Item/descendant::PrescribingTxt[prescribing_type/text()='FOREWORD']))" /></xsl:attribute>
+                    <xsl:attribute name="PRESCRIBING_TYPE-FOREWORD-ref"><xsl:value-of select="count(Item/descendant::PrescribingTxt[prescribing_type/text()='FOREWORD'])" /></xsl:attribute>
                 </PrescribingTxt>
-                <xsl:for-each-group select="Item" group-by="@PROGRAM_CODE">
-                    <xsl:sort select="@PROGRAM_CODE" />
-                    <xsl:variable name="PROGRAM_CODE" select="@PROGRAM_CODE" />
+                <xsl:for-each-group select="Item" group-by="@program_code">
+                    <xsl:sort select="@program_code" />
+                    <xsl:variable name="program_code" select="@program_code" />
                     <Program>
-                        <xsl:attribute name="PROGRAM_CODE"><xsl:value-of select="$PROGRAM_CODE" /></xsl:attribute>
+                        <xsl:attribute name="program_code"><xsl:value-of select="$program_code" /></xsl:attribute>
                         <xsl:attribute name="Item"><xsl:value-of select="count(current-group())" /></xsl:attribute>
                         <xsl:attribute name="Item-unique"><xsl:value-of select="count(distinct-values(current-group()))" /></xsl:attribute>
                         <xsl:attribute name="RestrictionText-unique"><xsl:value-of select="count(distinct-values(current-group()/ItemRestrictionRltd/RestrictionText))" /></xsl:attribute>
@@ -98,32 +98,32 @@
                         <xsl:attribute name="CriteriaParameterRltd-unique"><xsl:value-of select="count(distinct-values(current-group()/descendant::CriteriaParameterRltd))" /></xsl:attribute>
                         <xsl:attribute name="CriteriaParameterRltd-ref"><xsl:value-of select="count(current-group()/descendant::CriteriaParameterRltd)" /></xsl:attribute>
                         <RestrictionText>
-                            <xsl:attribute name="as:CAUTION-unique"><xsl:value-of select="count(distinct-values(current-group()/ItemRestrictionRltd/RestrictionText[CAUTION_INDICATOR/text() = 'Y']))" /></xsl:attribute>
-                            <xsl:attribute name="as:CAUTION-ref"><xsl:value-of select="count(current-group()/ItemRestrictionRltd/RestrictionText[CAUTION_INDICATOR/text() = 'Y'])" /></xsl:attribute>
-                            <xsl:attribute name="as:NOTE-unique"><xsl:value-of select="count(distinct-values(current-group()/ItemRestrictionRltd/RestrictionText[NOTE_INDICATOR/text() = 'Y']))" /></xsl:attribute>
-                            <xsl:attribute name="as:NOTE-ref"><xsl:value-of select="count(current-group()/ItemRestrictionRltd/RestrictionText[NOTE_INDICATOR/text() = 'Y'])" /></xsl:attribute>
-                            <xsl:attribute name="as:RESTRICTION-unique"><xsl:value-of select="count(distinct-values(current-group()/ItemRestrictionRltd/RestrictionText[CAUTION_INDICATOR/text() = 'N' and NOTE_INDICATOR/text() = 'N']))" /></xsl:attribute>
-                            <xsl:attribute name="as:RESTRICTION-ref"><xsl:value-of select="count(current-group()/ItemRestrictionRltd/RestrictionText[CAUTION_INDICATOR/text() = 'N' and NOTE_INDICATOR/text() = 'N'])" /></xsl:attribute>
+                            <xsl:attribute name="as:CAUTION-unique"><xsl:value-of select="count(distinct-values(current-group()/ItemRestrictionRltd/RestrictionText[caution_indicator/text() = 'Y']))" /></xsl:attribute>
+                            <xsl:attribute name="as:CAUTION-ref"><xsl:value-of select="count(current-group()/ItemRestrictionRltd/RestrictionText[caution_indicator/text() = 'Y'])" /></xsl:attribute>
+                            <xsl:attribute name="as:NOTE-unique"><xsl:value-of select="count(distinct-values(current-group()/ItemRestrictionRltd/RestrictionText[note_indicator/text() = 'Y']))" /></xsl:attribute>
+                            <xsl:attribute name="as:NOTE-ref"><xsl:value-of select="count(current-group()/ItemRestrictionRltd/RestrictionText[note_indicator/text() = 'Y'])" /></xsl:attribute>
+                            <xsl:attribute name="as:RESTRICTION-unique"><xsl:value-of select="count(distinct-values(current-group()/ItemRestrictionRltd/RestrictionText[caution_indicator/text() = 'N' and note_indicator/text() = 'N']))" /></xsl:attribute>
+                            <xsl:attribute name="as:RESTRICTION-ref"><xsl:value-of select="count(current-group()/ItemRestrictionRltd/RestrictionText[caution_indicator/text() = 'N' and note_indicator/text() = 'N'])" /></xsl:attribute>
                         </RestrictionText>
                         <PrescribingTxt>
-                            <xsl:attribute name="PRESCRIBING_TYPE-ADMINISTRATIVE_ADVICE-unique"><xsl:value-of select="count(distinct-values(current-group()/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='ADMINISTRATIVE_ADVICE']))" /></xsl:attribute>
-                            <xsl:attribute name="PRESCRIBING_TYPE-ADMINISTRATIVE_ADVICE-ref"><xsl:value-of select="count(current-group()/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='ADMINISTRATIVE_ADVICE'])" /></xsl:attribute>
-                            <xsl:attribute name="PRESCRIBING_TYPE-PRESCRIBING_INSTRUCTIONS-unique"><xsl:value-of select="count(distinct-values(current-group()/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='PRESCRIBING_INSTRUCTIONS']))" /></xsl:attribute>
-                            <xsl:attribute name="PRESCRIBING_TYPE-PRESCRIBING_INSTRUCTIONS-ref"><xsl:value-of select="count(current-group()/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='PRESCRIBING_INSTRUCTIONS'])" /></xsl:attribute>
-                            <xsl:attribute name="PRESCRIBING_TYPE-PARAMETER-unique"><xsl:value-of select="count(distinct-values(current-group()/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='PARAMETER']))" /></xsl:attribute>
-                            <xsl:attribute name="PRESCRIBING_TYPE-PARAMETER-ref"><xsl:value-of select="count(current-group()/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='PARAMETER'])" /></xsl:attribute>
-                            <xsl:attribute name="PRESCRIBING_TYPE-CRITERIA-unique"><xsl:value-of select="count(distinct-values(current-group()/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='CRITERIA']))" /></xsl:attribute>
-                            <xsl:attribute name="PRESCRIBING_TYPE-CRITERIA-ref"><xsl:value-of select="count(current-group()/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='CRITERIA'])" /></xsl:attribute>
-                            <xsl:attribute name="PRESCRIBING_TYPE-LEGACY_SCHEDULE_TEXT-unique"><xsl:value-of select="count(distinct-values(current-group()/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='LEGACY_SCHEDULE_TEXT']))" /></xsl:attribute>
-                            <xsl:attribute name="PRESCRIBING_TYPE-LEGACY_SCHEDULE_TEXT-ref"><xsl:value-of select="count(current-group()/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='LEGACY_SCHEDULE_TEXT'])" /></xsl:attribute>
-                            <xsl:attribute name="PRESCRIBING_TYPE-LEGACY_LI_TEXT-unique"><xsl:value-of select="count(distinct-values(current-group()/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='LEGACY_LI_TEXT']))" /></xsl:attribute>
-                            <xsl:attribute name="PRESCRIBING_TYPE-LEGACY_LI_TEXT-ref"><xsl:value-of select="count(current-group()/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='LEGACY_LI_TEXT'])" /></xsl:attribute>
-                            <xsl:attribute name="PRESCRIBING_TYPE-CAUTION-unique"><xsl:value-of select="count(distinct-values(current-group()/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='CAUTION']))" /></xsl:attribute>
-                            <xsl:attribute name="PRESCRIBING_TYPE-CAUTION-ref"><xsl:value-of select="count(current-group()/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='CAUTION'])" /></xsl:attribute>
-                            <xsl:attribute name="PRESCRIBING_TYPE-INDICATION-unique"><xsl:value-of select="count(distinct-values(current-group()/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='INDICATION']))" /></xsl:attribute>
-                            <xsl:attribute name="PRESCRIBING_TYPE-INDICATION-ref"><xsl:value-of select="count(current-group()/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='INDICATION'])" /></xsl:attribute>
-                            <xsl:attribute name="PRESCRIBING_TYPE-FOREWORD-unique"><xsl:value-of select="count(distinct-values(current-group()/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='FOREWORD']))" /></xsl:attribute>
-                            <xsl:attribute name="PRESCRIBING_TYPE-FOREWORD-ref"><xsl:value-of select="count(current-group()/descendant::PrescribingTxt[PRESCRIBING_TYPE/text()='FOREWORD'])" /></xsl:attribute>
+                            <xsl:attribute name="PRESCRIBING_TYPE-ADMINISTRATIVE_ADVICE-unique"><xsl:value-of select="count(distinct-values(current-group()/descendant::PrescribingTxt[prescribing_type/text()='ADMINISTRATIVE_ADVICE']))" /></xsl:attribute>
+                            <xsl:attribute name="PRESCRIBING_TYPE-ADMINISTRATIVE_ADVICE-ref"><xsl:value-of select="count(current-group()/descendant::PrescribingTxt[prescribing_type/text()='ADMINISTRATIVE_ADVICE'])" /></xsl:attribute>
+                            <xsl:attribute name="PRESCRIBING_TYPE-PRESCRIBING_INSTRUCTIONS-unique"><xsl:value-of select="count(distinct-values(current-group()/descendant::PrescribingTxt[prescribing_type/text()='PRESCRIBING_INSTRUCTIONS']))" /></xsl:attribute>
+                            <xsl:attribute name="PRESCRIBING_TYPE-PRESCRIBING_INSTRUCTIONS-ref"><xsl:value-of select="count(current-group()/descendant::PrescribingTxt[prescribing_type/text()='PRESCRIBING_INSTRUCTIONS'])" /></xsl:attribute>
+                            <xsl:attribute name="PRESCRIBING_TYPE-PARAMETER-unique"><xsl:value-of select="count(distinct-values(current-group()/descendant::PrescribingTxt[prescribing_type/text()='PARAMETER']))" /></xsl:attribute>
+                            <xsl:attribute name="PRESCRIBING_TYPE-PARAMETER-ref"><xsl:value-of select="count(current-group()/descendant::PrescribingTxt[prescribing_type/text()='PARAMETER'])" /></xsl:attribute>
+                            <xsl:attribute name="PRESCRIBING_TYPE-CRITERIA-unique"><xsl:value-of select="count(distinct-values(current-group()/descendant::PrescribingTxt[prescribing_type/text()='CRITERIA']))" /></xsl:attribute>
+                            <xsl:attribute name="PRESCRIBING_TYPE-CRITERIA-ref"><xsl:value-of select="count(current-group()/descendant::PrescribingTxt[prescribing_type/text()='CRITERIA'])" /></xsl:attribute>
+                            <xsl:attribute name="PRESCRIBING_TYPE-LEGACY_SCHEDULE_TEXT-unique"><xsl:value-of select="count(distinct-values(current-group()/descendant::PrescribingTxt[prescribing_type/text()='LEGACY_SCHEDULE_TEXT']))" /></xsl:attribute>
+                            <xsl:attribute name="PRESCRIBING_TYPE-LEGACY_SCHEDULE_TEXT-ref"><xsl:value-of select="count(current-group()/descendant::PrescribingTxt[prescribing_type/text()='LEGACY_SCHEDULE_TEXT'])" /></xsl:attribute>
+                            <xsl:attribute name="PRESCRIBING_TYPE-LEGACY_LI_TEXT-unique"><xsl:value-of select="count(distinct-values(current-group()/descendant::PrescribingTxt[prescribing_type/text()='LEGACY_LI_TEXT']))" /></xsl:attribute>
+                            <xsl:attribute name="PRESCRIBING_TYPE-LEGACY_LI_TEXT-ref"><xsl:value-of select="count(current-group()/descendant::PrescribingTxt[prescribing_type/text()='LEGACY_LI_TEXT'])" /></xsl:attribute>
+                            <xsl:attribute name="PRESCRIBING_TYPE-CAUTION-unique"><xsl:value-of select="count(distinct-values(current-group()/descendant::PrescribingTxt[prescribing_type/text()='CAUTION']))" /></xsl:attribute>
+                            <xsl:attribute name="PRESCRIBING_TYPE-CAUTION-ref"><xsl:value-of select="count(current-group()/descendant::PrescribingTxt[prescribing_type/text()='CAUTION'])" /></xsl:attribute>
+                            <xsl:attribute name="PRESCRIBING_TYPE-INDICATION-unique"><xsl:value-of select="count(distinct-values(current-group()/descendant::PrescribingTxt[prescribing_type/text()='INDICATION']))" /></xsl:attribute>
+                            <xsl:attribute name="PRESCRIBING_TYPE-INDICATION-ref"><xsl:value-of select="count(current-group()/descendant::PrescribingTxt[prescribing_type/text()='INDICATION'])" /></xsl:attribute>
+                            <xsl:attribute name="PRESCRIBING_TYPE-FOREWORD-unique"><xsl:value-of select="count(distinct-values(current-group()/descendant::PrescribingTxt[prescribing_type/text()='FOREWORD']))" /></xsl:attribute>
+                            <xsl:attribute name="PRESCRIBING_TYPE-FOREWORD-ref"><xsl:value-of select="count(current-group()/descendant::PrescribingTxt[prescribing_type/text()='FOREWORD'])" /></xsl:attribute>
                         </PrescribingTxt>
                     </Program>
                 </xsl:for-each-group>
@@ -180,8 +180,8 @@
 
 
             <xsl:for-each select="Program">
-                <xsl:variable name="program-path" select="concat($edition-path,@PROGRAM_CODE,'/index.psml')" />
-                <xsl:variable name="program-title" select="concat('Program code: ',@PROGRAM_CODE)" />
+                <xsl:variable name="program-path" select="concat($edition-path,@program_code,'/index.psml')" />
+                <xsl:variable name="program-title" select="concat('Program code: ',@program_code)" />
                 <xsl:result-document href="{$program-path}" method="xml">
                     <document type="analysis" version="current" level="portable">
                         <documentinfo>

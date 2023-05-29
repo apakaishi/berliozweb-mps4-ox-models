@@ -27,8 +27,8 @@
     </xsl:template>
 
     <xsl:template match="Item">
-        <xsl:variable name="PROGRAM_CODE" select="@PROGRAM_CODE" />
-        <xsl:variable name="program-path" select="concat($edition-path,'',$PROGRAM_CODE,'/')" />
+        <xsl:variable name="program_code" select="@program_code" />
+        <xsl:variable name="program-path" select="concat($edition-path,'',$program_code,'/')" />
 
         <xsl:apply-templates select="* except H1">
             <xsl:with-param name="path"><xsl:value-of select="$program-path" /></xsl:with-param>
@@ -40,14 +40,14 @@
     <xsl:template match="ItemRestrictionRltd">
         <xsl:param name="path" />
         <xsl:variable name="current-item"  select="ancestor::Item[1]" />
-        <xsl:variable name="schedule-code" select="$current-item/../@SCHEDULE_CODE"/>
-        <xsl:variable name="revision-number" select="$current-item/../@REVISION_NUMBER"/>
-        <xsl:variable name="program-code" select="$current-item/@PROGRAM_CODE"/>
-        <xsl:variable name="pbs-code" select="$current-item/@PBS_CODE"/>
+        <xsl:variable name="schedule-code" select="$current-item/../@schedule_code"/>
+        <xsl:variable name="revision-number" select="$current-item/../@revision_number"/>
+        <xsl:variable name="program-code" select="$current-item/@program_code"/>
+        <xsl:variable name="pbs-code" select="$current-item/@pbs_code"/>
         <xsl:variable name="heading" select="$current-item/section/H1"/>
         
         <xsl:result-document
-            href="{concat($path, 'Items/', $pbs-code, '/restrictions/', @RES_CODE, '.psml' )}">
+            href="{concat($path, 'Items/', $pbs-code, '/restrictions/', @res_code, '.psml' )}">
             <document level="portable">
                 <xsl:attribute name="date" select="current-dateTime()"/>
                 
@@ -78,9 +78,9 @@
                  
                 <xsl:if test="$DEBUG = 'true'">
                     <xsl:if
-                        test="ends-with(@RES_CODE, '_R') and ($checksum1 &gt; $checksum2 or $checksum2 != $checksum3 or $checksum2 != $checksum4)">
+                        test="ends-with(@res_code, '_R') and ($checksum1 &gt; $checksum2 or $checksum2 != $checksum3 or $checksum2 != $checksum4)">
                         <xsl:message>Checksum error: <xsl:value-of select="$pbs-code"/> -
-                            <xsl:value-of select="@RES_CODE"/> - <xsl:value-of
+                            <xsl:value-of select="@res_code"/> - <xsl:value-of
                             select="concat($checksum1, ':', $checksum2, ':', $checksum3, ':', $checksum4)"
                             /></xsl:message>
                         <xsl:if test="$checksum2 != $checksum3">
@@ -101,7 +101,7 @@
                         <xsl:value-of select="$heading"/>
                     </title>
                     <fragment id="1">
-                        <para>[<xsl:value-of  select=" @RES_CODE"/> - checksums: 
+                        <para>[<xsl:value-of  select=" @res_code"/> - checksums:
                             <xsl:value-of select="concat( $checksum1, ':',  $checksum2, ':', $checksum3, ':', $checksum4)"/>]</para>
                             
                     </fragment>
