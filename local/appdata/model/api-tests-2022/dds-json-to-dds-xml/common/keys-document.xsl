@@ -72,60 +72,19 @@
         <xsl:sequence select="schedule_code"/>
     </xsl:key>
 
-    <xsl:key name="summary-item" match="summary-of-changes/items/element" composite="yes">
-        <xsl:sequence select="table"/>
-        <xsl:sequence select="li_item_id"/>
-    </xsl:key>
-
-    <xsl:key name="amt-item" match="summary-of-changes/amt-items/element" composite="yes">
-        <xsl:sequence select="table"/>
-        <xsl:sequence select="li_item_id"/>
-        <xsl:sequence select="pbs_concept_id"/>
-        <xsl:sequence select="amt_code"/>
-    </xsl:key>
-
-    <xsl:key name="items-prescribing" match="summary-of-changes/items-prescribing/element" composite="yes">
-        <xsl:sequence select="table"/>
+    <xsl:key name="extemporaneous-preparation" match="extemporaneous-preparations/element" composite="yes">
         <xsl:sequence select="pbs_code"/>
-        <xsl:sequence select="prescribing_txt_id"/>
+        <xsl:sequence select="schedule_code"/>
     </xsl:key>
 
-    <xsl:key name="prescribings" match="summary-of-changes/prescribings/element" composite="yes">
-        <xsl:sequence select="table"/>
-        <xsl:sequence select="prescribing_txt_id"/>
-    </xsl:key>
-
-    <xsl:key name="criterias" match="summary-of-changes/criterias/element" composite="yes">
-        <xsl:sequence select="table"/>
-        <xsl:sequence select="criteria_prescribing_txt_id"/>
-    </xsl:key>
-
-    <xsl:key name="criterias-parameter" match="summary-of-changes/criterias-parameter/element" composite="yes">
-        <xsl:sequence select="table"/>
-        <xsl:sequence select="criteria_prescribing_txt_id"/>
-        <xsl:sequence select="parameter_prescribing_txt_id"/>
-    </xsl:key>
-
-    <xsl:key name="indications" match="summary-of-changes/indications/element" composite="yes">
-        <xsl:sequence select="table"/>
-        <xsl:sequence select="indication_prescribing_txt_id"/>
-    </xsl:key>
-
-    <xsl:key name="items-restriction" match="summary-of-changes/items-restriction/element" composite="yes">
-        <xsl:sequence select="table"/>
-        <xsl:sequence select="res_code"/>
+    <xsl:key name="standard-formula-preparations" match="standard-formula-preparations/element" composite="yes">
         <xsl:sequence select="pbs_code"/>
+        <xsl:sequence select="schedule_code"/>
     </xsl:key>
 
-    <xsl:key name="restrictions" match="summary-of-changes/restrictions/element" composite="yes">
-        <xsl:sequence select="table"/>
-        <xsl:sequence select="res_code"/>
-    </xsl:key>
-
-    <xsl:key name="restrictions-prescribing" match="summary-of-changes/restrictions-prescribing/element" composite="yes">
-        <xsl:sequence select="table"/>
-        <xsl:sequence select="res_code"/>
-        <xsl:sequence select="prescribing_text_id"/>
+    <xsl:key name="extemporaneous-standard-formula" match="extemporaneous-prep-sfp-relationships/element" composite="yes">
+        <xsl:sequence select="sfp_pbs_code"/>
+        <xsl:sequence select="schedule_code"/>
     </xsl:key>
 
 </xsl:stylesheet>
