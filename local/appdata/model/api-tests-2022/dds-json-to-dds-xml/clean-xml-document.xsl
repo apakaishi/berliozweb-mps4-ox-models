@@ -29,13 +29,13 @@
                 <xsl:variable name="filename" select="substring-before(tokenize(@short-path,'/')[last()],'.json')" />
                 <xsl:variable name="element-name" select="if($filename = 'items') then 'Item'
                                                             else if($filename = 'schedules') then 'Schedule'
-                                                            else if($filename = 'items-restrictions-relationships') then 'ItemRestrictionRltd'
-                                                            else if($filename = 'items-prescribing-text-relationships') then 'ItemPrescribingTxtRltd'
+                                                            else if($filename = 'item-restriction-relationships') then 'ItemRestrictionRltd'
+                                                            else if($filename = 'item-prescribing-text-relationships') then 'ItemPrescribingTxtRltd'
                                                             else if($filename = 'restrictions') then 'RestrictionText'
-                                                            else if($filename = 'restrictions-prescribing-text-relationships') then 'RstrctnPrscrbngTxtRltd'
-                                                            else if($filename = 'prescribing-text') then 'PrescribingTxt'
+                                                            else if($filename = 'restriction-prescribing-text-relationships') then 'RstrctnPrscrbngTxtRltd'
+                                                            else if($filename = 'prescribing-texts') then 'PrescribingTxt'
                                                             else if($filename = 'criteria') then 'Criteria'
-                                                            else if($filename = 'criteria-parameters-relationships') then 'CriteriaParameterRltd'
+                                                            else if($filename = 'criteria-parameter-relationships') then 'CriteriaParameterRltd'
                                                             else if($filename = 'indications') then 'Indication'
                                                             else $filename" />
 
