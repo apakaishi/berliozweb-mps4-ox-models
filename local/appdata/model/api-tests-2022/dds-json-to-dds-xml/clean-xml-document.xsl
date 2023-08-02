@@ -39,7 +39,7 @@
                                                             else if($filename = 'indications') then 'Indication'
                                                             else $filename" />
 
-                <xsl:apply-templates select="$path" mode="full">
+                <xsl:apply-templates select="$path/fn:map/fn:array" mode="full">
                     <xsl:with-param name="element-name" select="$element-name" />
                 </xsl:apply-templates>
             </xsl:for-each>
