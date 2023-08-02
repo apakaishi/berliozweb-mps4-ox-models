@@ -296,7 +296,7 @@
                                 li_drug_name, ''' ')"/>
                     </H1>
 
-                    <xsl:apply-templates select="item-increases/item-increase[@res_code][1]"/>
+                    <xsl:apply-templates select="ItemIncreases/ItemIncrease[@res_code][1]"/>
                     <xsl:apply-templates select="
                             *[contains(name(), 'Rltd')]
                             [restriction_indicator = 'Y' or not(restriction_indicator)]"/>
@@ -318,7 +318,7 @@
         </xsl:copy>
     </xsl:template>
 
-    <xsl:template match="item-increases/item-increase[@res_code]">
+    <xsl:template match="ItemIncreases/ItemIncrease[@res_code]">
         <xsl:element name="ItemRestrictionRltd">
             <xsl:attribute name="benefit_type_code" select="benefit_type_code" />
             <xsl:copy-of select="@*" />
