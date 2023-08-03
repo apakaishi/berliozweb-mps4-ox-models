@@ -4,6 +4,7 @@
 -->
 <pipelines  title="API TESTS 2023">
 
+  <!-- Input zip document with all json documents -->
   <pipeline id="json-to-xml"
             name="DDS Json to DDS XML"
             description="Conversion of Json document to XML"
@@ -120,11 +121,40 @@
     </step>
   </pipeline>
 
+  <!-- Input zip document with all json documents -->
   <pipeline id="json-to-xml-extra-documents"
             name="DDS Json to DDS XML - Extra Documents"
             description="Conversion of Json document to XML - Extra Documents"
             accepts="application/zip"
             default="true">
+
+    <fields>
+      <field
+              type="text"
+              id="schedule-code"
+              name="schedule-code"
+              label="schedule-code"
+              value=""
+              rules="required"
+              hint="API data  - schedule code."
+      />
+      <field
+              type="select"
+              id="edition-type"
+              name="edition-type"
+              label="edition type"
+              active="dds"
+              hint="To which type of edition type these resource will be uploaded?"
+              values='[
+            {
+              "text": "DDS", "value": "dds"
+            },
+            {
+              "text":"PBS v3", "value":"pbsv3"
+            }
+          ]'
+      />
+    </fields>
     <!-- Unpacking Documents Json (Folder: data) -->
     <step id="Unzip" name="Unzipping." class="org.pageseeder.ox.step.Decompression">
       <parameter name="output" value="data" />
@@ -152,8 +182,6 @@
       <parameter name="input"                 value="data-processed/cleaned-document.xml"/>
       <parameter name="xsl"                   value="dds-json-to-dds-xml/extra/create-psml-element-documents.xsl"/>
       <parameter name="display-result"        value="false"/>
-      <parameter name="_xslt-schedule-code"   value="3651" />
-      <parameter name="_xslt-edition-type"    value="dds" />
       <parameter name="_xslt-folder"          value="pg-folder/data" />
       <parameter name="output"                value="files/psml-element-documents.xml"/>
     </step>
@@ -163,11 +191,24 @@
     </step>
   </pipeline>
 
+
+  <!-- Input zip document with all json documents -->
   <pipeline id="generate-report-documents"
             name="DDS Json to DDS XML - Report Documents - Version PBS XML v2"
             description="DDS Json to DDS XML - Report Documents - Version PBS XML v2"
             accepts="application/zip"
             default="true">
+    <fields>
+      <field
+              type="text"
+              id="schedule-code"
+              name="schedule-code"
+              label="schedule-code"
+              value=""
+              rules="required"
+              hint="API data  - schedule code."
+      />
+    </fields>
     <!-- Unpacking Documents Json (Folder: data) -->
     <step id="Unzip" name="Unzipping." class="org.pageseeder.ox.step.Decompression">
       <parameter name="output" value="data" />
@@ -196,7 +237,6 @@
       <parameter name="input"                 value="data-processed/cleaned-document.xml"/>
       <parameter name="xsl"                   value="dds-json-to-dds-xml/sort-li-item-id-no-pig.xsl"/>
       <parameter name="display-result"        value="false"/>
-      <parameter name="_xslt-schedule-code"   value="3651" />
       <parameter name="output"                value="data-processed/sorted.xml"/>
     </step>
     <!-- Create full items list (Related with Prescribe-Text and Restrictions -->
@@ -204,14 +244,12 @@
       <parameter name="input"                 value="data-processed/sorted.xml"/>
       <parameter name="xsl"                   value="dds-json-to-dds-xml/create-full-item-list.xsl"/>
       <parameter name="display-result"        value="false"/>
-      <parameter name="_xslt-schedule-code"   value="3651" />
       <parameter name="output"                value="data-processed/full-items-document.xml"/>
     </step>
     <step id="create-v2-report-documents" name="Create PBS XML v2 Report Documents" viewable="false" class="org.pageseeder.ox.step.Transformation">
       <parameter name="input"                 value="data-processed/full-items-document.xml"/>
       <parameter name="xsl"                   value="dds-json-to-dds-xml/extra/create-v2-report-documents.xsl"/>
       <parameter name="display-result"        value="false"/>
-      <parameter name="_xslt-schedule-code"   value="3651" />
       <parameter name="_xslt-folder"          value="pg-folder/analysis/api-dds" />
       <parameter name="output"                value="files/v2-report-documents.xml"/>
     </step>
@@ -219,7 +257,6 @@
       <parameter name="input"                 value="data-processed/full-items-document.xml"/>
       <parameter name="xsl"                   value="dds-json-to-dds-xml/extra/create-v2-not-supply-report-documents.xsl"/>
       <parameter name="display-result"        value="false"/>
-      <parameter name="_xslt-schedule-code"   value="3651" />
       <parameter name="_xslt-folder"          value="pg-folder/analysis/api-dds" />
       <parameter name="output"                value="files/v2-report-documents.xml"/>
     </step>
@@ -229,11 +266,30 @@
     </step>
   </pipeline>
 
+  <!-- Input document DDS XML full version -->
   <pipeline id="pivot-source-xml"
             name="Pivot Source XML"
             description="Pivot Source XML"
             accepts="application/xml"
             default="true">
+    <fields>
+      <field
+              type="select"
+              id="type"
+              name="type"
+              label="type"
+              active="source"
+              hint="To which type of edition type these resource will be uploaded?"
+              values='[
+            {
+              "text": "source", "value": "source"
+            },
+            {
+              "text":"error", "value":"error"
+            }
+          ]'
+      />
+    </fields>
     <step id="Copy-Document-XML" name="Copy document xml" class="org.pageseeder.ox.step.Copy">
       <parameter name="input" value="resources/document.xml" />
       <parameter name="output" value="example/document.xml"/>
@@ -250,17 +306,35 @@
     <step id="viewer-pivot-paragraph-report" name="Results" viewable="true" class="org.pageseeder.ox.step.Transformation">
       <parameter name="input" value="example/document.xml" />
       <parameter name="display-result"  value="false"/>
-      <parameter name="_xslt-type" value="source" />
       <parameter name="xsl"    value="dds-json-to-dds-xml/pivot-html-viewer.xsl"/>
       <parameter name="output" value="files/index.html"/>
     </step>
   </pipeline>
 
+  <!-- Input document errors.json document -->
   <pipeline id="pivot-errors-json"
             name="Pivot Errors Json"
             description="Pivot Errors Json"
             accepts="application/json"
             default="true">
+    <fields>
+      <field
+              type="select"
+              id="type"
+              name="type"
+              label="type"
+              active="source"
+              hint="To which type of edition type these resource will be uploaded?"
+              values='[
+            {
+              "text": "source", "value": "source"
+            },
+            {
+              "text":"error", "value":"error"
+            }
+          ]'
+      />
+    </fields>
     <step id="Copy-Document-XML" name="Copy document xml" class="org.pageseeder.ox.step.Copy">
       <parameter name="input" value="resources/document.xml" />
       <parameter name="output" value="example/document.xml"/>
@@ -275,7 +349,6 @@
     <step id="viewer-pivot-paragraph-report" name="Results" viewable="true" class="org.pageseeder.ox.step.Transformation">
       <parameter name="input" value="example/document.xml" />
       <parameter name="display-result"  value="false"/>
-      <parameter name="_xslt-type" value="error" />
       <parameter name="xsl"    value="dds-json-to-dds-xml/pivot-html-viewer.xsl"/>
       <parameter name="output" value="files/index.html"/>
     </step>
