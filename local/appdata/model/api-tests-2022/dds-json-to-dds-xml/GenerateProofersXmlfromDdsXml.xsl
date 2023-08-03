@@ -76,7 +76,7 @@
                     ' ,.;:', '')) "/>
                 <xsl:variable name="checksum4" select="sum(string-to-codepoints($raw-li-chars4))"/>  
                  
-                <xsl:if test="$DEBUG = 'true'">
+                <xsl:if test="$DEBUG = 'false'">
                     <xsl:if
                         test="ends-with(@res_code, '_R') and ($checksum1 &gt; $checksum2 or $checksum2 != $checksum3 or $checksum2 != $checksum4)">
                         <xsl:message>Checksum error: <xsl:value-of select="$pbs-code"/> -
