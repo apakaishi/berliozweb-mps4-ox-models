@@ -65,7 +65,17 @@
                 <H2>LI HTML TEXT</H2>
                 <block label="LI">
                     <HTML_TEXT>
-                        <xsl:value-of disable-output-escaping="yes" select="li_html_text"/>
+                        <xsl:variable name="content">
+                            <xsl:value-of disable-output-escaping="yes" select="li_html_text"/>
+                        </xsl:variable>
+                        <xsl:analyze-string select="$content" regex="([&lt;])([ 1-9])">
+                            <xsl:matching-substring>
+                                <xsl:value-of select="concat(translate(regex-group(1),'&lt;','&lt;'),regex-group(2))"/>
+                            </xsl:matching-substring>
+                            <xsl:non-matching-substring>
+                                <xsl:value-of disable-output-escaping="yes" select="."/>
+                            </xsl:non-matching-substring>
+                        </xsl:analyze-string>
                     </HTML_TEXT>
                 </block>
             </div>
@@ -73,7 +83,17 @@
                 <H2>SCHEDULE HTML TEXT</H2>
                 <block label="SCHEDULE">
                     <HTML_TEXT>
-                        <xsl:value-of disable-output-escaping="yes" select="schedule_html_text"/>
+                        <xsl:variable name="content">
+                            <xsl:value-of disable-output-escaping="yes" select="schedule_html_text"/>
+                        </xsl:variable>
+                        <xsl:analyze-string select="$content" regex="([&lt;])([ 1-9])">
+                            <xsl:matching-substring>
+                                <xsl:value-of select="concat(translate(regex-group(1),'&lt;','&lt;'),regex-group(2))"/>
+                            </xsl:matching-substring>
+                            <xsl:non-matching-substring>
+                                <xsl:value-of disable-output-escaping="yes" select="."/>
+                            </xsl:non-matching-substring>
+                        </xsl:analyze-string>
                     </HTML_TEXT>
                 </block>
             </div>
