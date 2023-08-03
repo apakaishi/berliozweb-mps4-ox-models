@@ -335,6 +335,7 @@
           ]'
       />
     </fields>
+
     <step id="Copy-Document-XML" name="Copy document xml" class="org.pageseeder.ox.step.Copy">
       <parameter name="input" value="resources/document.xml" />
       <parameter name="output" value="example/document.xml"/>
