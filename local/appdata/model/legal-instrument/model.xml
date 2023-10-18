@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  This document defines the pipelines for the conversion ox model.
+-->
+
+<pipelines  title="Legal Instrument">
+  <pipeline id="dd-api-to-dds-xml"
+            name="DD API to DDS XML"
+            description="DD API to DDS XML"
+            accepts="application/zip"
+            default="true">
+    <fields>
+      <field
+              type="text"
+              id="schedule-code"
+              name="schedule-code"
+              label="schedule-code"
+              value=""
+              rules="required"
+              hint="API data  - schedule code."
+      />
+      <field
+              type="select"
+              id="edition-type"
+              name="edition-type"
+              label="edition type"
+              active="dds"
+              hint="To which type of edition type these resource will be uploaded?"
+              values='[
+            {
+              "text": "DDS", "value": "dds"
+            },
+            {
+              "text":"PBS v3", "value":"pbsv3"
+            }
+          ]'
+      />
+    </fields>
+
+    <step id="Unzip" name="Unzipping." class="org.pageseeder.ox.step.Decompression">
+      <parameter name="output" value="data" />
+    </step>
+    <step id="list-documents-path" name="Return a XML document with a list of documents" viewable="false" class="org.pageseeder.ox.step.ListFiles" async="true">
+      <parameter name="input"                 value="data"/>
+      <parameter name="glob-pattern"          value="*.json"/>
+      <parameter name="output"                value="files/list-files.xml"/>
+    </step>
+
+    <step id="json-to-xml" name="Conversion of JSON to XML" viewable="false" class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"                 value="files/list-files.xml"/>
+      <parameter name="xsl"                   value="dd-json-to-dds-xml-conversion/common/json-to-xml.xsl"/>
+      <parameter name="display-result"        value="false"/>
+      <parameter name="output"                value="files/json-conversion.xml"/>
+    </step>
+    <step id="clean-xml-documents" name="Clean XML documents" viewable="false" class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"                 value="files/list-files.xml"/>
+      <parameter name="xsl"                   value="dd-json-to-dds-xml-conversion/common/clean-xml-document.xsl"/>
+      <parameter name="display-result"        value="false"/>
+      <parameter name="output"                value="data-processed/cleaned-document.xml"/>
+    </step>
+
+    <step id="sort-document" name="Sort Document" viewable="false" class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"                 value="data-processed/cleaned-document.xml"/>
+      <parameter name="xsl"                   value="dd-json-to-dds-xml-conversion/common/sort-li-item-id-no-pig.xsl"/>
+      <parameter name="display-result"        value="false"/>
+      <parameter name="output"                value="data-processed/sorted.xml"/>
+    </step>
+
+    <step id="create-xml-dds-file" name="Create XML DDS Document" viewable="false" class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"                 value="data-processed/sorted.xml"/>
+      <parameter name="xsl"                   value="dd-json-to-dds-xml-conversion/common/create-full-item-list-lucene-xml.xsl"/>
+      <parameter name="display-result"        value="false"/>
+      <parameter name="output"                value="data-processed/full-items-document.xml"/>
+    </step>
+
+    <step id="create-li-documents" name="Create LI PSML Documents" viewable="false" class="org.pageseeder.ox.step.Transformation">
+      <parameter name="input"                 value="data-processed/full-items-document.xml"/>
+      <parameter name="xsl"                   value="dd-json-to-dds-xml-conversion/common/create-li-psml-documents.xsl"/>
+      <parameter name="display-result"        value="false"/>
+      <parameter name="_xslt-folder"          value="pg-folder" />
+      <parameter name="output"                value="files/split-document.xml"/>
+    </step>
+
+    <step id="zip-source-documents" name="Zipping Source Documents." class="org.pageseeder.ox.step.Compression">
+      <parameter name="input"                 value="pg-folder" />
+      <parameter name="output"                value="upload-document.zip"/>
+    </step>
+
+  </pipeline>
+
+</pipelines>
+
