@@ -90,7 +90,51 @@
 
     <step id="zip-source-documents" name="Zipping Source Documents." class="org.pageseeder.ox.step.Compression">
       <parameter name="input"                 value="pg-folder" />
-      <parameter name="output"                value="upload-document.zip"/>
+      <parameter name="output"                value="document.zip"/>
+    </step>
+
+    <step id="listing" name="Listing" class="org.pageseeder.ox.pageseeder.step.ListURIForURL">
+      <parameter name="group" value="mps-li" />
+      <parameter name="folder" value="documents" />
+    </step>
+    <!--
+    <step id="select-folder" name="Select Folder to Upload" interaction="true" class="org.pageseeder.ox.step.NOPStep">
+      <component name="SelectFolder"/>
+    </step> -->
+
+    <step id="clear-loading-zone" name="Clear upload zone"
+          class="org.pageseeder.ox.pageseeder.step.ClearLoadZone"
+          async="true" >
+      <parameter name="group" value="mps-li" />
+      <parameter name="uploadid" value="{_package_id}"/>
+    </step>
+
+    <step id="upload-to-pageseeder-loadingzone" name="Upload ZIP to Pageseeder" class="org.pageseeder.ox.pageseeder.step.UploadToLoadingZone"
+          async="true" >
+      <parameter name="input" value="document.zip" />
+      <parameter name="filename" value="document.zip" />
+      <parameter name="autoload" value="false" />
+      <parameter name="overwrite" value="true" />
+      <parameter name="group" value="mps-li" />
+      <parameter name="uploadid" value="{_package_id}"/>
+    </step>
+
+    <step id="unzip-loadingzone-content" name="Unzip file in Pageseeder" class="org.pageseeder.ox.pageseeder.step.UnzipLoadingZoneContent">
+      <parameter name="group" value="mps-li" />
+      <parameter name="path" value="document.zip" />
+      <parameter name="deleteoriginal" value="true" />
+      <parameter name="uploadid" value="{_package_id}"/>
+    </step>
+
+    <step id="loads-content-to-the-group" name="Load unzipped content to Pageseeder group" class="org.pageseeder.ox.pageseeder.step.StartLoading">
+      <parameter name="group" value="mps-li" />
+      <parameter name="createxrefs" value="true" />
+      <parameter name="index" value="true" />
+      <parameter name="overwrite" value="true" />
+      <parameter name="overwrite-properties" value="true" />
+      <parameter name="validate" value="true" />
+      <parameter name="folder" value="documents/"/>
+      <parameter name="uploadid" value="{_package_id}"/>
     </step>
 
   </pipeline>
