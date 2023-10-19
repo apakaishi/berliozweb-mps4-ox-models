@@ -15,12 +15,14 @@
 
     <xsl:import href="keys-document.xsl" />
     <xsl:param name="schedule-code" />
+    <xsl:param name="edition-type" />
 
     <xsl:output method="xml" encoding="UTF-8" indent="yes" omit-xml-declaration="yes" />
 
     <xsl:template match="root">
 
         <Schedule>
+            <xsl:attribute name="edition-type"><xsl:value-of select="$edition-type"/></xsl:attribute>
             <xsl:attribute name="schedule_code"><xsl:value-of select="$schedule-code"/></xsl:attribute>
             <xsl:for-each select="Schedule/element/child::*[not(name() ='effective_year' or name() ='schedule_code')]">
                 <xsl:attribute name="{local-name()}"><xsl:value-of select="."/></xsl:attribute>

@@ -13,13 +13,10 @@
         xmlns:fn="http://www.w3.org/2005/xpath-functions"
         exclude-result-prefixes="xs fn" version="2.0">
 
-    <xsl:param name="schedule-code" />
     <xsl:param name="folder" />
-    <xsl:param name="edition-type" />
 
-    <xsl:variable name="base" select="replace(replace(base-uri(),'file:', 'file://'), 'data-processed/full-items-document.xml', '')" />
-    <xsl:variable name="output" select="concat($base,$folder,'/')" />
-    <xsl:variable name="sch-path" select="concat('schedule-',$schedule-code,'/')" />
+    <xsl:variable name="base" select="substring-before(replace(base-uri(),'file:', 'file://'), '/part2-items')" />
+    <xsl:variable name="output" select="concat($base,'/',$folder,'/')" />
 
     <xsl:output method="xml" encoding="UTF-8" indent="yes" omit-xml-declaration="yes" />
 
@@ -36,7 +33,10 @@
     </xsl:variable>
 
     <xsl:template match="Schedule">
-        <xsl:variable name="effective_date" select="@effective_date" />
+        <xsl:variable name="schedule-code" select="@schedule_code" />
+        <xsl:variable name="edition-type"  select="@edition-type" />
+        <xsl:variable name="effectivedate" select="@effective_date" />
+        <xsl:variable name="sch-path" select="concat($effectivedate,'/schedule-',$schedule-code,'/')" />
 
         <xsl:variable name="path-document" select="concat($output, $sch-path, 'li/li-schedule-1.psml')" />
 

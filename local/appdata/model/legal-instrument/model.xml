@@ -4,9 +4,9 @@
 -->
 
 <pipelines  title="Legal Instrument">
-  <pipeline id="dd-api-to-dds-xml"
+  <pipeline id="schedule1-part2-dd-api-to-dds-xml"
             name="DD API to DDS XML"
-            description="DD API to DDS XML"
+            description="Schedule 1 - Part 2 - DD API to DDS XML"
             accepts="application/zip"
             default="true">
     <fields>
@@ -70,11 +70,18 @@
       <parameter name="input"                 value="data-processed/sorted.xml"/>
       <parameter name="xsl"                   value="dd-json-to-dds-xml-conversion/common/create-full-item-list-lucene-xml.xsl"/>
       <parameter name="display-result"        value="false"/>
-      <parameter name="output"                value="data-processed/full-items-document.xml"/>
+      <parameter name="output"                value="data-processed/part2-items.xml"/>
     </step>
 
+  </pipeline>
+
+  <pipeline id="schedule1-part2-dds-xml-to-psml"
+            name="DDS XML to PSML - Upload to Pageseeder Group"
+            description="Schedule 1 - Part 2 - DDS XML to PSML - Upload to Pageseeder Group"
+            accepts="application/xml"
+            default="true">
+
     <step id="create-li-documents" name="Create LI PSML Documents" viewable="false" class="org.pageseeder.ox.step.Transformation">
-      <parameter name="input"                 value="data-processed/full-items-document.xml"/>
       <parameter name="xsl"                   value="dd-json-to-dds-xml-conversion/common/create-li-psml-documents.xsl"/>
       <parameter name="display-result"        value="false"/>
       <parameter name="_xslt-folder"          value="pg-folder" />
