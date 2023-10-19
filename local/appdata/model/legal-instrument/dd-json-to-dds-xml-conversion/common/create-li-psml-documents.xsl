@@ -21,15 +21,19 @@
     <xsl:output method="xml" encoding="UTF-8" indent="yes" omit-xml-declaration="yes" />
 
     <xsl:variable name="references">
-        <xsl:for-each-group select="Schedule/Item" group-by="drug_name">
-            <xsl:variable name="mp" select="if(AmtItems[concept_type_code='MP']/pbs_concept_id != '') then AmtItems[concept_type_code='MP']/pbs_concept_id else drug_name"/>
-            <xsl:variable name="effective_date" select="@effective_date" />
-            <xsl:for-each-group select="current-group()" group-by="li_form">
-                <xsl:sort select="li_form" order="descending" />
-                <blockxref frag="default" reversefrag="content" reversetitle="" reverselink="true" reversetype="none" display="document" type="embed" href="{concat('/ps/mps/li/documents/',$effective_date,'/schedule-3071/li/li-schedule-1/',$mp,'.psml')}"
-                           urititle="{drug_name}" urilabels="Sch1" documenttype="li"><xsl:value-of select="drug_name" /></blockxref>
+        <xsl:for-each select="Schedule">
+            <xsl:variable name="effective-date" select="@effective_date" />
+            <xsl:variable name="schedule_code"  select="@schedule_code" />
+            <xsl:for-each-group select="Item" group-by="drug_name">
+                <xsl:variable name="mp" select="if(AmtItems[concept_type_code='MP']/pbs_concept_id != '') then AmtItems[concept_type_code='MP']/pbs_concept_id else drug_name"/>
+                <xsl:variable name="effective_date" select="@effective_date" />
+                <xsl:for-each-group select="current-group()" group-by="li_form">
+                    <xsl:sort select="li_form" order="descending" />
+                    <blockxref frag="default" reversefrag="content" reversetitle="" reverselink="true" reversetype="none" display="document" type="embed" href="{concat('/ps/mps/li/documents/',$effective-date,'/schedule-',$schedule_code,'/li/li-schedule-1/',$mp,'.psml')}"
+                               urititle="{drug_name}" urilabels="Sch1" documenttype="li"><xsl:value-of select="drug_name" /></blockxref>
+                </xsl:for-each-group>
             </xsl:for-each-group>
-        </xsl:for-each-group>
+        </xsl:for-each>
     </xsl:variable>
 
     <xsl:template match="Schedule">
@@ -48,7 +52,9 @@
                     </uri>
                 </documentinfo>
                 <section id="content">
-                    <xsl:copy-of select="$references" />
+                    <xref-fragment id="content">
+                        <xsl:copy-of select="$references" />
+                    </xref-fragment>
                 </section>
             </document>
         </xsl:result-document>
