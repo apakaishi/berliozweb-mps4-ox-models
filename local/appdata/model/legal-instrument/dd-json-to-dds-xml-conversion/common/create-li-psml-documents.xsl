@@ -91,7 +91,6 @@
                                     <hcell><para>Drug</para></hcell>
                                     <hcell><para>Form</para></hcell>
                                     <hcell><para>MoA</para></hcell>
-                                    <hcell><para>BioEq</para></hcell>
                                     <hcell><para>Brand</para></hcell>
                                     <hcell><para>Manufacturer</para></hcell>
                                     <hcell><para>Prescriber</para></hcell>
@@ -119,7 +118,7 @@
 
                                             <xsl:variable name="restriction">
                                                 <xsl:for-each-group select="current-group()/ItemRestrictionRltd/RestrictionText/treatment_of_code" group-by="text()">
-                                                    <xsl:value-of select="if(position()!= last()) then concat(.,' ') else ." />
+                                                    <xsl:value-of select="if(position()!= last()) then concat(concat('C',.),' ') else concat('C',.)" />
                                                 </xsl:for-each-group>
                                             </xsl:variable>
 
@@ -127,7 +126,6 @@
                                                 <cell><xsl:value-of select="li_drug_name" /></cell>
                                                 <cell><xsl:value-of select="$li_form" /></cell>
                                                 <cell><xsl:value-of select="manner_of_administration" /></cell>
-                                                <cell><xsl:value-of select="''" /></cell>
                                                 <cell><xsl:value-of select="$brand_name" /></cell>
                                                 <cell><xsl:value-of select="manufacturer_code" /></cell>
                                                 <cell><xsl:value-of select="$prescriber_code" /><inline label="item"><xsl:value-of select="concat($pbs_code,'(',program_code,')')" /></inline></cell>
