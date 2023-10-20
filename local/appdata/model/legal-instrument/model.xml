@@ -68,7 +68,7 @@
 
     <step id="create-xml-dds-file" name="Create XML DDS Document" viewable="false" class="org.pageseeder.ox.step.Transformation">
       <parameter name="input"                 value="data-processed/sorted.xml"/>
-      <parameter name="xsl"                   value="dd-json-to-dds-xml-conversion/common/create-full-item-list-lucene-xml.xsl"/>
+      <parameter name="xsl"                   value="dd-json-to-dds-xml-conversion/common/create-dds-xml-document.xsl"/>
       <parameter name="display-result"        value="false"/>
       <parameter name="output"                value="data-processed/part2-items.xml"/>
     </step>
