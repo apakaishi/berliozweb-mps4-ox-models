@@ -5,8 +5,8 @@
 
 <pipelines  title="Legal Instrument">
   <pipeline id="schedule1-part2-dd-api-to-dds-xml"
-            name="DD API to DDS XML"
-            description="Schedule 1 - Part 2 - DD API to DDS XML"
+            name="DD API to DDS XML [Schedule 1 - Part 2]"
+            description="DD API to DDS XML [Schedule 1 - Part 2]"
             accepts="application/zip"
             default="true">
     <fields>
@@ -76,8 +76,8 @@
   </pipeline>
 
   <pipeline id="schedule1-part2-items-psml"
-            name="DDS Items PSML - Upload to Pageseeder Group"
-            description="Schedule 1 - Part 2 - DDS Items PSML - Upload to Pageseeder Group"
+            name="DDS Items PSML [Schedule 1 - Part 2]"
+            description="DDS Items PSML [Schedule 1 - Part 2]"
             accepts="application/xml"
             default="true">
 
@@ -143,8 +143,8 @@
   </pipeline>
 
   <pipeline id="schedule1-part2-dds-xml-to-psml"
-            name="DDS XML to PSML - Upload to Pageseeder Group"
-            description="Schedule 1 - Part 2 - DDS XML to PSML - Upload to Pageseeder Group"
+            name="LI [Schedule 1 - Part 2]"
+            description="LI [Schedule 1 - Part 2]"
             accepts="application/xml"
             default="true">
 
@@ -164,6 +164,7 @@
       <parameter name="group" value="mps-li" />
       <parameter name="folder" value="documents" />
     </step>
+
     <!--
     <step id="select-folder" name="Select Folder to Upload" interaction="true" class="org.pageseeder.ox.step.NOPStep">
       <component name="SelectFolder"/>
