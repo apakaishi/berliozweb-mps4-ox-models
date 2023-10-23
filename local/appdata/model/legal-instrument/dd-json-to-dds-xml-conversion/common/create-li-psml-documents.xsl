@@ -44,7 +44,7 @@
 
         <xsl:variable name="path-document" select="concat($output, $sch-path, 'li/li-schedule-1.psml')" />
 
-        <xsl:result-document href="{$path-document}">
+<!--        <xsl:result-document href="{$path-document}">
             <document type="li" version="current" level="portable">
                 <documentinfo>
                     <uri documenttype="li">
@@ -57,14 +57,12 @@
                     </xref-fragment>
                 </section>
             </document>
-        </xsl:result-document>
+        </xsl:result-document>-->
 
         <xsl:for-each-group select="Item" group-by="drug_name">
             <xsl:variable name="mp" select="if(AmtItems[concept_type_code='MP']/pbs_concept_id != '') then AmtItems[concept_type_code='MP']/pbs_concept_id else drug_name"/>
             <xsl:variable name="title" select="li_drug_name" />
 
-            <xsl:variable name="program_code" select="@program_code" />
-            <xsl:variable name="pbs_code" select="@pbs_code" />
             <xsl:variable name="path" select="concat($output, $sch-path, 'li/li-schedule-1/', $mp,'.psml')" />
 
             <xsl:result-document href="{$path}">
@@ -80,8 +78,6 @@
                             <property name="version" title="version" value="0.1" datatype="string"/>
                             <property name="schedule-code" title="Schedule code" value="{$schedule-code}" datatype="string"/>
                             <property name="edition" title="Edition" value="{$edition-type}" datatype="string"/>
-                            <property name="program-code" title="Program code" value="{$program_code}" datatype="string"/>
-                            <property name="pbs-code" title="PBS code" value="{$pbs_code}" datatype="string"/>
                         </properties>
                     </metadata>
                     <section id="{$mp}">
@@ -103,7 +99,7 @@
                                     <hcell><para>S100</para></hcell>
                                 </row>
                                 <xsl:for-each-group select="current-group()" group-by="li_form">
-                                    <xsl:sort select="li_form" order="descending" />
+                                    <xsl:sort select="li_form" order="ascending" />
                                     <xsl:variable name="li_form" select="li_form"/>
                                     <xsl:variable name="tpp" select="if(AmtItems[concept_type_code='TPP']/pbs_concept_id != '') then AmtItems[concept_type_code='TPP']/pbs_concept_id else li_form"/>
 
@@ -114,7 +110,11 @@
                                              <xsl:variable name="pbs_code" select="@pbs_code"/>-->
 
                                         <xsl:for-each-group select="current-group()" group-by="prescriber_code">
-                                            <xsl:variable name="prescriber_code" select="prescriber_code"/>
+                                            <xsl:variable name="prescriber_code">
+                                                <xsl:for-each select="tokenize(prescriber_code,' ')">
+                                                    <xsl:value-of select="if(position()!= last()) then concat(.,'P ') else concat(.,'P')" />
+                                                </xsl:for-each>
+                                            </xsl:variable>
 
                                             <xsl:variable name="restriction">
                                                 <xsl:for-each-group select="current-group()/ItemRestrictionRltd/RestrictionText/treatment_of_code" group-by="text()">
@@ -128,7 +128,7 @@
                                                 <cell><xsl:value-of select="manner_of_administration" /></cell>
                                                 <cell><xsl:value-of select="$brand_name" /></cell>
                                                 <cell><xsl:value-of select="manufacturer_code" /></cell>
-                                                <cell><xsl:value-of select="$prescriber_code" /><inline label="item"><xsl:value-of select="concat($pbs_code,'(',program_code,')')" /></inline></cell>
+                                                <cell><xsl:value-of select="$prescriber_code" /><inline label="item"><xsl:value-of select="concat(@pbs_code,'(',@program_code,')')" /></inline></cell>
                                                 <cell><xsl:value-of select="$restriction" /></cell>
                                                 <cell><xsl:value-of select="''" /></cell>
                                                 <cell><xsl:value-of select="maximum_quantity_units" /></cell>
